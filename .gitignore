@@ -1,0 +1,4 @@
+*.log
+*.pyc
+/remoteWhiteborad/.idea/
+/remoteWhiteboard/__pycache__/
