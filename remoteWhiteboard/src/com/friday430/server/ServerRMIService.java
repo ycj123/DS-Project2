@@ -5,6 +5,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 
 public class ServerRMIService {
 
@@ -27,7 +28,8 @@ public class ServerRMIService {
     public void createNewBoard(String board_id, String managerKeychain) {
         try {
             BoardImpl boardImpl = new BoardImpl();
-            registry.bind(board_id + managerKeychain, boardImpl);
+            IRemoteBoard stub = (IRemoteBoard) UnicastRemoteObject.exportObject(boardImpl, 0);
+            registry.bind(board_id + managerKeychain, stub);
             System.out.println("White Board server is ready!");
         } catch (Exception var3) {
             var3.printStackTrace();
@@ -38,7 +40,7 @@ public class ServerRMIService {
         try{
             registry = LocateRegistry.getRegistry("localhost");
             IRemoteBoard board = (IRemoteBoard) registry.lookup(board_id + managerKeychain);
-            System.out.println("hhh");
+            board.geta();
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
         }
