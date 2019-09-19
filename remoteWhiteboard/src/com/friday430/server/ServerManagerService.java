@@ -10,7 +10,7 @@ public class ServerManagerService {
 
     private ServerManagerDao serverManagerDao = ServerManagerDao.getInstance();
 
-    public loadServerManangerDict(){
+    public void loadServerManangerDict(){
         try {
             serverManageDict = (HashMap<String, ArrayList<String>>) serverManagerDao.readServerManager();
         }catch(Exception e){
@@ -22,7 +22,7 @@ public class ServerManagerService {
 
     }
 
-    public addManager(String board_id, String manager_ip, String manager_port){
+    public void addManager(String board_id, String manager_ip, String manager_port){
         try{
             ArrayList<String> boardList = new ArrayList<String>();
             boardList.add(manager_ip);
