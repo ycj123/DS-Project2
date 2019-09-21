@@ -9,9 +9,14 @@ import java.util.ArrayList;
 
 public class ServerController extends Thread {
 
+    private ServerManagerService serverManagerService = null;
+    private ServerRMIService serverRMIService = null;
 
-    private ServerManagerService serverManagerService = new ServerManagerService();
-    private ServerRMIService serverRMIService = new ServerRMIService();
+    // class 得有构造方法！！！！！！！！！！！！！！
+    public ServerController(){
+        serverManagerService = new ServerManagerService();
+        serverRMIService = new ServerRMIService();
+    }
 
 
     public ArrayList handleClientRequest(String board_name) {
@@ -24,19 +29,28 @@ public class ServerController extends Thread {
         }
     }
 
-    public String handleManagerReauest(String manager_keychain, String board_name, Socket clientManager) {
+    // 尽量不要把复杂对象传入方法：socket
+    // 尝试在调用前做
+    // String[] manager = this.getManagerIPPort(clientManager).split("#+");
+    // 再把其结果传入方法
+    public String handleManagerReauest(String manager_keychain, String board_name, String manager_ip, String manager_port) {
         try {
             String board_id = this.generateBoardID(board_name);
+            if (board_id == null){
+                // TODO: handle board id convert exception
+                // 这个方法同样最好别用字符串返回 （return null） or （throws exception）
+                // 如果必须用字符串返回，记得调用方法时检查返回的字符串是否为错误信息
+            }
             if (serverManagerService.isBoard_id(board_id))
-                return ("The board has been created!");
+                return ("The board had been created.");
             else {
-                String[] manager = this.getManagerIPPort(clientManager).split("#+");
-                serverManagerService.addManager(board_id, manager[0], manager[1]);
+                //String[] manager = this.getManagerIPPort(clientManager).split("#+");
+                serverManagerService.addManager(board_id, manager_ip, manager_port);
                 serverRMIService.createNewBoard(board_id, manager_keychain);
-                return "Create a board successfully!";
+                return "Create board '" + board_name + "' successfully.";
             }
         } catch (Exception e) {
-            return ("Create a board failed!!");
+            return ("Create board '" + board_name + "' failed.");
         }
     }
 
@@ -46,6 +60,9 @@ public class ServerController extends Thread {
         return addr + "#+" + port_client;
     }
 
+    // 返回错误值时尽量不要用字符串
+    // 如果使用这个方法出错了 37行 String board_id = this.generateBoardID(board_name);
+    // 程序会把错误信息当成board_id执行
     private String generateBoardID(String board_name) {
         byte[] secreteByte = null;
         try {
@@ -60,7 +77,7 @@ public class ServerController extends Thread {
             }
             return board_id;
         }
-        return "Fail";
+        return null;
     }
 
 

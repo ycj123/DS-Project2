@@ -6,9 +6,14 @@ import java.util.HashMap;
 public class ServerManagerService {
 
 
-    private static HashMap<String, ArrayList<String>> serverManageDict = new HashMap<String, ArrayList<String>>();
+    private static HashMap<String, ArrayList<String>> serverManageDict;
+    private ServerManagerDao serverManagerDao = null;
 
-    private ServerManagerDao serverManagerDao = ServerManagerDao.getInstance();
+    // class 得有构造方法！！！！！！！！！！！！！！
+    public ServerManagerService(){
+        serverManagerDao = ServerManagerDao.getInstance();
+        this.loadServerManangerDict();
+    }
 
     public void loadServerManangerDict(){
         try {
@@ -18,9 +23,14 @@ public class ServerManagerService {
         }
     }
 
-    public String saveServerManagerDict(){
-        serverManagerDao.writeServerManager();
-        return ("The board has exited!");
+    // 表示方法是否正常运行别用String 用boolean
+    public Boolean saveServerManagerDict(){
+        try {
+            serverManagerDao.writeServerManager();
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
 //
 //    public boolean iskeyChain(String board_id, String key_chain){
