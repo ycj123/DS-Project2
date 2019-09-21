@@ -24,7 +24,7 @@ public class ServerManagerService {
     }
 
     // 表示方法是否正常运行别用String 用boolean
-    public Boolean saveServerManagerDict(){
+    public boolean saveServerManagerDict(){
         try {
             serverManagerDao.writeServerManager();
         }catch (Exception e){

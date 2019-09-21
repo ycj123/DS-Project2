@@ -40,18 +40,22 @@ public class ServerController extends Thread {
                 // TODO: handle board id convert exception
                 // 这个方法同样最好别用字符串返回 （return null） or （throws exception）
                 // 如果必须用字符串返回，记得调用方法时检查返回的字符串是否为错误信息
+                return ("Error! Try again!");
             }
-            if (serverManagerService.isBoard_id(board_id))
-                return ("The board had been created.");
-            else {
-                //String[] manager = this.getManagerIPPort(clientManager).split("#+");
-                serverManagerService.addManager(board_id, manager_ip, manager_port);
-                serverRMIService.createNewBoard(board_id, manager_keychain);
-                return "Create board '" + board_name + "' successfully.";
+            if(board_id.length() == 32) {
+                if (serverManagerService.isBoard_id(board_id))
+                    return ("The board had been created.");
+                else {
+                    //String[] manager = this.getManagerIPPort(clientManager).split("#+");
+                    serverManagerService.addManager(board_id, manager_ip, manager_port);
+                    serverRMIService.createNewBoard(board_id, manager_keychain);
+                    return "Create board '" + board_name + "' successfully.";
+                }
             }
         } catch (Exception e) {
             return ("Create board '" + board_name + "' failed.");
         }
+        return ("Create board '" + board_name + "' failed.");
     }
 
     private String getManagerIPPort(Socket client) {
