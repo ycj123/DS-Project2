@@ -5,7 +5,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 
 public class ServerRMIService {
 
@@ -25,7 +24,7 @@ public class ServerRMIService {
         }
     }
 
-    public void createNewBoard(String board_id, String managerKeychain) {
+    public synchronized void createNewBoard(String board_id, String managerKeychain) {
         try {
             BoardImpl boardImpl = new BoardImpl();
             IRemoteBoard stub = (IRemoteBoard) UnicastRemoteObject.exportObject(boardImpl, 0);
@@ -36,7 +35,7 @@ public class ServerRMIService {
         }
     }
 
-    public void getBoard(String board_id, String managerKeychain){
+    public synchronized void getBoard(String board_id, String managerKeychain){
         try{
             registry = LocateRegistry.getRegistry("localhost");
             IRemoteBoard board = (IRemoteBoard) registry.lookup(board_id + managerKeychain);
@@ -46,23 +45,23 @@ public class ServerRMIService {
         }
     }
 
-//    public saveBoard(board_id){
-//
-//    }
-//
-//
-//    public loadBoard(board_id){
-//
-//        }
-//
-//
-//    public saveAll(){
-//
-//        }
-//
-//    public loadAll(){
-//
-//        }
+    public saveBoard(String board_id){
+
+    }
+
+
+    public loadBoard(String board_id){
+
+        }
+
+
+    public saveAll(){
+
+        }
+
+    public loadAll(){
+
+        }
 
     public static void main(String[] args) {
         ServerRMIService sms = new ServerRMIService();
