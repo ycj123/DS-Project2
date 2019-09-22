@@ -16,9 +16,7 @@ public class SocketServer {
 
     int manager_port = 5555;
     private static int manager_counter = 0;
-
-    private ServerManagerService serverManagerService = null;
-    private ServerRMIService serverRMIService = null;
+    
     private ServerController serverController = null;
 
     public SocketServer(){

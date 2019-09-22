@@ -46,6 +46,7 @@ public class ServerRMIService {
     }
 
     public saveBoard(String board_id){
+        ServerRMIDao.
 
     }
 
