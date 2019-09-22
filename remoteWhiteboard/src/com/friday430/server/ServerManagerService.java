@@ -32,13 +32,7 @@ public class ServerManagerService {
         }
         return true;
     }
-//
-//    public boolean iskeyChain(String board_id, String key_chain){
-//        if(key_chain == idkeychain.get(board_id)){
-//
-//
-//        }
-//    }
+
 
     public boolean isBoard_id(String board_id){
         return serverManageDict.containsKey(board_id);
