@@ -1,13 +1,12 @@
 package com.friday430.server;
 
 import java.math.BigInteger;
-import java.net.InetAddress;
-import java.net.Socket;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class ServerController extends Thread {
+
 
     private ServerManagerService serverManagerService = null;
     private ServerRMIService serverRMIService = null;
@@ -37,7 +36,6 @@ public class ServerController extends Thread {
         try {
             String board_id = this.generateBoardID(board_name);
             if (board_id == null){
-                // TODO: handle board id convert exception
                 // 这个方法同样最好别用字符串返回 （return null） or （throws exception）
                 // 如果必须用字符串返回，记得调用方法时检查返回的字符串是否为错误信息
                 return ("Error! Try again!");
@@ -58,11 +56,7 @@ public class ServerController extends Thread {
         return ("Create board '" + board_name + "' failed.");
     }
 
-    private String getManagerIPPort(Socket client) {
-        InetAddress addr = client.getInetAddress();
-        int port_client = client.getPort();
-        return addr + "#+" + port_client;
-    }
+
 
     // 返回错误值时尽量不要用字符串
     // 如果使用这个方法出错了 37行 String board_id = this.generateBoardID(board_name);
