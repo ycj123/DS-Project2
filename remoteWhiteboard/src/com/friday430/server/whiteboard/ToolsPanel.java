@@ -27,6 +27,7 @@ class ToolsPanel extends VBox {
     private Button squareBtn;
     private Button rectAngleBtn;
     private Button ellipseBtn;
+    private Button clearBtn;
 //    private Button triAngleBtn;
 
     private Pen tools;
@@ -47,6 +48,7 @@ class ToolsPanel extends VBox {
         squareBtn = new Button();
         rectAngleBtn = new Button();
         ellipseBtn = new Button();
+        clearBtn = new Button();
 //        triAngleBtn = new Button();
 
         String PEN_ICON = "./Icons/pen.png";
@@ -65,6 +67,8 @@ class ToolsPanel extends VBox {
         createBtn(squareBtn, SQUARE_ICON);
         String RECTANGLE_ICON = "./Icons/rectangle.png";
         createBtn(rectAngleBtn, RECTANGLE_ICON);
+        String CLEAR_ICON = "./Icons/clear.png";
+        createBtn(clearBtn, CLEAR_ICON);
 //        createBtn(triAngleBtn, TRIANGLE_ICON);
         setupButtons();
 
@@ -123,6 +127,11 @@ class ToolsPanel extends VBox {
         ellipseBtn.setOnAction(arg0 -> {
             tools.setTool(new TEllipse(canvas));
             setActive(ellipseBtn);
+        });
+        clearBtn.setOnAction(arg0 -> {
+            new Clear(canvas);
+            // canvas = new Canvas();
+            setActive(clearBtn);
         });
 //        triAngleBtn.setOnAction(new EventHandler<ActionEvent>() {
 //            @Override

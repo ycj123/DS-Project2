@@ -6,11 +6,6 @@ import javafx.scene.input.MouseEvent;
 
 import com.friday430.server.whiteboard.Canvas;
 
-/**
- * Use Tools to draw/edit/do whatever on a Canvas.
- * 
- * This class should be extended to create new tools.
- */
 abstract class Tool implements EventHandler<MouseEvent> {
 
     private Canvas canvas;

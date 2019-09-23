@@ -12,35 +12,27 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import com.friday430.server.whiteboard.properties.*;
 
-/**
- * Canvas allows a user to add various shapes to a Pane.
- * 
- */
 public class Canvas extends Pane implements PropertiesListener {
 
     private List<Shape> erase;
     private double locationX = 0.0;
     private double locationY = 0.0;
 
-    /**
-     * Create a Canvas object.
-     */
     public Canvas() {
         erase = new LinkedList<Shape>();
         Properties.addListener(this);
     }
 
-    /**
-     * Set the background color of this Canvas.
-     */
+    public void clear() {
+        // erase = new LinkedList<Shape>();
+        getChildren().clear();
+    }
+
     private void setBackground(Color color) {
 	    setBackground(new Background(new BackgroundFill(
 		    color, new CornerRadii(0), new Insets(0))));
     }
 
-    /**
-     * Add a Shape to this Canvas.
-     */
     public void addShape(Shape s) {
 	    getChildren().add(s);
     }

@@ -3,6 +3,9 @@ package com.friday430.server.whiteboard;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.util.Arrays;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -11,10 +14,14 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 
 import javax.imageio.ImageIO;
+
+import com.friday430.server.whiteboard.properties.Properties;
 
 /**
  * Menu for WhiteBoard.
@@ -81,7 +88,16 @@ class WhiteBoardMenu extends MenuBar {
      */
 	private void loadFromFile() {
         fileChooser.setTitle("Load");
-        fileChooser.showOpenDialog(null);
+		File file = fileChooser.showOpenDialog(null);
+
+		if (file != null) {
+			System.out.println(file.toURI().toString());
+
+			BackgroundImage myBI = new BackgroundImage(new Image(file.toURI().toString() ,canvas.getWidth(),canvas.getHeight(),false,true),
+						BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+						BackgroundSize.DEFAULT);
+			canvas.setBackground(new Background(myBI));
+		}
 	}
 
 }
