@@ -1,26 +1,28 @@
 package com.friday430.server;
 
 import com.friday430.remote.IRemoteBoard;
+import com.friday430.server.whiteboard.WhiteBoard;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+/**
+ * White Board Implement Class using JavaFx
+ */
 public class BoardImpl extends Application implements IRemoteBoard{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Collaborative Whiteboard");
-        primaryStage.setScene(new Scene(new BorderPane(), 500, 500));
+        primaryStage.setTitle("Collaborative WhiteBoard");
+        primaryStage.setScene(new Scene(new WhiteBoard(), 900, 500));
         primaryStage.show();
-        // Center it on my primary monitor.
+        //set position
         Rectangle2D screen = Screen.getScreens().get(Screen.getScreens().size() - 1).getBounds();
         primaryStage.setX(screen.getMaxX() / 2.0 - primaryStage.getScene().getWidth() / 2.0);
         primaryStage.setY(screen.getHeight() / 2.0 - primaryStage.getScene().getHeight() / 2.0);
@@ -31,6 +33,9 @@ public class BoardImpl extends Application implements IRemoteBoard{
         launch(args);
     }
 
+    /**
+     * Test
+     */
     @Override
     public void geta() {
         System.out.println("hihi");
