@@ -14,16 +14,16 @@ class LocationPanel extends HBox {
         final Label locationLbl = new Label("(X: 0, Y: 0)");
         locationLbl.setTextFill(Defaults.TEXT_COLOR);
 
-        canvas.setOnMouseMoved(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
+        canvas.setOnMouseMoved(e -> {
+        int x = (int) (canvas.getLocationX() - e.getX()) * -1;
+        int y = (int) (canvas.getLocationY() - e.getY()) * -1;
+        locationLbl.setText("(X: " + x + ", Y: " + y + ")");
+        });
+        canvas.setOnMouseDragged(e -> {
             int x = (int) (canvas.getLocationX() - e.getX()) * -1;
             int y = (int) (canvas.getLocationY() - e.getY()) * -1;
             locationLbl.setText("(X: " + x + ", Y: " + y + ")");
-            }
-
         });
-
         getChildren().add(locationLbl);
     }
 
