@@ -1,5 +1,6 @@
 package com.friday430.server.whiteboard;
 
+import com.friday430.remote.IRemoteBoard;
 import com.friday430.server.whiteboard.properties.Defaults;
 import com.friday430.server.whiteboard.tools.Pen;
 import javafx.geometry.Insets;
@@ -13,6 +14,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+
+import java.rmi.RemoteException;
 
 /**
  * WhiteBoard
@@ -83,4 +86,5 @@ public class WhiteBoard extends BorderPane {
 		down.getChildren().add(bottomDown);
 		setBottom(down);
 	}
+
 }

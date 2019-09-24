@@ -5,6 +5,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 
 public class ServerRMIService {
 
@@ -45,22 +46,22 @@ public class ServerRMIService {
         }
     }
 
-    public saveBoard(String board_id){
-        ServerRMIDao.
+    public void saveBoard(String board_id){
+        //ServerRMIDao.
 
     }
 
 
-    public loadBoard(String board_id){
+    public void loadBoard(String board_id){
 
         }
 
 
-    public saveAll(){
+    public void saveAll(){
 
         }
 
-    public loadAll(){
+    public void loadAll(){
 
         }
 
