@@ -5,6 +5,7 @@ import com.friday430.server.whiteboard.tools.Pen;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Separator;
+import javafx.geometry.Pos;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -20,6 +21,7 @@ public class WhiteBoard extends BorderPane {
 
     private Canvas canvas;
 	private  Pen pen;
+	private ColorPanel colorPanel;
 
 	public WhiteBoard() {
         canvas = new Canvas();
@@ -38,6 +40,10 @@ public class WhiteBoard extends BorderPane {
 		separator.setOrientation(Orientation.VERTICAL);
 		VBox left = new VBox();
 		left.setBackground(new Background(new BackgroundFill(Defaults.PANE_COLOR, null, null)));
+		left.setAlignment(Pos.CENTER);
+		left.setSpacing(10);
+		colorPanel = new ColorPanel();
+        left.getChildren().add(colorPanel.getColorPanel());
 		left.getChildren().add(tp);
 		left.getChildren().add(separator);
 		setLeft(left);

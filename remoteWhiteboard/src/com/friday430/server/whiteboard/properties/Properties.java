@@ -2,6 +2,9 @@ package com.friday430.server.whiteboard.properties;
 
 import java.util.ArrayList;
 import java.util.List;
+// import com.friday430.server.whiteboard;
+//import com.friday430.server.whiteboard;
+import com.friday430.server.whiteboard.ColorPanel;
 
 import javafx.scene.paint.Color;
 
@@ -34,6 +37,8 @@ public class Properties {
         for (PropertiesListener listener : listeners) {
             listener.onForeColorChng(color);
         }
+        // Shape.resetColor(color);
+        ColorPanel.setShapeColor(color);
     }
 
     /**

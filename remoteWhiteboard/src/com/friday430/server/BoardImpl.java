@@ -20,7 +20,7 @@ public class BoardImpl extends Application implements IRemoteBoard{
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Collaborative WhiteBoard");
-        primaryStage.setScene(new Scene(new WhiteBoard(), 900, 500));
+        primaryStage.setScene(new Scene(new WhiteBoard(), 900, 830));
         primaryStage.show();
         //set position
         Rectangle2D screen = Screen.getScreens().get(Screen.getScreens().size() - 1).getBounds();

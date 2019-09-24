@@ -2,8 +2,11 @@ package com.friday430.server.whiteboard;
 
 import com.friday430.server.whiteboard.properties.Defaults;
 import com.friday430.server.whiteboard.tools.*;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -36,7 +39,7 @@ class ToolsPanel extends VBox {
     ToolsPanel(Pen tools, Canvas canvas) {
         super();
         setBackground(new Background(new BackgroundFill(Defaults.PANE_COLOR, null, null)));
-        
+        setAlignment(Pos.CENTER);
         this.tools = tools;
         this.canvas = canvas;
 
@@ -133,6 +136,22 @@ class ToolsPanel extends VBox {
             // canvas = new Canvas();
             setActive(clearBtn);
         });
+        //Add text button
+//        textBtn.setOnAction(arg0 -> {
+//            TextInputDialog dialog = new TextInputDialog("");
+//            dialog.setTitle("文本输入框");
+//            dialog.setContentText("请输入");
+//            dialog.setHeaderText("修改字体后，直接在画布点击");
+//            Optional<String> result = dialog.showAndWait();
+//            if (result.isPresent()){
+//                Shape.resetText(result.get());
+//                GraphicsContext gc = canvas.getGraphicsContext2D();
+//                gc.setLineWidth(1);
+//                gc.setFont(Font.font(Shape.fontFamily, Shape.fontSize));
+//                gc.setStroke(Shape.color);
+//                gc.strokeText(Shape.Text, event.getX(), event.getY());
+//            }
+//        });
 //        triAngleBtn.setOnAction(new EventHandler<ActionEvent>() {
 //            @Override
 //            public void handle(ActionEvent arg0) {
