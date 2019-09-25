@@ -23,8 +23,8 @@ public class ServerController extends Thread {
     private static int client_counter = 0;
 
 
-    private ServerManagerService serverManagerService = null;
-    private ServerRMIService serverRMIService = null;
+    private ServerManagerService serverManagerService = new ServerManagerService();
+//    private ServerRMIService serverRMIService = new ServerRMIService();
 
     // class 得有构造方法！！！！！！！！！！！！！！
 //    public ServerController() throws IOException {
@@ -40,21 +40,25 @@ public class ServerController extends Thread {
     }
 
 
-    public ArrayList handleClientRequest(String board_name) {
+    public String handleClientRequest(String board_name) {
         String board_id = this.generateBoardID(board_name);
+        System.out.println("clientBoard_id:"+board_id);
+
         try{
             if(serverManagerService.isBoard_id(board_id)) {
-                return serverManagerService.getManager(board_id);
+                ArrayList response_list = serverManagerService.getManager(board_id);
+                String manager_ip = (String) response_list.get(0);
+                String manager_port = (String) response_list.get(1);
+                return (manager_ip+"###"+manager_port);
+
             }
             else {
-                return null;
+                return ("The board does not exist!");
             }
         }catch (NullPointerException e){
-            e.printStackTrace();
-
+            System.out.println("NullPointerException");
         }
-
-        return null;
+        return ("Error! Try again!");
     }
 
     // 尽量不要把复杂对象传入方法：socket
@@ -64,6 +68,7 @@ public class ServerController extends Thread {
     public String handleManagerReauest(String manager_keychain, String board_name, String manager_ip, String manager_port) {
         try {
             String board_id = this.generateBoardID(board_name);
+            System.out.println("managerBoard_id:"+board_id);
             if (board_id == null){
                 // 这个方法同样最好别用字符串返回 （return null） or （throws exception）
                 // 如果必须用字符串返回，记得调用方法时检查返回的字符串是否为错误信息
@@ -75,11 +80,15 @@ public class ServerController extends Thread {
                 else {
 //                    String[] manager = this.getManagerIPPort(clientManager).split("#+");
                     serverManagerService.addManager(board_id, manager_ip, manager_port);
-                    serverRMIService.createNewBoard(board_id, manager_keychain);
+                    serverManagerService.saveServerManagerDict();
+//                    serverRMIService.createNewBoard(board_id, manager_keychain);
                     return "Create board '" + board_name + "' successfully.";
                 }
             }
-            serverManagerService.saveServerManagerDict();
+            System.out.println("before save managerdict");
+
+            System.out.println("after save managerdict");
+
         } catch (Exception e) {
             return ("Create board '" + board_name + "' failed.!!!");
         }
@@ -182,6 +191,7 @@ public class ServerController extends Thread {
             OutputStreamWriter out = new OutputStreamWriter(managerSocket.getOutputStream(),"UTF-8");
             BufferedWriter output = new BufferedWriter(out);
 
+//            System.out.println("1");
             String managerMassage = input.readLine();//从manager传输过来的消息；
             System.out.println(managerMassage);
             if(managerMassage != null){
@@ -190,18 +200,20 @@ public class ServerController extends Thread {
 
                 String manager_keychain = request[0];
                 String board_name = request[1];
-                System.out.println("manager_keychain:"+request[0]);
-                System.out.println("board_name:"+request[1]);
+                String manager_port = request[2];
+                String manager_ip = request[3];
 
-                InetAddress manager_ip_int = manager.getInetAddress(); //得到manager的IP地址
-                String manager_ip = String.valueOf(manager_ip_int);
-                System.out.println("manager_ip:"+manager_ip);
-                int manager_port_int = manager.getPort();//得到manager的port
-                String manager_port = String.valueOf(manager_port_int);
-                System.out.println("manager_port:"+manager_port);
+//                System.out.println("manager_keychain:"+request[0]);
+//                System.out.println("board_name:"+request[1]);
+
+
+//                System.out.println("manager_ip:"+manager_ip);
+//                int manager_port_int = manager.getPort();//得到manager的port
+//                String manager_port = String.valueOf(manager_port_int);
+//                System.out.println("manager_port:"+manager_port);
 
                 String response = this.handleManagerReauest(manager_keychain, board_name, manager_ip, manager_port);
-                System.out.println(response);
+//                System.out.println("RE"+response);
 
                 output.write(response);
 
@@ -225,23 +237,29 @@ public class ServerController extends Thread {
             // Output Stream
             OutputStreamWriter out = new OutputStreamWriter(clientSocket.getOutputStream(), StandardCharsets.UTF_8);
             BufferedWriter output = new BufferedWriter(out);
-            System.out.println("clientMessage");
             String clientMessage = input.readLine();//从client传过来的请求
-            System.out.println(clientMessage);
+            System.out.println("clientMessage:"+clientMessage);
+            String managerMessage;
 
-            if(clientMessage != null){
-                String board_name = clientMessage;
-                ArrayList response_list = this.handleClientRequest(board_name);
-                String manager_ip = (String) response_list.get(0);
-                String manager_port = (String) response_list.get(1);
-                String managerMessage = manager_ip + "###" + manager_port; //传过去的字符串
+            try{
+                if(clientMessage != null) {
+                    String board_name = clientMessage;
+                    managerMessage = this.handleClientRequest(board_name);
+//                    String manager_ip = (String) response_list.get(0);
+//                    String manager_port = (String) response_list.get(1);
+//                    managerMessage = manager_ip + "###" + manager_port; //传过去的字符串
+                }
+                else {
+                    managerMessage = "The board does not exist!";
+                }
 
-                output.write(managerMessage);
-                System.out.println("sent");
+                    output.write(managerMessage);
+                    output.newLine();
+                    output.flush();
+                    System.out.println("The message has sent to client" + managerMessage);
 
-                output.newLine();
-                output.flush();
-
+                } catch (NullPointerException e){
+                System.out.println("The board does not exist!");
             }
 
             in.close();

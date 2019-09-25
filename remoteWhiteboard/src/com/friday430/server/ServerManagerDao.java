@@ -5,11 +5,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+//qjx改了一部分，反正最后功能可以实现了
+
 public class ServerManagerDao {
-    private static HashMap<String, ArrayList<String>> serverManageDict;
     private static ServerManagerDao instance = null;
 
-    private ServerManagerDao() {
+    ServerManagerDao() {
+
     }
 
     ;
@@ -22,12 +24,13 @@ public class ServerManagerDao {
         return instance;
     }
 
-    public void readServerManager() throws IOException {
-        File f = new File("manager.csv");
+    public HashMap<String, ArrayList<String>> readServerManager() throws IOException {
+        HashMap<String, ArrayList<String>> serverManageDict = new HashMap<String, ArrayList<String>>();  //return hashmap
+        File f = new File("manager.txt");
         if (!f.exists()){
 
             f.createNewFile();
-            FileOutputStream fos = new FileOutputStream("manager.csv");
+            FileOutputStream fos = new FileOutputStream("manager.txt");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
             oos.writeObject(serverManageDict);
@@ -37,33 +40,28 @@ public class ServerManagerDao {
         }
         try{
 
-            FileInputStream fis = new FileInputStream("manager.csv");
+            FileInputStream fis = new FileInputStream("manager.txt");
             ObjectInputStream ois = new ObjectInputStream(fis);
             serverManageDict = (HashMap<String, ArrayList<String>>) ois.readObject();
 
             fis.close();
             ois.close();
-        } catch(
-                IOException e)
-
-        {
+            return serverManageDict;
+        } catch(IOException e) {
             System.out.println("Error initializing stream");
-        } catch(
-                ClassNotFoundException e)
-
-        {
-            // TODO Auto-generated catch block
+        } catch(ClassNotFoundException e) {
             e.printStackTrace();
         }
-
+        return serverManageDict;
     }
 
-    public void writeServerManager() {
+    public void writeServerManager(HashMap<String, ArrayList<String>> serverManageDict) {
         try {
-            FileOutputStream fos = new FileOutputStream("manager.csv");
+            FileOutputStream fos = new FileOutputStream("manager.txt");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
             oos.writeObject(serverManageDict);
+            System.out.println("serverManageDictKey:"+serverManageDict.keySet());
 
             fos.close();
             oos.close();

@@ -6,8 +6,8 @@ import java.util.HashMap;
 public class ServerManagerService {
 
 
-    private static HashMap<String, ArrayList<String>> serverManageDict;
-    private ServerManagerDao serverManagerDao = null;
+    private static HashMap<String, ArrayList<String>> serverManageDict = new HashMap<String, ArrayList<String>>();
+    private ServerManagerDao serverManagerDao;
 
     // class 得有构造方法！！！！！！！！！！！！！！
     public ServerManagerService(){
@@ -15,18 +15,23 @@ public class ServerManagerService {
         this.loadServerManangerDict();
     }
 
+
     public void loadServerManangerDict(){
         try {
-            serverManagerDao.readServerManager();
+            serverManageDict = serverManagerDao.readServerManager();
+            System.out.println(serverManageDict.keySet());
+            System.out.println("Read hashmap successfully");
         }catch(Exception e){
             serverManageDict = new HashMap<String, ArrayList<String>>();
+            System.out.println("Create a hashmap successfully");
         }
     }
 
     // 表示方法是否正常运行别用String 用boolean
     public boolean saveServerManagerDict(){
         try {
-            serverManagerDao.writeServerManager();
+            serverManagerDao.writeServerManager(serverManageDict);//传参数
+            System.out.println("The hashmap has been saved！");
         }catch (Exception e){
             return false;
         }
@@ -35,6 +40,10 @@ public class ServerManagerService {
 
 
     public boolean isBoard_id(String board_id){
+//        System.out.println("isBoard test!");
+//        System.out.println("isBoard test board_id:"+board_id);
+//
+//        System.out.println("isBoard_return:"+serverManageDict.containsKey(board_id));
         return serverManageDict.containsKey(board_id);
     }
 
