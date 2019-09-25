@@ -17,7 +17,7 @@ public class ServerManagerService {
 
     public void loadServerManangerDict(){
         try {
-            //serverManageDict = (HashMap<String, ArrayList<String>>)serverManagerDao.readServerManager();
+            serverManagerDao.readServerManager();
         }catch(Exception e){
             serverManageDict = new HashMap<String, ArrayList<String>>();
         }
@@ -26,7 +26,7 @@ public class ServerManagerService {
     // 表示方法是否正常运行别用String 用boolean
     public boolean saveServerManagerDict(){
         try {
-            //serverManagerDao.writeServerManager();
+            serverManagerDao.writeServerManager();
         }catch (Exception e){
             return false;
         }

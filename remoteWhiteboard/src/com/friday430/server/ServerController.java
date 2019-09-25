@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ServerController extends Thread {
 
@@ -26,20 +27,34 @@ public class ServerController extends Thread {
     private ServerRMIService serverRMIService = null;
 
     // class 得有构造方法！！！！！！！！！！！！！！
-    public ServerController(){
-        serverManagerService = new ServerManagerService();
-        serverRMIService = new ServerRMIService();
+//    public ServerController() throws IOException {
+//        serverManagerService = new ServerManagerService();
+////        this.serverSocket(4444);
+//        this.serverSocket(5555);
+////        serverRMIService = new ServerRMIService();
+//    }
+//
+    private int port;
+    public ServerController(int port){
+        this.port = port;
     }
 
 
     public ArrayList handleClientRequest(String board_name) {
         String board_id = this.generateBoardID(board_name);
-        if(serverManagerService.isBoard_id(board_id)) {
-            return serverManagerService.getManager(board_id);
+        try{
+            if(serverManagerService.isBoard_id(board_id)) {
+                return serverManagerService.getManager(board_id);
+            }
+            else {
+                return null;
+            }
+        }catch (NullPointerException e){
+            e.printStackTrace();
+
         }
-        else {
-            return null;
-        }
+
+        return null;
     }
 
     // 尽量不要把复杂对象传入方法：socket
@@ -58,14 +73,15 @@ public class ServerController extends Thread {
                 if (serverManagerService.isBoard_id(board_id))
                     return ("The board had been created.");
                 else {
-                    //String[] manager = this.getManagerIPPort(clientManager).split("#+");
+//                    String[] manager = this.getManagerIPPort(clientManager).split("#+");
                     serverManagerService.addManager(board_id, manager_ip, manager_port);
                     serverRMIService.createNewBoard(board_id, manager_keychain);
                     return "Create board '" + board_name + "' successfully.";
                 }
             }
+            serverManagerService.saveServerManagerDict();
         } catch (Exception e) {
-            return ("Create board '" + board_name + "' failed.");
+            return ("Create board '" + board_name + "' failed.!!!");
         }
         return ("Create board '" + board_name + "' failed.");
     }
@@ -113,7 +129,7 @@ public class ServerController extends Thread {
 
 
 
-    public void serverSocket(int port) throws IOException {
+    public void run() {
         if (port == manager_port) {
             ServerSocketFactory factoryManager = ServerSocketFactory.getDefault();
             try(ServerSocket managerServer = factoryManager.createServerSocket(manager_port)){
@@ -130,6 +146,8 @@ public class ServerController extends Thread {
                 }
             }catch (BindException e){
                 System.out.println("Address already in use");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         if(port == client_port) {
@@ -144,10 +162,13 @@ public class ServerController extends Thread {
                     System.out.println("Client " + client_counter + ": Applying for connection!");
                     // Start a new thread for a connection
                     Thread tt = new Thread(() -> this.serveClient(client));
+//                    System.out.println("sent");
                     tt.start();
                 }
             } catch (BindException e) {
                 System.out.println("Address already in use");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -162,18 +183,25 @@ public class ServerController extends Thread {
             BufferedWriter output = new BufferedWriter(out);
 
             String managerMassage = input.readLine();//从manager传输过来的消息；
-
+            System.out.println(managerMassage);
             if(managerMassage != null){
-                String[] request = managerMassage.split("#+");
+                String[] request = managerMassage.split("###");
+                System.out.println(Arrays.toString(request));
+
                 String manager_keychain = request[0];
                 String board_name = request[1];
+                System.out.println("manager_keychain:"+request[0]);
+                System.out.println("board_name:"+request[1]);
 
                 InetAddress manager_ip_int = manager.getInetAddress(); //得到manager的IP地址
                 String manager_ip = String.valueOf(manager_ip_int);
+                System.out.println("manager_ip:"+manager_ip);
                 int manager_port_int = manager.getPort();//得到manager的port
                 String manager_port = String.valueOf(manager_port_int);
+                System.out.println("manager_port:"+manager_port);
 
                 String response = this.handleManagerReauest(manager_keychain, board_name, manager_ip, manager_port);
+                System.out.println(response);
 
                 output.write(response);
 
@@ -197,17 +225,19 @@ public class ServerController extends Thread {
             // Output Stream
             OutputStreamWriter out = new OutputStreamWriter(clientSocket.getOutputStream(), StandardCharsets.UTF_8);
             BufferedWriter output = new BufferedWriter(out);
-
+            System.out.println("clientMessage");
             String clientMessage = input.readLine();//从client传过来的请求
+            System.out.println(clientMessage);
 
             if(clientMessage != null){
                 String board_name = clientMessage;
                 ArrayList response_list = this.handleClientRequest(board_name);
                 String manager_ip = (String) response_list.get(0);
                 String manager_port = (String) response_list.get(1);
-                String managerMessage = manager_ip + "#+" + manager_port; //传过去的字符串
+                String managerMessage = manager_ip + "###" + manager_port; //传过去的字符串
 
                 output.write(managerMessage);
+                System.out.println("sent");
 
                 output.newLine();
                 output.flush();

@@ -47,29 +47,28 @@ public class ServerRMIService {
     }
 
     public void saveBoard(String board_id){
-        //ServerRMIDao.
-
+        serverRMIDao.writeBoard(board_id);
     }
 
 
     public void loadBoard(String board_id){
-
+        serverRMIDao.readBoard(board_id);
         }
 
 
-    public void saveAll(){
+//    public void saveAll(){
+//        serverRMIDao.readAll();
+//        }
+//
+//    public void loadAll(){
+//        serverRMIDao.writeAll();
+//        }
 
-        }
-
-    public void loadAll(){
-
-        }
-
-    public static void main(String[] args) {
-        ServerRMIService sms = new ServerRMIService();
-        sms.createNewBoard("123", "345");
-        sms.getBoard("123", "345");
-
-
-    }
+//    public static void main(String[] args) {
+//        ServerRMIService sms = new ServerRMIService();
+//        sms.createNewBoard("123", "345");
+//        sms.getBoard("123", "345");
+//
+//
+//    }
 }
