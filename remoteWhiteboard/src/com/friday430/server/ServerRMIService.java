@@ -27,9 +27,9 @@ public class ServerRMIService {
 
     public synchronized void createNewBoard(String board_id, String managerKeychain) {
         try {
-            BoardImpl boardImpl = new BoardImpl();
-            IRemoteBoard stub = (IRemoteBoard) UnicastRemoteObject.exportObject(boardImpl, 0);
-            registry.bind(board_id + managerKeychain, stub);
+//            BoardImpl boardImpl = new BoardImpl();
+//            IRemoteBoard stub = (IRemoteBoard) UnicastRemoteObject.exportObject(boardImpl, 0);
+//            registry.bind(board_id + managerKeychain, stub);
             System.out.println("White Board server is ready!");
         } catch (Exception var3) {
             var3.printStackTrace();

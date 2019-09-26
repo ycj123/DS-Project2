@@ -10,12 +10,9 @@ import java.util.HashMap;
 public class ServerManagerDao {
     private static ServerManagerDao instance = null;
 
-    ServerManagerDao() {
+    private ServerManagerDao() {
 
     }
-
-    ;
-    private static String fileName;
 
     public static synchronized ServerManagerDao getInstance() {
         if (instance == null) {

@@ -40,7 +40,7 @@ public class ServerRMIDao {
     }
 
 
-        //write a board according to board_id
+    //write a board according to board_id
     public void writeBoard(String board_id){
         try {
             //根据board_id在哈希表中寻找fileName
@@ -61,8 +61,8 @@ public class ServerRMIDao {
 }
 
 //    public ServerRMIDao readAll(){
-//
 //    }
+
 //    public void writeAll(){
 //
 //    }
