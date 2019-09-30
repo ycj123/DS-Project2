@@ -1,5 +1,6 @@
 package com.friday430.server.whiteboard.tools;
 
+import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -52,6 +53,10 @@ public class TEllipse extends Tool {
        ellipse.setFill(Color.TRANSPARENT);
        ellipse.setStroke(Properties.getForeColor());
        ellipse.setStrokeWidth(Properties.getWidth());
+       EventHandler<MouseEvent> p = shapeOnMousePressedEventHandler();
+       EventHandler<MouseEvent> d = shapeOnMouseDraggedEventHandler();
+       ellipse.setOnMousePressed(p);
+       ellipse.setOnMouseDragged(d);
        getCanvas().addShape(ellipse);
    }
 

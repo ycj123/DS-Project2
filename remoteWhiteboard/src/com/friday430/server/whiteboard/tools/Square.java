@@ -1,5 +1,6 @@
 package com.friday430.server.whiteboard.tools;
 
+import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -35,6 +36,10 @@ public class Square extends Tool {
        square.setFill(Color.TRANSPARENT);
        square.setStroke(Properties.getForeColor());
        square.setStrokeWidth(Properties.getWidth());
+       EventHandler<MouseEvent> p = shapeOnMousePressedEventHandler();
+       EventHandler<MouseEvent> d = shapeOnMouseDraggedEventHandler();
+       square.setOnMousePressed(p);
+       square.setOnMouseDragged(d);
        getCanvas().addShape(square);
    }
 

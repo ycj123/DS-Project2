@@ -1,5 +1,6 @@
 package com.friday430.server.whiteboard.tools;
 
+import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.StrokeLineCap;
@@ -36,6 +37,10 @@ public class TLine extends Tool {
 	// End the line and add it to the Canvas.
        line.setEndX(x);
        line.setEndY(y);
+       EventHandler<MouseEvent> p = shapeOnMousePressedEventHandler();
+       EventHandler<MouseEvent> d = shapeOnMouseDraggedEventHandler();
+       line.setOnMousePressed(p);
+       line.setOnMouseDragged(d);
        getCanvas().addShape(line);
    }
 

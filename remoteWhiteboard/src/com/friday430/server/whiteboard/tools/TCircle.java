@@ -1,5 +1,6 @@
 package com.friday430.server.whiteboard.tools;
 
+import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -48,6 +49,10 @@ public class TCircle extends Tool {
        circle.setFill(Color.TRANSPARENT);
        circle.setStroke(Properties.getForeColor());
        circle.setStrokeWidth(Properties.getWidth());
+       EventHandler<MouseEvent> p = shapeOnMousePressedEventHandler();
+       EventHandler<MouseEvent> d = shapeOnMouseDraggedEventHandler();
+       circle.setOnMousePressed(p);
+       circle.setOnMouseDragged(d);
        getCanvas().addShape(circle);
    }
 
