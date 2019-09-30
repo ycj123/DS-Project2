@@ -2,7 +2,9 @@ package com.friday430.server.whiteboard.tools;
 
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
+import javafx.scene.shape.Shape;
 import javafx.scene.input.MouseEvent;
+import java.util.function.Consumer;
 
 import com.friday430.server.whiteboard.Canvas;
 
@@ -12,6 +14,8 @@ abstract class Tool implements EventHandler<MouseEvent> {
    Tool tool;
    private Mover mover;
    private boolean primaryClick;
+   double orgSceneX, orgSceneY;
+   double orgTranslateX, orgTranslateY;
 
    /**
     * Create a Tool. This should be implemented further by subclasses.
@@ -154,4 +158,27 @@ abstract class Tool implements EventHandler<MouseEvent> {
            onRightMouseReleased(e);
        }
    }
+   EventHandler<MouseEvent> shapeOnMousePressedEventHandler() {
+//    EventHandler<MouseEvent> OnMousePressedEventHandler =
+       return t -> {
+                orgSceneX = t.getSceneX();
+                orgSceneY = t.getSceneY();
+                orgTranslateX = ((Shape)(t.getSource())).getTranslateX();
+                orgTranslateY = ((Shape)(t.getSource())).getTranslateY();
+            };
+//    return OnMousePressedEventHandler;
+   }
+   
+   EventHandler<MouseEvent> shapeOnMouseDraggedEventHandler() {
+       return t -> {
+           double offsetX = t.getSceneX() - orgSceneX;
+           double offsetY = t.getSceneY() - orgSceneY;
+           double newTranslateX = orgTranslateX + offsetX;
+           double newTranslateY = orgTranslateY + offsetY;
+
+           ((Shape)(t.getSource())).setTranslateX(newTranslateX);
+           ((Shape)(t.getSource())).setTranslateY(newTranslateY);
+       };
+   }
+
 }

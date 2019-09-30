@@ -1,5 +1,6 @@
 package com.friday430.server.whiteboard.tools;
 
+import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -34,6 +35,10 @@ public class TRectangle extends Tool {
        rectangle.setFill(Color.TRANSPARENT);
        rectangle.setStroke(Properties.getForeColor());
        rectangle.setStrokeWidth(Properties.getWidth());
+       EventHandler<MouseEvent> p = shapeOnMousePressedEventHandler();
+       EventHandler<MouseEvent> d = shapeOnMouseDraggedEventHandler();
+       rectangle.setOnMousePressed(p);
+       rectangle.setOnMouseDragged(d);
        getCanvas().addShape(rectangle);
    }
 
@@ -49,4 +54,6 @@ public class TRectangle extends Tool {
        // End the line (usually this makes a dot if there is no drag).
        endRectangle(e.getX(), e.getY());
    }
+
+
 }

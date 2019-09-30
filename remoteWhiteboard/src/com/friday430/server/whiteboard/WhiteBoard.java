@@ -20,13 +20,12 @@ import java.rmi.RemoteException;
 /**
 * WhiteBoard
 */
-public class WhiteBoard extends BorderPane {
+class WhiteBoard extends BorderPane {
 
    private Canvas canvas;
 	private  Pen pen;
-	private ColorPanel colorPanel;
 
-	public WhiteBoard() {
+	WhiteBoard() {
        canvas = new Canvas();
        pen = new Pen(canvas);
 		pen.setTool(pen);
@@ -45,7 +44,7 @@ public class WhiteBoard extends BorderPane {
 		left.setBackground(new Background(new BackgroundFill(Defaults.PANE_COLOR, null, null)));
 		left.setAlignment(Pos.CENTER);
 		left.setSpacing(10);
-		colorPanel = new ColorPanel();
+	   ColorPanel colorPanel = new ColorPanel();
        left.getChildren().add(colorPanel.getColorPanel());
 		left.getChildren().add(tp);
 		left.getChildren().add(separator);
