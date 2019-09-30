@@ -3,3 +3,4 @@
 remoteWhiteborad/.idea/*
 remoteWhiteboard/__pycache__/*
 .DS_Store
+remoteWhiteboard/out/*
