@@ -4,9 +4,7 @@ import com.friday430.server.whiteboard.properties.Defaults;
 import com.friday430.server.whiteboard.tools.*;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -17,7 +15,6 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-import java.awt.*;
 
 /**
 * Panel shows all the optional tools.
@@ -33,6 +30,7 @@ class ToolsPanel extends VBox {
    private Button rectAngleBtn;
    private Button ellipseBtn;
    private Button clearBtn;
+   private Button arrowBtn;
 //    private Button triAngleBtn;
 
    private Pen tools;
@@ -54,6 +52,7 @@ class ToolsPanel extends VBox {
        rectAngleBtn = new Button();
        ellipseBtn = new Button();
        clearBtn = new Button();
+       arrowBtn = new Button();
 //        triAngleBtn = new Button();
 
        String PEN_ICON = "./Icons/pen.png";
@@ -74,6 +73,8 @@ class ToolsPanel extends VBox {
        createBtn(rectAngleBtn, RECTANGLE_ICON);
        String CLEAR_ICON = "./Icons/clear.png";
        createBtn(clearBtn, CLEAR_ICON);
+       String ARROW_ICON = "./Icons/arrow.png";
+       createBtn(arrowBtn, ARROW_ICON);
 //        createBtn(triAngleBtn, TRIANGLE_ICON);
        setupButtons();
 
@@ -138,6 +139,11 @@ class ToolsPanel extends VBox {
            // canvas = new Canvas();
            setActive(clearBtn);
        });
+       arrowBtn.setOnAction(arg0 -> {
+           tools.setTool(new Arrow(canvas));
+        // canvas = new Canvas();
+        setActive(arrowBtn);
+    });
        //Add text button
 //        textBtn.setOnAction(arg0 -> {
 //            TextInputDialog dialog = new TextInputDialog("");
@@ -177,5 +183,10 @@ class ToolsPanel extends VBox {
            }
        }
    }
+
+   public Pen getTool() {
+       return tools;
+   }
+
 
 }

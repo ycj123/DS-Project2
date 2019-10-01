@@ -159,14 +159,12 @@ abstract class Tool implements EventHandler<MouseEvent> {
        }
    }
    EventHandler<MouseEvent> shapeOnMousePressedEventHandler() {
-//    EventHandler<MouseEvent> OnMousePressedEventHandler =
        return t -> {
                 orgSceneX = t.getSceneX();
                 orgSceneY = t.getSceneY();
                 orgTranslateX = ((Shape)(t.getSource())).getTranslateX();
                 orgTranslateY = ((Shape)(t.getSource())).getTranslateY();
             };
-//    return OnMousePressedEventHandler;
    }
    
    EventHandler<MouseEvent> shapeOnMouseDraggedEventHandler() {
