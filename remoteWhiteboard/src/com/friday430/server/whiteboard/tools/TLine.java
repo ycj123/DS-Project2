@@ -21,6 +21,7 @@ public class TLine extends Tool {
     */
    public TLine(Canvas canvas) {
 	    super(canvas);
+//	    tool = new TLine(canvas);
    }
 
    private void startLine(double x, double y) {
