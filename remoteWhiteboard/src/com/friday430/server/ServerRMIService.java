@@ -27,23 +27,24 @@ public class ServerRMIService {
 
     public synchronized void createNewBoard(String board_id, String managerKeychain) {
         try {
-//            BoardImpl boardImpl = new BoardImpl();
-//            IRemoteBoard stub = (IRemoteBoard) UnicastRemoteObject.exportObject(boardImpl, 0);
-//            registry.bind(board_id + managerKeychain, stub);
+            RmiObject rmiObject = new RmiObject();
+            IRemoteBoard stub = (IRemoteBoard) UnicastRemoteObject.exportObject(rmiObject, 0);
+            registry.bind(board_id + managerKeychain, stub);
             System.out.println("White Board server is ready!");
         } catch (Exception var3) {
             var3.printStackTrace();
         }
     }
 
-    public synchronized void getBoard(String board_id, String managerKeychain){
+    public synchronized IRemoteBoard getBoard(String board_id, String managerKeychain){
+        IRemoteBoard board = null;
         try{
             registry = LocateRegistry.getRegistry("localhost");
-            IRemoteBoard board = (IRemoteBoard) registry.lookup(board_id + managerKeychain);
-            board.geta();
+            board = (IRemoteBoard) registry.lookup(board_id + managerKeychain);
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
         }
+        return board;
     }
 
     public void saveBoard(String board_id){
