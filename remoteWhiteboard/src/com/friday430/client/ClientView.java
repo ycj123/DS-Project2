@@ -1,19 +1,23 @@
 package com.friday430.client;
 
 import com.friday430.client.whiteboard.TempPane;
+import com.friday430.client.whiteboard.WhiteBoard;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class ClientView extends Application {
 
-    private BorderPane temp_pane;
+    private WhiteBoard temp_pane;
 
     public ClientView(){
-        temp_pane = new TempPane();
+        temp_pane = new WhiteBoard();
     }
 
     @Override
@@ -28,12 +32,20 @@ public class ClientView extends Application {
         primaryStage.centerOnScreen();
     }
 
-    private void update_canvas(){
-
+    public void update_canvas(Image image){
+        this.temp_pane.setCanvas(image);
     }
 
-    private void update_chat(){
+    public void update_chat(ArrayList<String[]> chat_history){
+        this.temp_pane.setTa(chat_history);
+    }
 
+    public Image get_canvas(){
+        return this.temp_pane.getCanvas();
+    }
+
+    public ArrayList<String[]> get_chat() {
+        return this.temp_pane.getTa();
     }
 
     public static void main(String[] args) {

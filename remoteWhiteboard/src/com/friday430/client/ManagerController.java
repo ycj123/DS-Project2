@@ -7,32 +7,36 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 class ManagerController {
-    private static String manager_keychain;
 
     private static int hostPORT = 4444;
     public static String host_ip = "localhost";
     private static String sendData;
-    private static String board_name = "asdasd";
+    private static String board_name = "";
+    private static String manager_keychain;
 
 //    private ClientView clientView;
 
 
-    public ManagerController()  {
+    public ManagerController(String input_board_name, String server_ip, String server_port)  {
 //
 //        private ClientView clientView =
         //需在视窗里生成board_name
-        manager_keychain = this.initManagerKeychain();
+        host_ip = server_ip;
+        hostPORT = Integer.parseInt(server_port);
+        board_name = input_board_name;
+        manager_keychain = initManagerKeychain();
         Thread1 m1 = new Thread1("client");
         m1.start();
         System.out.println("waiting for users");
-        Thread2 m2 = new Thread2("server",manager_keychain);
+        Thread2 m2 = new Thread2("server",manager_keychain, board_name);
         m2.start();
     }
 
-    public static String initManagerKeychain(){
+    private static String initManagerKeychain(){
         //对每一个manager生成一个manager_keychian
-        String manager_keychain = "asdadx";
-        return manager_keychain;
+        int random = (int)(Math.random() * 500000 + 1);
+        int salt = (int)(Math.random() * 5000 + 1);
+        return Integer.toString(random + salt);
     }
 
     //请求创建管理员面板
@@ -45,16 +49,15 @@ class ManagerController {
             BufferedWriter output = new BufferedWriter(out);
             String str = toclientPORT+"";
             InetAddress localip = socket.getInetAddress();
-            String manager_ip = String.valueOf(localip);
-            String sendData =manager_keychain+"###"+board_name+"###"+str+"###"+localip;
+            String manager_ip = localip.getHostAddress();
+            String sendData =manager_keychain+"###"+board_name+"###"+str+"###"+manager_ip;
             output.write(sendData);
             output.newLine();
             System.out.println("Data sent to Server--> " + sendData);
             output.flush();
             InputStreamReader in = new InputStreamReader(socket.getInputStream(), "UTF-8");
             BufferedReader input = new BufferedReader(in);
-
-
+            System.out.println(input.readLine());
         }
         catch (NoRouteToHostException e) {
             System.out.println("Can't assign requested address (Address not available)!");
@@ -74,10 +77,11 @@ class ManagerController {
     }
 
     public static String handleClientRequest(String request){
+        System.out.println(request);
         String[] data = request.split("###");
         String m_keychain = data[0];
         String name = data[1];
-        if (name == board_name){
+        if (name.equals(board_name)){
             return m_keychain;
         }else{return null;}
 
@@ -126,20 +130,22 @@ class Thread2 extends Thread {
     private String name2;
     private ServerSocket clientSocket = null;
     private String keychain;
+    private String board_name;
     private static String host_ip = "localhost";
     private static int hostPORT = 5555;
     private static int toclientPORT = 3758;
 
 
 
-    public Thread2(String name,String manager_keychain) {
+    public Thread2(String name,String manager_keychain, String board_name) {
         this.keychain = manager_keychain;
         this.name2 = name;
+        this.board_name = board_name;
     }
 
     public void run() {
         //视窗调用MessagetoServerRequest()函数
-        ManagerController.ManagertoServerRequest(keychain,toclientPORT,keychain );        //处理与server端的交互
+        ManagerController.ManagertoServerRequest(board_name,toclientPORT,keychain);        //处理与server端的交互
 
     }
 }

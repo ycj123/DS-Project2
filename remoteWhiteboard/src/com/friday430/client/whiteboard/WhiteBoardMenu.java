@@ -95,4 +95,17 @@ class WhiteBoardMenu extends MenuBar {
 		}
 	}
 
+	public void loadFromImage(Image image) {
+		BackgroundImage myBI = new BackgroundImage(image,
+				BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+				BackgroundSize.DEFAULT);
+		canvas.setBackground(new Background(myBI));
+	}
+
+	public Image saveToImage() {
+		fileChooser.setTitle("Save");
+		Image img = canvas.snapshot(new SnapshotParameters(), null);
+		return img;
+	}
+
 }

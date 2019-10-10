@@ -1,13 +1,10 @@
 package com.friday430.client;
 
-import java.io.IOException;
-import java.util.Scanner;
-
-public class Client {
+public class Client_tmp {
     public static void main(String[] args){
 
         if (args.length == 0){
-            ManagerController mc = new ManagerController("default_board", "127.0.0.1", "4444");
+            ClientController cc = new ClientController("default_board", "127.0.0.1", "5555");
         }
         if (args.length == 2) {
             if (args[0].equals("client")) {

@@ -1,23 +1,36 @@
 package com.friday430.client;
 
+import com.friday430.remote.IRemoteBoard;
+
 import java.io.*;
 import java.net.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.Timer;
+import java.util.TimerTask;
 
 class ClientController{
     private static String host_ip = "localhost" ;//与连的网有关
     private static String manager_ip = "localhost";//与连的网有关
     private static int managerPORT = 3758;
-    private static int serverPORT= 5555;
-    //    private ClientView clientView;
+    private static int serverPORT = 5555;
+
+    private String rmiServerIP;
+    private String rmiServerPort;
     private String board_name;
 
-    public ClientController(){
+    private ClientView clientView;
+    private IRemoteBoard rmiObject = null;
+
+    public ClientController(String board_name, String server_ip, String server_port){
 //        private ClientView clientView = new ClientView();
         //视窗调用sendMessagetoServer()函数
-        board_name = "asdasd";
+        host_ip = server_ip;
+        serverPORT = Integer.parseInt(server_port);
+        this.board_name = board_name;
         this.sendMessagetoServer(board_name, host_ip,serverPORT);
     }
 
@@ -55,21 +68,23 @@ class ClientController{
     }
 
     public void handleServerResponse(String serverResponse) {
-            String[] request = serverResponse.split("###");
-            String board_id = request[0];
-            String manager_IP = request[1];
-            String managerPORT = request[2];
-            System.out.println("received");
+        String[] request = serverResponse.split("###");
+        //String board_id = request[0];
+        String manager_IP = request[0];
+        String managerPORT = request[1];
+        System.out.println("received");
 
-            int toManagerPORT = Integer.parseInt(managerPORT);
-            this.askPermission(manager_ip, toManagerPORT, board_name);
+        int toManagerPORT = Integer.parseInt(managerPORT);
+
+        System.out.println(manager_IP + " "  + toManagerPORT + " " + board_name);
+        this.askPermission(manager_IP, toManagerPORT, board_name);
     }
 
     //给manager发请求
     public String askPermission(String manager_ip, int toManagerPORT,String board_name){
-        try(Socket socket = new Socket(manager_ip, toManagerPORT);)
+        try
         {
-
+            Socket socket = new Socket(manager_ip, toManagerPORT);
 
             // Output Stream
             OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream(),"UTF-8");
@@ -85,21 +100,43 @@ class ClientController{
             String message = input.readLine();
             return message;
 
+        }catch (ConnectException e) {
+            System.out.println("Board manager offline.");
         }catch (IOException e) {
             e.printStackTrace();
-        }return null;
+        }
+        return null;
     }
 
-//    public void askForBoard(String board_id,String key_chain,int toManagerPORT) throws IOException {
-//        try {
-//            Socket socket = new Socket(manager_ip, toManagerPORT);
-//            OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
-//            BufferedWriter output = new BufferedWriter(out);
-//            String identity_data = board_id+"###"+key_chain;
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public IRemoteBoard askForBoard(String board_id, String key_chain) {
+        try {
+            String identity_data = board_id + "###" + key_chain;
+            Registry registry = LocateRegistry.getRegistry(this.rmiServerIP, Integer.parseInt(this.rmiServerPort));
+            rmiObject = (IRemoteBoard) registry.lookup(identity_data);
+
+            this.clientView = new ClientView();
+            Timer timer = new Timer();
+            TimerTask upload = new TimerTask() {
+                @Override
+                public void run() {
+                    rmiObject.setImage(clientView.get_canvas());
+                    rmiObject.setChat(clientView.get_chat());
+                }
+            };
+            TimerTask download = new TimerTask() {
+                @Override
+                public void run() {
+                    clientView.update_canvas(rmiObject.getImage());
+                    clientView.update_chat(rmiObject.getChat());
+                }
+            };
+
+            timer.schedule(upload, 500, 200);
+            timer.schedule(download, 300, 1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rmiObject;
+    }
 }
 
