@@ -15,6 +15,9 @@ public class Pen extends Tool {
 
    Line line;
 
+   protected double sX, sY, red, green, blue, width;
+
+
    /**
     * Create a Pen tool.
     */
@@ -31,12 +34,19 @@ public class Pen extends Tool {
        line.setStrokeWidth(Properties.getWidth());
        line.setStrokeLineCap(StrokeLineCap.ROUND);
        line.setStrokeLineJoin(StrokeLineJoin.BEVEL);
+       this.sX = x;
+       this.sY = y;
+       this.red = Properties.getForeColor().getRed();
+       this.blue = Properties.getForeColor().getBlue();
+       this.green = Properties.getForeColor().getGreen();
+       this.width = Properties.getWidth();
    }
 
    protected void endLine(double x, double y) {
        // End the line and add it to the Canvas.
        line.setEndX(x);
        line.setEndY(y);
+       getCanvas().updateShapeRMI(0.0, sX, sY, x, y, red, green, blue, width);
        getCanvas().addShape(line);
    }
 
@@ -50,9 +60,6 @@ public class Pen extends Tool {
    public void onMouseDrag(MouseEvent e) {
        // End the line and start a new one.
        endLine(e.getX(), e.getY());
-       System.out.println(e.getX());
-       System.out.println(e.getY());
-       System.out.println("~~~");
        startLine(e.getX(), e.getY());
    }
 

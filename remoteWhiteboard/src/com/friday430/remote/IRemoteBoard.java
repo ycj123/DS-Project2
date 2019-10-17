@@ -20,7 +20,7 @@ public interface IRemoteBoard extends Remote {
 
     Image getImage();
 
-    void updateCanvas_object(HashMap<String, Integer> new_object);
+    void updateCanvas_object(HashMap<String, Double> new_object);
 
-    ArrayList<HashMap<String, Integer>> getCanvas_object(int start_index);
+    ArrayList<HashMap<String, Double>> getCanvas_object(int start_index);
 }

@@ -57,6 +57,7 @@ public class TEllipse extends Tool {
        EventHandler<MouseEvent> d = shapeOnMouseDraggedEventHandler();
        ellipse.setOnMousePressed(p);
        ellipse.setOnMouseDragged(d);
+       getCanvas().updateShapeRMI(2.0, sX, sY, eX, eY, Properties.getForeColor().getRed(), Properties.getForeColor().getGreen(), Properties.getForeColor().getBlue(), Properties.getWidth());
        getCanvas().addShape(ellipse);
    }
 

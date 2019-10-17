@@ -21,10 +21,11 @@ public class Canvas extends Pane implements PropertiesListener {
    private List<Shape> erase;
    private double locationX = 0.0;
    private double locationY = 0.0;
-   //private WhiteBoard whiteBoard = null;
 
-   public Canvas() {
-       //whiteBoard = WhiteBoard.getInstance(null);
+   private WhiteBoard whiteBoard = null;
+
+   public Canvas(WhiteBoard whiteBoard) {
+       this.whiteBoard = whiteBoard;
        erase = new LinkedList<Shape>();
        Properties.addListener(this);
    }
@@ -39,17 +40,22 @@ public class Canvas extends Pane implements PropertiesListener {
 		    color, new CornerRadii(0), new Insets(0))));
    }
 
+   public void updateShapeRMI(double shape, double start_x, double start_y, double end_x, double end_y,
+                              double red, double green, double blue, double width){
+       HashMap<String, Double> shape_hash = new HashMap<>();
+       shape_hash.put("shape", shape);
+       shape_hash.put("start_x", start_x);
+       shape_hash.put("start_y", start_y);
+       shape_hash.put("end_x", end_x);
+       shape_hash.put("end_y", end_y);
+       shape_hash.put("red", red);
+       shape_hash.put("green", green);
+       shape_hash.put("blue", blue);
+       shape_hash.put("width", width);
+       this.whiteBoard.updateCurrentShape(shape_hash);
+   }
+
    public void addShape(Shape s) {
-       try {
-           //HashMap<String, Integer> new_object =
-           //this.whiteBoard.on_canvas_update();
-           //System.out.println(s);
-           FileOutputStream f = new FileOutputStream(new File("myObjects.txt"));
-           ObjectOutputStream o = new ObjectOutputStream(f);
-           o.writeObject(s);
-       }catch (Exception e){
-           e.printStackTrace();
-       }
        getChildren().add(s);
    }
 

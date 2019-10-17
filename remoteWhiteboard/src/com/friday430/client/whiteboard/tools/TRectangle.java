@@ -39,6 +39,7 @@ public class TRectangle extends Tool {
        EventHandler<MouseEvent> d = shapeOnMouseDraggedEventHandler();
        rectangle.setOnMousePressed(p);
        rectangle.setOnMouseDragged(d);
+       getCanvas().updateShapeRMI(3.0, sX, sY, x, y, Properties.getForeColor().getRed(), Properties.getForeColor().getGreen(), Properties.getForeColor().getBlue(), Properties.getWidth());
        getCanvas().addShape(rectangle);
    }
 

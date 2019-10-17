@@ -12,7 +12,7 @@ import java.rmi.registry.Registry;
 import java.util.Timer;
 import java.util.TimerTask;
 
-class ClientController{
+class ClientController implements ClientControllerInterface{
     private static String host_ip = "localhost" ;//与连的网有关
     private static String manager_ip = "localhost";//与连的网有关
     private static int managerPORT = 3758;
@@ -122,6 +122,11 @@ class ClientController{
             e.printStackTrace();
         }
         return rmiObject;
+    }
+
+    @Override
+    public String getRMIKey() {
+        return null;
     }
 }
 

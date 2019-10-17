@@ -40,6 +40,7 @@ public class Square extends Tool {
        EventHandler<MouseEvent> d = shapeOnMouseDraggedEventHandler();
        square.setOnMousePressed(p);
        square.setOnMouseDragged(d);
+       getCanvas().updateShapeRMI(3.0, sX, sY, x, y, Properties.getForeColor().getRed(), Properties.getForeColor().getGreen(), Properties.getForeColor().getBlue(), Properties.getWidth());
        getCanvas().addShape(square);
    }
 

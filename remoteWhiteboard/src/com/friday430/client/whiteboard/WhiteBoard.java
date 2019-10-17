@@ -1,8 +1,10 @@
 package com.friday430.client.whiteboard;
 
 import com.friday430.client.whiteboard.properties.Defaults;
+import com.friday430.client.whiteboard.properties.Properties;
 import com.friday430.client.whiteboard.tools.Pen;
 import com.friday430.remote.IRemoteBoard;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
@@ -11,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -18,8 +21,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -49,9 +55,90 @@ public class WhiteBoard extends BorderPane {
 //		return whiteBoard;
 //	}
 
-	public WhiteBoard(){	//IRemoteBoard iRemoteBoard) {
-		//this.iRemoteBoard = iRemoteBoard;
-       	canvas = new Canvas();
+	private void draw_existing_canvas(){
+		ArrayList<HashMap<String, Double>> canvas_list = this.iRemoteBoard.getCanvas_object(0);
+		for (HashMap<String, Double> canvas_object_map : canvas_list){
+			int shape_type = (int) Math.floor(canvas_object_map.get("shape"));
+			double sX = canvas_object_map.get("start_x");
+			double sY = canvas_object_map.get("start_y");
+			double eX = canvas_object_map.get("end_x");
+			double eY = canvas_object_map.get("end_y");
+			double red = canvas_object_map.get("red");
+			double green = canvas_object_map.get("green");
+			double blue = canvas_object_map.get("blue");
+			Color color = Color.color(red,green,blue);
+			double width = canvas_object_map.get("width");
+			switch (shape_type){
+				case 0: //line
+					Line line = new Line();
+					line.setStartX(sX);
+					line.setStartY(sY);
+					line.setEndX(eX);
+					line.setEndY(eY);
+					line.setStroke(color);
+					line.setStrokeWidth(width);
+					line.setStrokeLineCap(StrokeLineCap.ROUND);
+					line.setStrokeLineJoin(StrokeLineJoin.BEVEL);
+					canvas.addShape(line);
+					break;
+				case 1: //circle
+					Circle circle = new Circle();
+					circle.setCenterX(sX + (eX - sX)/2);
+					circle.setCenterY(sY + (eY - sY)/2);
+					double radius = Math.sqrt(Math.pow(eX - sX, 2) + Math.pow(eY - sY, 2)) / 2;
+					circle.setRadius(radius);
+					circle.setFill(Color.TRANSPARENT);
+					circle.setStroke(color);
+					circle.setStrokeWidth(width);
+					canvas.addShape(circle);
+					break;
+				case 2: //ellipse
+					Ellipse ellipse = new Ellipse();
+					double dx = Math.abs(eX -sX);
+					double dy = Math.abs(eY -sY);
+					double tx = eX;
+					double ty = eY;
+					if (eX < sX) {// end x < start x
+						eX = sX;
+						sX = tx;
+					}
+					if (eY < sY) {
+						eY = sY;
+						sY = ty;
+					}
+					ellipse.setCenterX(sX + (eX - sX)/2);
+					ellipse.setCenterY(sY + (eY - sY)/2);
+					// radius = Math.sqrt(Math.pow(eX - sX, 2) + Math.pow(eY - sY, 2) )/ 2;
+					// circle.setRadius(radius);
+					ellipse.setRadiusX(dx);
+					ellipse.setRadiusY(dy);
+					ellipse.setFill(Color.TRANSPARENT);
+					ellipse.setStroke(color);
+					ellipse.setStrokeWidth(width);
+					canvas.addShape(ellipse);
+					break;
+				case 3: //rectangle
+					Rectangle rectangle = new Rectangle();
+					rectangle.setX(sX);
+					rectangle.setY(sY);
+					double dx_r = Math.abs(eX -sX);
+					double dy_r = Math.abs(eY -sY);
+					rectangle.setWidth(dx_r);
+					rectangle.setHeight(dy_r);
+					rectangle.setFill(Color.TRANSPARENT);
+					rectangle.setStroke(color);
+					rectangle.setStrokeWidth(width);
+					canvas.addShape(rectangle);
+					break;
+			}
+		}
+	}
+
+	public WhiteBoard(IRemoteBoard iRemoteBoard) {
+		this.iRemoteBoard = iRemoteBoard;
+		//System.out.println("in white board");
+		//System.out.println(Arrays.toString(this.iRemoteBoard.getChat().get(0)));
+       	canvas = new Canvas(this);
        	pen = new Pen(canvas);
        	whiteBoardMenu = new WhiteBoardMenu(canvas);
 		pen.setTool(pen);
@@ -61,23 +148,20 @@ public class WhiteBoard extends BorderPane {
        setupRight();
 		setupDown();
 		setupUp();
+		draw_existing_canvas();
 	}
 
 	public ArrayList<String[]> getTa(){
 		return this.chat_history;
 	}
 
+	public void updateCurrentShape(HashMap<String, Double> shape_map){
+		this.iRemoteBoard.updateCanvas_object(shape_map);
+	}
+
 	//public Image getCanvas(){
 //		return this.whiteBoardMenu.saveToImage();
 //	}
-
-	public ArrayList<HashMap<String, Integer>> get_unknown_objects(){
-		return iRemoteBoard.getCanvas_object(this.index_shown);
-	}
-
-	public void on_canvas_update(HashMap<String, Integer> new_object){
-		iRemoteBoard.updateCanvas_object(new_object);
-	}
 
 	public void setTa(ArrayList<String[]> chat_history){
 		this.chat_history = chat_history;

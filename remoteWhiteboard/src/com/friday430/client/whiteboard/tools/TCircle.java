@@ -53,6 +53,7 @@ public class TCircle extends Tool {
        EventHandler<MouseEvent> d = shapeOnMouseDraggedEventHandler();
        circle.setOnMousePressed(p);
        circle.setOnMouseDragged(d);
+       getCanvas().updateShapeRMI(1.0, sX, sY, eX, eY, Properties.getForeColor().getRed(), Properties.getForeColor().getGreen(), Properties.getForeColor().getBlue(), Properties.getWidth());
        getCanvas().addShape(circle);
    }
 

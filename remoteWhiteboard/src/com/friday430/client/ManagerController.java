@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-class ManagerController {
+class ManagerController implements ClientControllerInterface{
 
     private static int hostPORT = 4444;
     public static String host_ip = "localhost";
@@ -85,6 +85,11 @@ class ManagerController {
             return m_keychain;
         }else{return null;}
 
+    }
+
+    @Override
+    public String getRMIKey() {
+        return null;
     }
 }
 

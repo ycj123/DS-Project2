@@ -16,6 +16,8 @@ public class TLine extends Tool {
 
    private Line line;
 
+    private double sX, sY, red, green, blue, width;
+
    /**
     * Create a Line tool.
     */
@@ -32,6 +34,12 @@ public class TLine extends Tool {
        line.setStrokeWidth(Properties.getWidth());
        line.setStrokeLineCap(StrokeLineCap.ROUND);
        line.setStrokeLineJoin(StrokeLineJoin.BEVEL);
+       this.sX = x;
+       this.sY = y;
+       this.red = Properties.getForeColor().getRed();
+       this.blue = Properties.getForeColor().getBlue();
+       this.green = Properties.getForeColor().getGreen();
+       this.width = Properties.getWidth();
    }
 
    private void endLine(double x, double y) {
@@ -42,6 +50,7 @@ public class TLine extends Tool {
        EventHandler<MouseEvent> d = shapeOnMouseDraggedEventHandler();
        line.setOnMousePressed(p);
        line.setOnMouseDragged(d);
+       getCanvas().updateShapeRMI(0.0, sX, sY, x, y, red, green, blue, width);
        getCanvas().addShape(line);
    }
 

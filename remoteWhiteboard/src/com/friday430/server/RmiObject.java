@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,19 +13,22 @@ public class RmiObject implements IRemoteBoard {
     private ArrayList<String[]> chat_history;
     private Image image;
 
-    private ArrayList<HashMap<String, Integer>> canvas_objects;
+    private ArrayList<HashMap<String, Double>> canvas_objects = new ArrayList<HashMap<String, Double>>();
 
-    public synchronized ArrayList<HashMap<String, Integer>> getCanvas_objects(){
+    public synchronized ArrayList<HashMap<String, Double>> getCanvas_objects(){
         return this.canvas_objects;
     }
 
-    public synchronized void updateCanvas_object(HashMap<String, Integer> new_object){
+    public synchronized void updateCanvas_object(HashMap<String, Double> new_object){
         this.canvas_objects.add(new_object);
     }
 
     @Override
-    public ArrayList<HashMap<String, Integer>> getCanvas_object(int start_index) {
-        return (ArrayList<HashMap<String, Integer>>) canvas_objects.subList(start_index, canvas_objects.size());
+    public ArrayList<HashMap<String, Double>> getCanvas_object(int start_index) {
+        List l = canvas_objects.subList(start_index, canvas_objects.size());
+
+        return new ArrayList<HashMap<String, Double>>(l);
+        //return (ArrayList<HashMap<String, Double>>)
     }
 
 
