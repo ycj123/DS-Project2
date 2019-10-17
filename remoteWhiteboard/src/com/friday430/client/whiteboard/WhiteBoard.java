@@ -2,6 +2,7 @@ package com.friday430.client.whiteboard;
 
 import com.friday430.client.whiteboard.properties.Defaults;
 import com.friday430.client.whiteboard.tools.Pen;
+import com.friday430.remote.IRemoteBoard;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
@@ -19,6 +20,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
 * WhiteBoard
@@ -29,13 +31,29 @@ public class WhiteBoard extends BorderPane {
 	private  Pen pen;
 	private WhiteBoardMenu whiteBoardMenu;
 	private TextArea ta;
+	private IRemoteBoard iRemoteBoard;
+	private int index_shown = 0;
 
 	private ArrayList<String[]> chat_history;
 
-	public WhiteBoard() {
-       canvas = new Canvas();
-       pen = new Pen(canvas);
-       whiteBoardMenu = new WhiteBoardMenu(canvas);
+
+	//private static WhiteBoard whiteBoard = null;
+
+//	public static WhiteBoard getInstance(IRemoteBoard iRemoteBoard){
+//		if (whiteBoard == null) {
+//			if (iRemoteBoard == null){
+//				System.out.println("!!!get instance whiteboard, both whiteboard and rmi null");
+//			}
+//			whiteBoard = new WhiteBoard(iRemoteBoard);
+//		}
+//		return whiteBoard;
+//	}
+
+	public WhiteBoard(){	//IRemoteBoard iRemoteBoard) {
+		//this.iRemoteBoard = iRemoteBoard;
+       	canvas = new Canvas();
+       	pen = new Pen(canvas);
+       	whiteBoardMenu = new WhiteBoardMenu(canvas);
 		pen.setTool(pen);
 
        setCenter(canvas);
@@ -49,8 +67,16 @@ public class WhiteBoard extends BorderPane {
 		return this.chat_history;
 	}
 
-	public Image getCanvas(){
-		return this.whiteBoardMenu.saveToImage();
+	//public Image getCanvas(){
+//		return this.whiteBoardMenu.saveToImage();
+//	}
+
+	public ArrayList<HashMap<String, Integer>> get_unknown_objects(){
+		return iRemoteBoard.getCanvas_object(this.index_shown);
+	}
+
+	public void on_canvas_update(HashMap<String, Integer> new_object){
+		iRemoteBoard.updateCanvas_object(new_object);
 	}
 
 	public void setTa(ArrayList<String[]> chat_history){

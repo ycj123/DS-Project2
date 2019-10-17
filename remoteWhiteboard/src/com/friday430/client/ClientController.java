@@ -114,25 +114,10 @@ class ClientController{
             Registry registry = LocateRegistry.getRegistry(this.rmiServerIP, Integer.parseInt(this.rmiServerPort));
             rmiObject = (IRemoteBoard) registry.lookup(identity_data);
 
-            this.clientView = new ClientView();
-            Timer timer = new Timer();
-            TimerTask upload = new TimerTask() {
-                @Override
-                public void run() {
-                    rmiObject.setImage(clientView.get_canvas());
-                    rmiObject.setChat(clientView.get_chat());
-                }
-            };
-            TimerTask download = new TimerTask() {
-                @Override
-                public void run() {
-                    clientView.update_canvas(rmiObject.getImage());
-                    clientView.update_chat(rmiObject.getChat());
-                }
-            };
+            //lientView.setiRemoteBoard(rmiObject);
+            ClientView.launch();
 
-            timer.schedule(upload, 500, 200);
-            timer.schedule(download, 300, 1000);
+            //this.clientView = new ClientView();
         } catch (Exception e) {
             e.printStackTrace();
         }

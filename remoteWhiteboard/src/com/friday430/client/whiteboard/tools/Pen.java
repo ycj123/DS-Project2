@@ -50,6 +50,9 @@ public class Pen extends Tool {
    public void onMouseDrag(MouseEvent e) {
        // End the line and start a new one.
        endLine(e.getX(), e.getY());
+       System.out.println(e.getX());
+       System.out.println(e.getY());
+       System.out.println("~~~");
        startLine(e.getX(), e.getY());
    }
 

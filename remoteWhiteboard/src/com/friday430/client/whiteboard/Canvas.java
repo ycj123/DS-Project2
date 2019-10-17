@@ -1,5 +1,9 @@
 package com.friday430.client.whiteboard;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,8 +21,10 @@ public class Canvas extends Pane implements PropertiesListener {
    private List<Shape> erase;
    private double locationX = 0.0;
    private double locationY = 0.0;
+   //private WhiteBoard whiteBoard = null;
 
    public Canvas() {
+       //whiteBoard = WhiteBoard.getInstance(null);
        erase = new LinkedList<Shape>();
        Properties.addListener(this);
    }
@@ -34,7 +40,17 @@ public class Canvas extends Pane implements PropertiesListener {
    }
 
    public void addShape(Shape s) {
-	    getChildren().add(s);
+       try {
+           //HashMap<String, Integer> new_object =
+           //this.whiteBoard.on_canvas_update();
+           //System.out.println(s);
+           FileOutputStream f = new FileOutputStream(new File("myObjects.txt"));
+           ObjectOutputStream o = new ObjectOutputStream(f);
+           o.writeObject(s);
+       }catch (Exception e){
+           e.printStackTrace();
+       }
+       getChildren().add(s);
    }
 
    /**
