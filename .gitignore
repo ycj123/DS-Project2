@@ -1,6 +1,0 @@
-*.log
-*.pyc
-remoteWhiteboard/__pycache__/*
-.DS_Store
-remoteWhiteboard/out/*
-remoteWhiteboard/.idea/*
