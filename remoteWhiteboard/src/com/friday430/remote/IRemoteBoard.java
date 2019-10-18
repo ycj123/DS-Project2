@@ -16,9 +16,7 @@ public interface IRemoteBoard extends Remote {
 
     ArrayList<String[]> getChat();
 
-    void setImage(Image image);
-
-    Image getImage();
+    ArrayList<HashMap<String, Double>> getCanvas_objects();
 
     void updateCanvas_object(HashMap<String, Double> new_object);
 
