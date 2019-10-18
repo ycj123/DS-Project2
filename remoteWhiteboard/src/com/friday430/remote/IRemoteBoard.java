@@ -23,4 +23,8 @@ public interface IRemoteBoard extends Remote {
     ArrayList<HashMap<String, Double>> getCanvas_object(int start_index);
 
     String getBoard_id();
+
+    String getRMI_key();
+
+    void clear_object();
 }

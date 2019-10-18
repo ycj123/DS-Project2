@@ -1,14 +1,17 @@
 package com.friday430.server;
 
+import com.friday430.remote.IRemoteBoard;
+
 import java.io.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServerRMIDao {
     private static ServerRMIDao serverRMIDao = null;
 
     private ServerRMIDao() {
     }
-
-    ;
 
     public static synchronized ServerRMIDao getInstance() {
         if (serverRMIDao == null) {
@@ -18,52 +21,61 @@ public class ServerRMIDao {
         return null;
     }
 
-    public ServerRMIDao readBoard(String board_id) {
+    public IRemoteBoard readBoard(String board_id) {
+        IRemoteBoard board = null;
         try {
-            FileInputStream fi = new FileInputStream(new File("fileName-board_id"));  //fileName-board_id的对应
+            FileInputStream fi = new FileInputStream(new File(board_id + ".board"));  //fileName-board_id的对应
             ObjectInputStream oi = new ObjectInputStream(fi);
-
-            // Read objects
-            ServerRMIDao object1 = ServerRMIDao.getInstance();
-
+            board = (IRemoteBoard)oi.readObject();
             oi.close();
             fi.close();
-            return object1;
-
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         } catch (IOException e) {
             System.out.println("Error initializing stream");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
-        return null;
+        return board;
 
     }
 
 
     //write a board according to board_id
-    public void writeBoard(String board_id){
+    public void writeBoard(IRemoteBoard board){
         try {
-            //根据board_id在哈希表中寻找fileName
-            ServerRMIDao s1 = ServerRMIDao.getInstance();
-            FileOutputStream f = new FileOutputStream(new File("fileName"));  //create a file
+            String board_id = board.getBoard_id();
+            FileOutputStream f = new FileOutputStream(new File(board_id + ".board"));  //create a file
             ObjectOutputStream o = new ObjectOutputStream(f);
-
             // Write objects to file
-            o.writeObject(s1);
-            o.close();
-            f.close();
+            o.writeObject(board);
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         } catch (IOException e) {
             System.out.println("Error initializing stream");
         }
     }
+
+    public ArrayList<IRemoteBoard> readAll() {
+        ArrayList<IRemoteBoard> list = new ArrayList<>();
+        File folder = new File("./");
+        File[] listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                if (listOfFiles[i].getName().endsWith(".board")) {
+                    String board_id = listOfFiles[i].getName().split(".board")[0];
+                    list.add(this.readBoard(board_id));
+                }
+            }
+        }
+        return list;
+    }
+
+    public void writeAll(List<IRemoteBoard> board_list){
+        for (IRemoteBoard board : board_list){
+            this.writeBoard(board);
+        }
+    }
+
 }
-
-//    public ServerRMIDao readAll(){
-//    }
-
-//    public void writeAll(){
-//
-//    }
-//}

@@ -13,15 +13,26 @@ public class RmiObject implements IRemoteBoard {
     private ArrayList<String[]> chat_history;
     private ArrayList<HashMap<String, Double>> canvas_objects;
     private String board_id;
+    private String RMI_key;
 
-    public RmiObject(String board_id) {
+    public RmiObject(String board_id, String RMI_key) {
         this.chat_history = new ArrayList<>();
         this.canvas_objects = new ArrayList<>();
         this.board_id = board_id;
+        this.RMI_key = RMI_key;
+    }
+
+    public String getRMI_key(){
+        return this.RMI_key;
     }
 
     public String getBoard_id(){
         return this.board_id;
+    }
+
+    public void clear_object() {
+        this.canvas_objects = null;
+        this.canvas_objects = new ArrayList<>();
     }
 
     public synchronized ArrayList<HashMap<String, Double>> getCanvas_objects(){
