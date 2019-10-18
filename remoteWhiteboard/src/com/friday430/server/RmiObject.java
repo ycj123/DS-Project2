@@ -12,10 +12,16 @@ import java.util.List;
 public class RmiObject implements IRemoteBoard {
     private ArrayList<String[]> chat_history;
     private ArrayList<HashMap<String, Double>> canvas_objects;
+    private String board_id;
 
-    public RmiObject() {
+    public RmiObject(String board_id) {
         this.chat_history = new ArrayList<>();
         this.canvas_objects = new ArrayList<>();
+        this.board_id = board_id;
+    }
+
+    public String getBoard_id(){
+        return this.board_id;
     }
 
     public synchronized ArrayList<HashMap<String, Double>> getCanvas_objects(){

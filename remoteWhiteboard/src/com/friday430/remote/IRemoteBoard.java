@@ -21,4 +21,6 @@ public interface IRemoteBoard extends Remote {
     void updateCanvas_object(HashMap<String, Double> new_object);
 
     ArrayList<HashMap<String, Double>> getCanvas_object(int start_index);
+
+    String getBoard_id();
 }
