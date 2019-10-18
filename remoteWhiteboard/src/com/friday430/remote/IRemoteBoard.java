@@ -27,4 +27,6 @@ public interface IRemoteBoard extends Remote {
     String getRMI_key();
 
     void clear_object();
+
+    int get_object_length();
 }
