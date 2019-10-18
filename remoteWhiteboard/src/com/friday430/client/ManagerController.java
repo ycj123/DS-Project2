@@ -16,6 +16,7 @@ class ManagerController extends Thread implements ClientControllerInterface {
     private static String manager_keychain;
     private String managerkey = "";
     private String key;
+    private String board_id;
     private int port;
 
 //    private ClientView clientView;
@@ -26,7 +27,7 @@ class ManagerController extends Thread implements ClientControllerInterface {
         host_ip = server_ip;
         this.port = Integer.parseInt(port);
         board_name = input_board_name;
-        manager_keychain = initManagerKeychain();
+        this.manager_keychain = initManagerKeychain();
         this.start();
     }
 
@@ -63,7 +64,7 @@ class ManagerController extends Thread implements ClientControllerInterface {
                 String[] message = managerkey.split("###");
                 String board_id = message[0];
                 String substr2 = message[1];
-                this.managerkey = board_id;
+                this.board_id = board_id;
                 System.out.println(substr2);
             }
         }
@@ -98,6 +99,7 @@ class ManagerController extends Thread implements ClientControllerInterface {
 
     @Override
     public String getRMIKey() {
+        this.managerkey= this.board_id+this.manager_keychain;
         return this.managerkey;
     }
 
@@ -128,7 +130,7 @@ class ManagerController extends Thread implements ClientControllerInterface {
 
         }
         if (port == hostPORT) {
-            this.ManagertoServerRequest(board_name, toclientPORT, this.managerkey);        //处理与server端的交互
+            this.ManagertoServerRequest(board_name, toclientPORT, this.manager_keychain);        //处理与server端的交互
         }
 
     }
