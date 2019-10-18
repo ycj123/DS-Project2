@@ -1,35 +1,33 @@
 package com.friday430.client;
 
+import javax.net.ServerSocketFactory;
 import java.io.*;
 import java.net.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-class ManagerController implements ClientControllerInterface{
-
+class ManagerController extends Thread implements ClientControllerInterface {
+    private static int toclientPORT = 3758;
     private static int hostPORT = 4444;
     public static String host_ip = "localhost";
     private static String sendData;
     private static String board_name = "";
     private static String manager_keychain;
+    private String managerkey ;
+    private String key;
+    private int port;
 
 //    private ClientView clientView;
 
 
-    public ManagerController(String input_board_name, String server_ip, String server_port)  {
+    public ManagerController(String input_board_name, String server_ip, int port)  {
 //
-//        private ClientView clientView =
-        //需在视窗里生成board_name
         host_ip = server_ip;
-        hostPORT = Integer.parseInt(server_port);
+        this.port = port;
         board_name = input_board_name;
         manager_keychain = initManagerKeychain();
-        Thread1 m1 = new Thread1("client");
-        m1.start();
-        System.out.println("waiting for users");
-        Thread2 m2 = new Thread2("server",manager_keychain, board_name);
-        m2.start();
+
     }
 
     private static String initManagerKeychain(){
@@ -40,7 +38,7 @@ class ManagerController implements ClientControllerInterface{
     }
 
     //请求创建管理员面板
-    public static void ManagertoServerRequest(String board_name, int toclientPORT,String manager_keychain){
+    public void ManagertoServerRequest(String board_name, int toclientPORT, String manager_keychain){
 
         try(Socket socket = new Socket(host_ip, hostPORT);)
         {
@@ -57,7 +55,17 @@ class ManagerController implements ClientControllerInterface{
             output.flush();
             InputStreamReader in = new InputStreamReader(socket.getInputStream(), "UTF-8");
             BufferedReader input = new BufferedReader(in);
-            System.out.println(input.readLine());
+            String managerkey = input.readLine();
+            String substr1 = managerkey.substring(0,4);
+            if (substr1.equals("Error")){
+                System.out.println(substr1);
+            }else{
+                String[] message = managerkey.split("###");
+                String board_id = message[0];
+                String substr2 = message[1];
+                this.managerkey = board_id;
+                System.out.println(substr2);
+            }
         }
         catch (NoRouteToHostException e) {
             System.out.println("Can't assign requested address (Address not available)!");
@@ -86,71 +94,106 @@ class ManagerController implements ClientControllerInterface{
         }else{return null;}
 
     }
+//    public String saveboard_id(){}
 
     @Override
     public String getRMIKey() {
-        return null;
-    }
-}
-
-//负责client通信
-class Thread1 extends Thread {
-    private static String name1;
-    public  int toclientPORT = 3758;
-    private String key;
-
-    public Thread1(String name) {
-        this.name1 = name;
+        return this.managerkey;
     }
 
     public void run() {
-        try {
-            ServerSocket clientSocket=new ServerSocket(toclientPORT);
-            Socket client = clientSocket.accept();
-            System.out.println("waiting for clients' requests!");
+        if (port == toclientPORT) {
+            try {
+                ServerSocket clientSocket = new ServerSocket(toclientPORT);
+                Socket client = clientSocket.accept();
+                System.out.println("waiting for clients' requests!");
 
 
-            InputStreamReader in = new InputStreamReader(client.getInputStream(), "UTF-8");
-            BufferedReader input = new BufferedReader(in);
+                InputStreamReader in = new InputStreamReader(client.getInputStream(), "UTF-8");
+                BufferedReader input = new BufferedReader(in);
 
 
-
-            String requests = input.readLine();
-            while (requests !=null){
-                key =ManagerController.handleClientRequest(requests);
-                OutputStreamWriter out = new OutputStreamWriter(client.getOutputStream(), "UTF-8");
-                BufferedWriter output = new BufferedWriter(out);
-                output.write(key);
-                output.flush();
+                String requests = input.readLine();
+                while (requests != null) {
+                    key = ManagerController.handleClientRequest(requests);
+                    OutputStreamWriter out = new OutputStreamWriter(client.getOutputStream(), "UTF-8");
+                    BufferedWriter output = new BufferedWriter(out);
+                    output.write(key);
+                    output.flush();
+                    System.out.println("waiting for users");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        }
+        if (port == hostPORT) {
+            this.ManagertoServerRequest(board_name, toclientPORT, this.managerkey);        //处理与server端的交互
         }
 
     }
 }
 
+
+
+////负责client通信
+//class Thread1 extends Thread {
+//    private static String name1;
+//
+//    private String key;
+//
+//    public Thread1(String name) {
+//        this.name1 = name;
+//    }
+//
+//    public void run() {
+//        try {
+//            ServerSocket clientSocket=new ServerSocket(toclientPORT);
+//            Socket client = clientSocket.accept();
+//            System.out.println("waiting for clients' requests!");
+//
+//
+//            InputStreamReader in = new InputStreamReader(client.getInputStream(), "UTF-8");
+//            BufferedReader input = new BufferedReader(in);
+//
+//
+//
+//            String requests = input.readLine();
+//            while (requests !=null){
+//                key =ManagerController.handleClientRequest(requests);
+//                OutputStreamWriter out = new OutputStreamWriter(client.getOutputStream(), "UTF-8");
+//                BufferedWriter output = new BufferedWriter(out);
+//                output.write(key);
+//                output.flush();
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
+//}
+//
 //负责和服务器的线程
-class Thread2 extends Thread {
-    private String name2;
-    private ServerSocket clientSocket = null;
-    private String keychain;
-    private String board_name;
-    private static String host_ip = "localhost";
-    private static int hostPORT = 5555;
-    private static int toclientPORT = 3758;
-
-
-
-    public Thread2(String name,String manager_keychain, String board_name) {
-        this.keychain = manager_keychain;
-        this.name2 = name;
-        this.board_name = board_name;
-    }
-
-    public void run() {
-        //视窗调用MessagetoServerRequest()函数
-        ManagerController.ManagertoServerRequest(board_name,toclientPORT,keychain);        //处理与server端的交互
-
-    }
-}
+//class Thread2 extends Thread {
+//    private String name2;
+//    private String keychain;
+//    private String board_name;
+//    private static String host_ip = "localhost";
+//    private static int hostPORT = 5555;
+//    private static int toclientPORT = 3758;
+//
+//
+//
+//    public Thread2(String name,String manager_keychain, String board_name) {
+//        this.keychain = manager_keychain;
+//        this.name2 = name;
+//        this.board_name = board_name;
+//    }
+//
+//    public void run() {
+//        //视窗调用MessagetoServerRequest()函数
+//
+//        ManagerController.ManagertoServerRequest(board_name,toclientPORT,keychain);        //处理与server端的交互
+//
+//    }
+//}
