@@ -1,6 +1,8 @@
 package com.friday430.server;
 
 
+import com.friday430.remote.IRemoteBoard;
+
 import javax.net.ServerSocketFactory;
 import java.io.*;
 import java.math.BigInteger;
@@ -24,7 +26,7 @@ public class ServerController extends Thread {
 
 
     private ServerManagerService serverManagerService = new ServerManagerService();
-//    private ServerRMIService serverRMIService = new ServerRMIService();
+    private ServerRMIService serverRMIService = new ServerRMIService();
 
     // class 得有构造方法！！！！！！！！！！！！！！
 //    public ServerController() throws IOException {
@@ -49,14 +51,14 @@ public class ServerController extends Thread {
                 ArrayList response_list = serverManagerService.getManager(board_id);
                 String manager_ip = (String) response_list.get(0);
                 String manager_port = (String) response_list.get(1);
-                return (manager_ip+"###"+manager_port);
+                return (manager_ip+"###"+manager_port+"###"+board_id);
 
             }
             else {
-                return ("The board does not exist!");
+                return ("Error! The board does not exist!");
             }
         }catch (NullPointerException e){
-            System.out.println("NullPointerException");
+            System.out.println("Error! NullPointerException");
         }
         return ("Error! Try again!");
     }
@@ -75,24 +77,27 @@ public class ServerController extends Thread {
                 return ("Error! Try again!");
             }
             if(board_id.length() == 32) {
-                if (serverManagerService.isBoard_id(board_id))
+                if (serverManagerService.isBoard_id(board_id)) {
+                    serverRMIService.loadBoard(board_id);
                     return ("The board had been created.");
+                }
                 else {
 //                    String[] manager = this.getManagerIPPort(clientManager).split("#+");
                     serverManagerService.addManager(board_id, manager_ip, manager_port);
                     serverManagerService.saveServerManagerDict();
-//                    serverRMIService.createNewBoard(board_id, manager_keychain);
-                    return "Create board '" + board_name + "' successfully.";
+                    if(serverRMIService.createNewBoard(board_id, manager_keychain)){
+                        return board_id + "###" + "Create board '" + board_name + "' successfully.";
+                    }
+                    else {
+                        return ("Error! Create board " + board_name + " failed.!!!");
+                    }
                 }
             }
-            System.out.println("before save managerdict");
-
-            System.out.println("after save managerdict");
 
         } catch (Exception e) {
-            return ("Create board '" + board_name + "' failed.!!!");
+            return ("Error! Create board '" + board_name + "' failed.!!!");
         }
-        return ("Create board '" + board_name + "' failed.");
+        return ("Error! Create board '" + board_name + "' failed.");
     }
 
 
@@ -116,25 +121,6 @@ public class ServerController extends Thread {
         }
         return null;
     }
-
-//    public void serverManager(int manager_port) throws IOException {
-//        ServerSocketFactory factoryManager = ServerSocketFactory.getDefault();
-//        try(ServerSocket managerServer = factoryManager.createServerSocket(manager_port)){
-//            System.out.println("Waiting for manager connection-");
-//            // wait for connection
-//            while(true)
-//            {
-//                Socket manager = managerServer.accept();
-//                manager_counter++;
-//                System.out.println("Manager "+manager_counter+": Applying for connection!");
-//                // Start a new thread for a connection
-//                Thread t = new Thread(() -> serveManager(manager));
-//                t.start();
-//            }
-//        }catch (BindException e){
-//            System.out.println("Address already in use");
-//        }
-//    }
 
 
 
