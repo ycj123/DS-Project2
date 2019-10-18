@@ -56,7 +56,12 @@ public class WhiteBoard extends BorderPane {
 //	}
 
 	private void draw_existing_canvas(){
-		ArrayList<HashMap<String, Double>> canvas_list = this.iRemoteBoard.getCanvas_object(0);
+		ArrayList<HashMap<String, Double>> canvas_list = null;
+		try {
+			canvas_list = this.iRemoteBoard.getCanvas_object(0);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		for (HashMap<String, Double> canvas_object_map : canvas_list){
 			int shape_type = (int) Math.floor(canvas_object_map.get("shape"));
 			double sX = canvas_object_map.get("start_x");
@@ -156,7 +161,11 @@ public class WhiteBoard extends BorderPane {
 	}
 
 	public void updateCurrentShape(HashMap<String, Double> shape_map){
-		this.iRemoteBoard.updateCanvas_object(shape_map);
+		try {
+			this.iRemoteBoard.updateCanvas_object(shape_map);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	//public Image getCanvas(){

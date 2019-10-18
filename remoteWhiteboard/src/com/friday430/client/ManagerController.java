@@ -8,26 +8,26 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 class ManagerController extends Thread implements ClientControllerInterface {
-    private static int toclientPORT = 3758;
+    private static int toclientPORT = 37581;
     private static int hostPORT = 4444;
     public static String host_ip = "localhost";
     private static String sendData;
     private static String board_name = "";
     private static String manager_keychain;
-    private String managerkey ;
+    private String managerkey = "";
     private String key;
     private int port;
 
 //    private ClientView clientView;
 
 
-    public ManagerController(String input_board_name, String server_ip, int port)  {
+    public ManagerController(String input_board_name, String server_ip, String port)  {
 //
         host_ip = server_ip;
-        this.port = port;
+        this.port = Integer.parseInt(port);
         board_name = input_board_name;
         manager_keychain = initManagerKeychain();
-
+        this.start();
     }
 
     private static String initManagerKeychain(){
@@ -56,9 +56,9 @@ class ManagerController extends Thread implements ClientControllerInterface {
             InputStreamReader in = new InputStreamReader(socket.getInputStream(), "UTF-8");
             BufferedReader input = new BufferedReader(in);
             String managerkey = input.readLine();
-            String substr1 = managerkey.substring(0,4);
+            String substr1 = managerkey.substring(0,5);
             if (substr1.equals("Error")){
-                System.out.println(substr1);
+                System.out.println(managerkey);
             }else{
                 String[] message = managerkey.split("###");
                 String board_id = message[0];

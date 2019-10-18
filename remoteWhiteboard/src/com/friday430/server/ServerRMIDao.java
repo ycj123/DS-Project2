@@ -16,9 +16,8 @@ public class ServerRMIDao {
     public static synchronized ServerRMIDao getInstance() {
         if (serverRMIDao == null) {
             serverRMIDao = new ServerRMIDao();
-            return serverRMIDao;
         }
-        return null;
+        return serverRMIDao;
     }
 
     public IRemoteBoard readBoard(String board_id) {

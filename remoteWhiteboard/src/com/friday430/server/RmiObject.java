@@ -4,6 +4,7 @@ import com.friday430.remote.IRemoteBoard;
 import javafx.scene.image.Image;
 
 import java.lang.reflect.Array;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,51 +23,51 @@ public class RmiObject implements IRemoteBoard {
         this.RMI_key = RMI_key;
     }
 
-    public String getRMI_key(){
+    public String getRMI_key() throws RemoteException {
         return this.RMI_key;
     }
 
-    public String getBoard_id(){
+    public String getBoard_id() throws RemoteException{
         return this.board_id;
     }
 
-    public void clear_object() {
+    public void clear_object() throws RemoteException{
         this.canvas_objects = null;
         this.canvas_objects = new ArrayList<>();
     }
 
-    public synchronized ArrayList<HashMap<String, Double>> getCanvas_objects(){
+    public synchronized ArrayList<HashMap<String, Double>> getCanvas_objects() throws RemoteException{
         return this.canvas_objects;
     }
 
-    public synchronized void updateCanvas_object(HashMap<String, Double> new_object){
+    public synchronized void updateCanvas_object(HashMap<String, Double> new_object) throws RemoteException{
         this.canvas_objects.add(new_object);
     }
 
-    public ArrayList<HashMap<String, Double>> getCanvas_object(int start_index) {
+    public ArrayList<HashMap<String, Double>> getCanvas_object(int start_index) throws RemoteException{
         List l = canvas_objects.subList(start_index, canvas_objects.size());
         return new ArrayList<HashMap<String, Double>>(l);
         //return (ArrayList<HashMap<String, Double>>)
     }
 
-    public synchronized void updateChat(String username, String words){
+    public synchronized void updateChat(String username, String words) throws RemoteException{
         this.chat_history.add(new String[]{username, words});
     }
 
-    public List<String[]> getChatWithNumber(int number){
+    public List<String[]> getChatWithNumber(int number) throws RemoteException{
         int array_length = this.chat_history.size();
         return chat_history.subList(array_length - number, array_length);
     }
 
-    public ArrayList<String[]> getChat() {
+    public ArrayList<String[]> getChat() throws RemoteException {
         return this.chat_history;
     }
 
-    public void setChat(ArrayList<String[]> chat){
+    public void setChat(ArrayList<String[]> chat) throws RemoteException{
         this.chat_history = chat;
     }
 
-    public int get_object_length(){
+    public int get_object_length() throws RemoteException{
         return this.canvas_objects.size();
     }
 }

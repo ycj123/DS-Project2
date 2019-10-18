@@ -16,7 +16,7 @@ public class ServerRMIService {
     private ArrayList<IRemoteBoard> board_list = null;
 
     public ServerRMIService() {
-        this.initRMI();
+        //this.initRMI();
         this.serverRMIDao = ServerRMIDao.getInstance();
         try {
             this.read_on_start();
@@ -27,13 +27,15 @@ public class ServerRMIService {
 
     private void initRMI() {
         try {
-            registry = LocateRegistry.createRegistry(1099);
+            registry = LocateRegistry.createRegistry(10990);
         } catch (Exception var3) {
             var3.printStackTrace();
         }
     }
 
     public void read_on_start() throws RemoteException, AlreadyBoundException {
+        System.out.println("dao: ");
+        System.out.println(serverRMIDao);
         ArrayList<IRemoteBoard> board_list = serverRMIDao.readAll();
         for (IRemoteBoard board : board_list) {
             String rmi_key = board.getRMI_key();
@@ -47,7 +49,7 @@ public class ServerRMIService {
         try {
             String rmi_key = board_id + managerKeychain;
             RmiObject rmiObject = new RmiObject(board_id, rmi_key);
-            IRemoteBoard stub = (IRemoteBoard) UnicastRemoteObject.exportObject(rmiObject, 0);
+            IRemoteBoard stub = (IRemoteBoard) UnicastRemoteObject.exportObject(rmiObject, 10999);
             registry.bind(rmi_key, stub);
             this.saveBoard(stub);
             System.out.println("White Board server is ready!");

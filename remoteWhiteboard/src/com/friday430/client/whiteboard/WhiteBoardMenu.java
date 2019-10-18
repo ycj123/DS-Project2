@@ -2,6 +2,7 @@ package com.friday430.client.whiteboard;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -79,7 +80,12 @@ class WhiteBoardMenu extends MenuBar {
        fileChooser.setTitle("Save");
     //    WritableImage img = canvas.snapshot(new SnapshotParameters(), null);
 		// BufferedImage buffImg = SwingFXUtils.fromFXImage(img, null);
-		ArrayList<HashMap<String, Double>> map = iRemoteBoard.getCanvas_objects();
+		ArrayList<HashMap<String, Double>> map = null;
+		try {
+			map = iRemoteBoard.getCanvas_objects();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 		// FileOutputStream os = new FileOutputStream("D:\\student.data");
 		// ObjectOutputStream oos = new ObjectOutputStream(os);
 		// oos.writeObject(o);

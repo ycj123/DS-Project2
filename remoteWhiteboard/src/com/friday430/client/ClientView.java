@@ -23,6 +23,7 @@ public class ClientView extends Application{
     private IRemoteBoard iRemoteBoard;
     private WhiteBoard wb = null;
     private ClientControllerInterface client_controller = null;
+    private ManagerController mc= null;
     private boolean is_manager = true;
     private IRemoteBoard rmiObject;
 
@@ -41,9 +42,11 @@ public class ClientView extends Application{
         //parameters.getNamed();
         List<String> raw_para_list = parameters.getRaw();
         client_controller = new ManagerController("default_board", "127.0.0.1", "4444");
+        mc = new ManagerController("default_board", "127.0.0.1", "37581");
 
         if (raw_para_list.size() == 0){
             client_controller = new ManagerController("default_board", "127.0.0.1", "4444");
+            mc = new ManagerController("default_board", "127.0.0.1", "3758");
         }
         if (raw_para_list.size() == 2) {
             if (raw_para_list.get(0).equals("client")) {
@@ -51,6 +54,7 @@ public class ClientView extends Application{
                 is_manager = false;
             } else if (raw_para_list.get(0).equals("manager")) {
                 client_controller = new ManagerController(raw_para_list.get(1), "127.0.0.1", "4444");
+                mc = new ManagerController("default_board", "127.0.0.1", "3758");
             } else {
                 System.exit(1);
             }
@@ -61,16 +65,21 @@ public class ClientView extends Application{
                 is_manager = false;
             } else if (raw_para_list.get(0).equals("manager")) {
                 client_controller = new ManagerController(raw_para_list.get(1),raw_para_list.get(2), raw_para_list.get(3));
+                mc = new ManagerController("default_board", "127.0.0.1", "3758");
             } else {
                 System.exit(1);
             }
         }
-
-        String rmi_key = this.client_controller.getRMIKey();
+        String rmi_key = "";
+        while (rmi_key.equals("")){
+            Thread.sleep(100);
+            rmi_key = this.client_controller.getRMIKey();
+        }
+        //String rmi_key = this.client_controller.getRMIKey();
         Registry registry = LocateRegistry.getRegistry(this.rmiServerIP, Integer.parseInt(this.rmiServerPort));
         rmiObject = (IRemoteBoard) registry.lookup(rmi_key);
 
-//        {rmiObject = new RmiObject();
+        //rmiObject = new RmiObject("1", "2");
 //        HashMap<String, Double> tmp = new HashMap<>(){};
 //        tmp.put("shape", 0.0);
 //        tmp.put("start_x", 100.0);

@@ -10,23 +10,23 @@ import java.util.List;
 
 public interface IRemoteBoard extends Remote {
 
-    void setChat(ArrayList<String[]> chat);
+    void setChat(ArrayList<String[]> chat) throws RemoteException;
 
-    List<String[]> getChatWithNumber(int number);
+    List<String[]> getChatWithNumber(int number) throws RemoteException;
 
-    ArrayList<String[]> getChat();
+    ArrayList<String[]> getChat() throws RemoteException;
 
-    ArrayList<HashMap<String, Double>> getCanvas_objects();
+    ArrayList<HashMap<String, Double>> getCanvas_objects() throws RemoteException;
 
-    void updateCanvas_object(HashMap<String, Double> new_object);
+    void updateCanvas_object(HashMap<String, Double> new_object) throws RemoteException;
 
-    ArrayList<HashMap<String, Double>> getCanvas_object(int start_index);
+    ArrayList<HashMap<String, Double>> getCanvas_object(int start_index) throws RemoteException;
 
-    String getBoard_id();
+    String getBoard_id() throws RemoteException;
 
-    String getRMI_key();
+    String getRMI_key() throws RemoteException;
 
-    void clear_object();
+    void clear_object() throws RemoteException;
 
-    int get_object_length();
+    int get_object_length() throws RemoteException;
 }

@@ -2,41 +2,35 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27ed65b3-4a99-4718-bd4a-acc875a87f72" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/friday430/client/ClientControllerInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/myObjects.txt" beforeDir="false" afterPath="$PROJECT_DIR$/myObjects.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manager.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/myObjects.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/Client.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/ClientController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/ClientController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/ClientView$1.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/ClientView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/ClientView.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/ManagerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/ManagerController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/Thread1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/Thread1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/Thread2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/Thread2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/cv_main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/cv_main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/Canvas.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/Canvas.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/WhiteBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/WhiteBoard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/tools/Eraser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/tools/Eraser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/tools/Pen.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/tools/Pen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/tools/Square.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/tools/Square.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/tools/TCircle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/tools/TCircle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/tools/TEllipse.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/tools/TEllipse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/tools/TLine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/tools/TLine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/tools/TRectangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/tools/TRectangle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/Thread1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/Thread2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/WhiteBoard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/WhiteBoardMenu$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/WhiteBoardMenu$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/WhiteBoardMenu.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/remote/IRemoteBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/remote/IRemoteBoard.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/RmiObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/RmiObject.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/ServerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/ServerController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/ServerRMIDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/ServerRMIDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/ServerRMIService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/ServerRMIService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/friday430/client/ClientView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/ClientView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/friday430/client/ManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/ManagerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/cv_main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/cv_main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/Canvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/Canvas.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/WhiteBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/WhiteBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/tools/Eraser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/tools/Eraser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/tools/Pen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/tools/Pen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/tools/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/tools/Square.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/tools/TCircle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/tools/TCircle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/tools/TEllipse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/tools/TEllipse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/tools/TLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/tools/TLine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/tools/TRectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/tools/TRectangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/WhiteBoardMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/WhiteBoardMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/friday430/remote/IRemoteBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/remote/IRemoteBoard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/friday430/server/RmiObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/server/RmiObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/friday430/server/ServerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/server/ServerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/friday430/server/ServerRMIDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/server/ServerRMIDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/friday430/server/ServerRMIService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/server/ServerRMIService.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,8 +41,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -62,7 +56,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
@@ -101,9 +95,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ClientView" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="ClientView" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.friday430.client.ClientView" />
       <module name="remoteWhiteboard" />
+      <option name="PROGRAM_PARAMETERS" value="manager 127.0.0.1 4444" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.friday430.client.*" />
@@ -140,6 +135,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.friday430.server.Server" />
+      <module name="remoteWhiteboard" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.friday430.server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="cv_main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.friday430.client.cv_main" />
       <module name="remoteWhiteboard" />
@@ -153,9 +161,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.ClientView" />
+      <item itemvalue="Application.Client" />
+      <item itemvalue="Application.Client_tmp" />
+      <item itemvalue="Application.Client_view_main" />
+      <item itemvalue="Application.cv_main" />
+      <item itemvalue="Application.Server" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ClientView" />
+        <item itemvalue="Application.Server" />
         <item itemvalue="Application.cv_main" />
         <item itemvalue="Application.Client_view_main" />
         <item itemvalue="Application.Client_tmp" />
@@ -177,7 +193,7 @@
       <workItem from="1568705207769" duration="398000" />
       <workItem from="1568800931288" duration="19117000" />
       <workItem from="1570529903565" duration="384000" />
-      <workItem from="1570530302312" duration="39346000" />
+      <workItem from="1570530302312" duration="51633000" />
     </task>
     <servers />
   </component>
