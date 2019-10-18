@@ -21,6 +21,9 @@ class ClientController implements ClientControllerInterface{
     private String rmiServerIP;
     private String rmiServerPort;
     private String board_name;
+    private String managerkey;
+    private String board_id ;
+    private  String manager_keychain;
 
     private ClientView clientView;
     private IRemoteBoard rmiObject = null;
@@ -33,6 +36,7 @@ class ClientController implements ClientControllerInterface{
         this.board_name = board_name;
         this.sendMessagetoServer(board_name, host_ip,serverPORT);
     }
+
 
     private String sendMessagetoServer(String board_name,String host_ip, int serverPORT) {
         try (Socket socket = new Socket(host_ip, serverPORT);) {
@@ -68,16 +72,20 @@ class ClientController implements ClientControllerInterface{
     }
 
     public void handleServerResponse(String serverResponse) {
-        String[] request = serverResponse.split("###");
-        //String board_id = request[0];
-        String manager_IP = request[0];
-        String managerPORT = request[1];
-        System.out.println("received");
+        String substr1 = serverResponse.substring(0,5);
+        if(substr1.equals("Error")){
+            System.out.println(substr1);
+        }else{
+            String[] request = serverResponse.split("###");
+            String manager_IP = request[0];
+            String managerPORT = request[1];
+            this.board_id = request[2];
+            System.out.println("received");
 
-        int toManagerPORT = Integer.parseInt(managerPORT);
-
-        System.out.println(manager_IP + " "  + toManagerPORT + " " + board_name);
-        this.askPermission(manager_IP, toManagerPORT, board_name);
+            int toManagerPORT = Integer.parseInt(managerPORT);
+            System.out.println(manager_IP + " " + toManagerPORT + " " + board_name);
+            this.askPermission(manager_IP, toManagerPORT, board_name);
+        }
     }
 
     //给manager发请求
@@ -97,8 +105,8 @@ class ClientController implements ClientControllerInterface{
             InputStreamReader in = new InputStreamReader(socket.getInputStream(),"UTF-8");
             BufferedReader input = new BufferedReader(in);
 
-            String message = input.readLine();
-            return message;
+            this.manager_keychain = input.readLine();
+            return this.manager_keychain;
 
         }catch (ConnectException e) {
             System.out.println("Board manager offline.");
@@ -126,7 +134,8 @@ class ClientController implements ClientControllerInterface{
 
     @Override
     public String getRMIKey() {
-        return null;
+        this.managerkey = this.board_id+this.manager_keychain;
+        return this.managerkey;
     }
 }
 
