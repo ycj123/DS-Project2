@@ -43,15 +43,18 @@ public class ServerRMIService {
         }
     }
 
-    public synchronized void createNewBoard(String board_id, String managerKeychain) {
+    public synchronized boolean createNewBoard(String board_id, String managerKeychain) {
         try {
             String rmi_key = board_id + managerKeychain;
             RmiObject rmiObject = new RmiObject(board_id, rmi_key);
             IRemoteBoard stub = (IRemoteBoard) UnicastRemoteObject.exportObject(rmiObject, 0);
             registry.bind(rmi_key, stub);
+            this.saveBoard(stub);
             System.out.println("White Board server is ready!");
+            return true;
         } catch (Exception var3) {
             var3.printStackTrace();
+            return false;
         }
     }
 
