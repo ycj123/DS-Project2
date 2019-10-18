@@ -65,4 +65,8 @@ public class RmiObject implements IRemoteBoard {
     public void setChat(ArrayList<String[]> chat){
         this.chat_history = chat;
     }
+
+    public int get_object_length(){
+        return this.canvas_objects.size();
+    }
 }
