@@ -23,6 +23,7 @@ public class ClientView extends Application{
     private IRemoteBoard iRemoteBoard;
     private WhiteBoard wb = null;
     private ClientControllerInterface client_controller = null;
+    private boolean is_manager = true;
     private IRemoteBoard rmiObject;
 
     private String rmiServerIP = "127.0.0.1";
@@ -39,47 +40,52 @@ public class ClientView extends Application{
         Parameters parameters = getParameters();
         //parameters.getNamed();
         List<String> raw_para_list = parameters.getRaw();
-        //client_controller = new ManagerController("default_board", "127.0.0.1", "4444");
-        //String rmi_key = this.client_controller.getRMIKey();
-        //Registry registry = LocateRegistry.getRegistry(this.rmiServerIP, Integer.parseInt(this.rmiServerPort));
-        //rmiObject = (IRemoteBoard) registry.lookup(rmi_key);
+        client_controller = new ManagerController("default_board", "127.0.0.1", "4444");
 
-        rmiObject = new RmiObject();
-        HashMap<String, Double> tmp = new HashMap<>(){};
-        tmp.put("shape", 0.0);
-        tmp.put("start_x", 100.0);
-        tmp.put("start_y", 100.0);
-        tmp.put("end_x", 200.0);
-        tmp.put("end_y", 200.0);
-        tmp.put("red", 1.0);
-        tmp.put("green", 0.0);
-        tmp.put("blue", 0.0);
-        tmp.put("width", 1.0);
-        rmiObject.updateCanvas_object(tmp);
+        if (raw_para_list.size() == 0){
+            client_controller = new ManagerController("default_board", "127.0.0.1", "4444");
+        }
+        if (raw_para_list.size() == 2) {
+            if (raw_para_list.get(0).equals("client")) {
+                client_controller = new ClientController(raw_para_list.get(1), "127.0.0.1", "5555");
+                is_manager = false;
+            } else if (raw_para_list.get(0).equals("manager")) {
+                client_controller = new ManagerController(raw_para_list.get(1), "127.0.0.1", "4444");
+            } else {
+                System.exit(1);
+            }
+        }
+        if (raw_para_list.size() == 4) {
+            if (raw_para_list.get(0).equals("client")) {
+                client_controller = new ClientController(raw_para_list.get(1),raw_para_list.get(2), raw_para_list.get(3));
+                is_manager = false;
+            } else if (raw_para_list.get(0).equals("manager")) {
+                client_controller = new ManagerController(raw_para_list.get(1),raw_para_list.get(2), raw_para_list.get(3));
+            } else {
+                System.exit(1);
+            }
+        }
 
-        this.wb = new WhiteBoard(rmiObject);
+        String rmi_key = this.client_controller.getRMIKey();
+        Registry registry = LocateRegistry.getRegistry(this.rmiServerIP, Integer.parseInt(this.rmiServerPort));
+        rmiObject = (IRemoteBoard) registry.lookup(rmi_key);
+
+//        {rmiObject = new RmiObject();
+//        HashMap<String, Double> tmp = new HashMap<>(){};
+//        tmp.put("shape", 0.0);
+//        tmp.put("start_x", 100.0);
+//        tmp.put("start_y", 100.0);
+//        tmp.put("end_x", 200.0);
+//        tmp.put("end_y", 200.0);
+//        tmp.put("red", 1.0);
+//        tmp.put("green", 0.0);
+//        tmp.put("blue", 0.0);
+//        tmp.put("width", 1.0);
+//        rmiObject.updateCanvas_object(tmp);}
+
+        this.wb = new WhiteBoard(rmiObject, is_manager);
         //parameters.getUnnamed();
-//        if (raw_para_list.size() == 0){
-//            ManagerController mc = new ManagerController("default_board", "127.0.0.1", "4444");
-//        }
-//        if (raw_para_list.size() == 2) {
-//            if (raw_para_list.get(0).equals("client")) {
-//                ClientController cc = new ClientController(raw_para_list.get(1), "127.0.0.1", "5555");
-//            } else if (raw_para_list.get(0).equals("manager")) {
-//                ManagerController mc = new ManagerController(raw_para_list.get(1), "127.0.0.1", "4444");
-//            } else {
-//                System.exit(1);
-//            }
-//        }
-//        if (raw_para_list.size() == 4) {
-//            if (raw_para_list.get(0).equals("client")) {
-//                ClientController cc = new ClientController(raw_para_list.get(1),raw_para_list.get(2), raw_para_list.get(3));
-//            } else if (raw_para_list.get(0).equals("manager")) {
-//                ManagerController mc = new ManagerController(raw_para_list.get(1),raw_para_list.get(2), raw_para_list.get(3));
-//            } else {
-//                System.exit(1);
-//            }
-//        }
+
 
     }
 
