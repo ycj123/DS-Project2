@@ -134,20 +134,20 @@ public class WhiteBoard extends BorderPane {
 		}
 	}
 
-	public WhiteBoard(IRemoteBoard iRemoteBoard) {
+	public WhiteBoard(IRemoteBoard iRemoteBoard, boolean isManager) {
 		this.iRemoteBoard = iRemoteBoard;
 		//System.out.println("in white board");
 		//System.out.println(Arrays.toString(this.iRemoteBoard.getChat().get(0)));
        	canvas = new Canvas(this);
        	pen = new Pen(canvas);
-       	whiteBoardMenu = new WhiteBoardMenu(canvas);
+       	whiteBoardMenu = new WhiteBoardMenu(canvas, iRemoteBoard);
 		pen.setTool(pen);
 
-       setCenter(canvas);
-       setupLeft();
-       setupRight();
+        setCenter(canvas);
+        setupLeft();
+        setupRight();
 		setupDown();
-		setupUp();
+		setupUp(isManager);
 		draw_existing_canvas();
 	}
 
@@ -209,10 +209,12 @@ public class WhiteBoard extends BorderPane {
 		setRight(right);
 	}
 
-   private void setupUp() {
+   private void setupUp(boolean isManager) {
 		VBox up = new VBox();
 		up.setBackground(new Background(new BackgroundFill(Defaults.PANE_COLOR, null, null)));
-		up.getChildren().add(this.whiteBoardMenu);
+		if (isManager) {
+			up.getChildren().add(this.whiteBoardMenu);
+		}
 		setTop(up);
 	}
 
