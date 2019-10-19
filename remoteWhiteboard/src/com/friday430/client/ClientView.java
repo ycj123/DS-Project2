@@ -5,11 +5,14 @@ import com.friday430.client.whiteboard.WhiteBoard;
 import com.friday430.remote.IRemoteBoard;
 import com.friday430.server.RmiObject;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -113,6 +116,13 @@ public class ClientView extends Application{
         primaryStage.setX(screen.getMaxX() / 2.0 - primaryStage.getScene().getWidth() / 2.0);
         primaryStage.setY(screen.getHeight() / 2.0 - primaryStage.getScene().getHeight() / 2.0);
         primaryStage.centerOnScreen();
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
     }
 
     //public void update_chat(ArrayList<String[]> chat_history){
