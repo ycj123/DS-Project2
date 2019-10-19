@@ -34,19 +34,32 @@ class ManagerController extends Thread implements ClientControllerInterface {
         this.start();
     }
 
-    private static String initManagerKeychain() throws UnknownHostException, SocketException {
-        InetAddress ip = InetAddress.getLocalHost();
-        NetworkInterface network = NetworkInterface.getByInetAddress(ip);
-
-        byte[] mac = network.getHardwareAddress();
-
-        System.out.print("Current MAC address : ");
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < mac.length; i++) {
-            sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "" : ""));
+    private static String initManagerKeychain() throws IOException {
+        //InetAddress ip = InetAddress.getLocalHost();
+        //NetworkInterface network = NetworkInterface.getByInetAddress(ip);
+        //byte[] mac = network.getHardwareAddress();
+        //System.out.print("Current MAC address : ");
+        //StringBuilder sb = new StringBuilder();
+        //for (int i = 0; i < mac.length; i++) {
+        //    sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "" : ""));
+        //}
+        //return sb.toString();
+        String key = "";
+        try {
+            FileInputStream fis = new FileInputStream("manager_key");
+            DataInputStream dis = new DataInputStream(fis);
+            key = dis.readUTF();
+        }catch (FileNotFoundException e){
+            int random = (int)(Math.random() * 500000 + 1);
+            int salt = (int)(Math.random() * 5000 + 1);
+            key = Integer.toString(random + salt);
+            File f = new File("manager_key");
+            f.createNewFile();
+            FileOutputStream fos = new FileOutputStream("manager_key");
+            DataOutputStream dos = new DataOutputStream(fos);
+            dos.writeUTF(key);
         }
-        return sb.toString();
+        return key;
     }
 
     //请求创建管理员面板
