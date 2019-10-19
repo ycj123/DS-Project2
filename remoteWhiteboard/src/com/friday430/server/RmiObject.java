@@ -46,7 +46,7 @@ public class RmiObject extends UnicastRemoteObject implements IRemoteBoard {
         this.canvas_objects.add(new_object);
     }
 
-    public ArrayList<HashMap<String, Double>> getCanvas_object(int start_index) throws RemoteException{
+    public ArrayList<HashMap<String, Double>> getCanvas_object(int start_index) throws RemoteException, IllegalArgumentException{
         List l = canvas_objects.subList(start_index, canvas_objects.size());
         return new ArrayList<HashMap<String, Double>>(l);
         //return (ArrayList<HashMap<String, Double>>)

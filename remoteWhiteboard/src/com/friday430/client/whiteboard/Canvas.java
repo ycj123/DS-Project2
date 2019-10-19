@@ -15,6 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import com.friday430.client.whiteboard.properties.*;
+import com.friday430.remote.IRemoteBoard;
 
 public class Canvas extends Pane implements PropertiesListener {
 
@@ -33,6 +34,7 @@ public class Canvas extends Pane implements PropertiesListener {
    public void clear() {
        // erase = new LinkedList<Shape>();
        getChildren().clear();
+       whiteBoard.clear();
    }
 
    private void setBackground(Color color) {

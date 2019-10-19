@@ -49,7 +49,7 @@ public class ManagerView extends Application{
 
         if (raw_para_list.size() == 0){
            client_controller = new ManagerController("default_board", "192.168.0.103", "4444");
-           mc = new ManagerController("default_board", "192.168.0.103", "3758");
+           mc = new ManagerController("default_board", "192.168.0.103", "37581");
             // client_controller = new ClientController("default_board", "192.168.0.103", "5555");
             // is_manager = false;
         }
@@ -77,7 +77,7 @@ public class ManagerView extends Application{
         }
         String rmi_key = "";
         while (rmi_key.equals("")){
-            Thread.sleep(100);
+            Thread.sleep(1000);
             rmi_key = this.client_controller.getRMIKey();
         }
         //String rmi_key = this.client_controller.getRMIKey();

@@ -15,7 +15,7 @@ import java.util.TimerTask;
 class ClientController implements ClientControllerInterface{
     private static String host_ip = "localhost" ;//与连的网有关
     private static String manager_ip = "localhost";//与连的网有关
-    private static int managerPORT = 3758;
+    private static int managerPORT = 37581;
     private static int serverPORT = 5555;
 
     private String rmiServerIP;
@@ -92,18 +92,23 @@ class ClientController implements ClientControllerInterface{
     public String askPermission(String manager_ip, int toManagerPORT,String board_name){
         try
         {
+            System.out.println(manager_ip+" " + toManagerPORT);
             Socket socket = new Socket(manager_ip, toManagerPORT);
-
+//            socket.setTcpNoDelay(true);
             // Output Stream
             OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream(),"UTF-8");
             BufferedWriter output = new BufferedWriter(out);
-            output.write(board_name);
-            System.out.println("Request sent to Manager: join" + board_name);
-            output.flush();
-
             // Input stream
             InputStreamReader in = new InputStreamReader(socket.getInputStream(),"UTF-8");
             BufferedReader input = new BufferedReader(in);
+            output.write(board_name + "\n");
+            System.out.println("Request sent to Manager: join" + board_name);
+//            output.write("Test");
+            output.flush();
+//            out.flush();
+//            output.close();
+            System.out.println("Flush Complete");
+
 
             this.manager_keychain = input.readLine();
             return this.manager_keychain;

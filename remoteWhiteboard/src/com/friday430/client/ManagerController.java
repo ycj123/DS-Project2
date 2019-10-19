@@ -6,6 +6,7 @@ import java.net.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Scanner;
 
 class ManagerController extends Thread implements ClientControllerInterface {
     private static int toclientPORT = 37581;
@@ -81,6 +82,7 @@ class ManagerController extends Thread implements ClientControllerInterface {
             InputStreamReader in = new InputStreamReader(socket.getInputStream(), "UTF-8");
             BufferedReader input = new BufferedReader(in);
             String managerkey = input.readLine();
+            System.out.println(managerkey);
             String substr1 = managerkey.substring(0,5);
             if (substr1.equals("Error")){
                 System.out.println(managerkey);
@@ -111,19 +113,20 @@ class ManagerController extends Thread implements ClientControllerInterface {
 
     public static String handleClientRequest(String request){
         System.out.println(request);
-        String[] data = request.split("###");
-        String m_keychain = data[0];
-        String name = data[1];
-        if (name.equals(board_name)){
-            return m_keychain;
-        }else{return null;}
-
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Client wish to join [" + request + "] (y/n)");
+        String user_response = scanner.next();
+        if (user_response.equals("y")){
+            return manager_keychain + "\n";
+        }else{
+            return null;
+        }
     }
 //    public String saveboard_id(){}
 
     @Override
     public String getRMIKey() {
-        return this.board_id + manager_keychain;
+        return board_id + manager_keychain;
     }
 
     public void run() {
@@ -137,17 +140,20 @@ class ManagerController extends Thread implements ClientControllerInterface {
                 InputStreamReader in = new InputStreamReader(client.getInputStream(), "UTF-8");
                 BufferedReader input = new BufferedReader(in);
 
-
-                String requests = input.readLine();
-                while (requests != null) {
-                    key = ManagerController.handleClientRequest(requests);
-                    OutputStreamWriter out = new OutputStreamWriter(client.getOutputStream(), "UTF-8");
-                    BufferedWriter output = new BufferedWriter(out);
-                    output.write(key);
-                    output.flush();
-                    System.out.println("waiting for users");
+                while(true) {
+                    Thread.sleep(100);
+                    String requests = input.readLine();
+                    if (requests != null) {
+                        key = ManagerController.handleClientRequest(requests);
+                        OutputStreamWriter out = new OutputStreamWriter(client.getOutputStream(), "UTF-8");
+                        BufferedWriter output = new BufferedWriter(out);
+                        output.write(key);
+                        output.flush();
+                        System.out.println("waiting for users");
+                    }
                 }
-            } catch (IOException e) {
+
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
 

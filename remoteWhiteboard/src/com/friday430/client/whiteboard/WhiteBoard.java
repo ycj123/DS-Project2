@@ -59,8 +59,16 @@ public class WhiteBoard extends BorderPane {
 //		return whiteBoard;
 //	}
 
-	private void draw_existing_canvas(int index) throws RemoteException {
-		ArrayList<HashMap<String, Double>> canvas_list = this.iRemoteBoard.getCanvas_object(index);
+	private void draw_existing_canvas() throws RemoteException {
+		ArrayList<HashMap<String, Double>> canvas_list = null;
+		try {
+			canvas_list = this.iRemoteBoard.getCanvas_object(this.index_shown);
+		} catch (IllegalArgumentException e) {
+			this.index_shown  = 0;
+			this.canvas.clear();
+			canvas_list = this.iRemoteBoard.getCanvas_object(this.index_shown);
+		}
+
 		for (HashMap<String, Double> canvas_object_map : canvas_list){
 			int shape_type = (int) Math.floor(canvas_object_map.get("shape"));
 			double sX = canvas_object_map.get("start_x");
@@ -152,7 +160,7 @@ public class WhiteBoard extends BorderPane {
         setupRight();
 		setupDown();
 		setupUp(isManager);
-		draw_existing_canvas(0);// init
+		draw_existing_canvas();// init
 		this.index_shown = this.iRemoteBoard.get_object_length();
 		TimerTask timerTask = new TimerTask(){
 		
@@ -184,7 +192,7 @@ public class WhiteBoard extends BorderPane {
 					}
 					if (current_len != index_shown) {
 						try {
-							draw_existing_canvas(index_shown);
+							draw_existing_canvas();
 						} catch (RemoteException e) {
 							e.printStackTrace();
 						}
@@ -228,6 +236,16 @@ public class WhiteBoard extends BorderPane {
 			chat_formatted = chat_formatted.concat(user_name + "\n");
 			chat_formatted = chat_formatted.concat(user_words + "\n");
 		}
+	}
+
+	public void clear() {
+		try {
+			this.iRemoteBoard.clear_object();
+			this.index_shown = 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public void setCanvas(Image image){
