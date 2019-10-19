@@ -49,7 +49,7 @@ public class ServerRMIDao {
             // Write objects to file
             o.writeObject(board);
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
+            System.out.println("File not found in write");
         } catch (IOException e) {
             System.out.println("Error initializing stream");
         }

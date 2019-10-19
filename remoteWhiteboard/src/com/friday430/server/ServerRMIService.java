@@ -15,7 +15,7 @@ public class ServerRMIService {
 
     private Registry registry;
     private ServerRMIDao serverRMIDao;
-    private ArrayList<IRemoteBoard> board_list = null;
+    private ArrayList<IRemoteBoard> board_list = new ArrayList<>();
 
     private static ServerRMIService instance = null;
 
@@ -49,10 +49,9 @@ public class ServerRMIService {
         ArrayList<IRemoteBoard> board_list = serverRMIDao.readAll();
         for (IRemoteBoard board : board_list) {
             String rmi_key = board.getRMI_key();
-            IRemoteBoard stub = (IRemoteBoard) UnicastRemoteObject.exportObject(board, 0);
-            //registry.bind(rmi_key, stub);
+            registry.bind(rmi_key, board);
             //Naming.rebind(rmi_key, stub);
-            this.board_list.add(stub);
+            this.board_list.add(board);
         }
     }
 
@@ -66,6 +65,7 @@ public class ServerRMIService {
             //this.saveBoard(stub);
             System.out.println(rmi_key);
             System.out.println("White Board server is ready!");
+            saveBoard(rmiObject);
             return true;
         } catch (Exception var3) {
             var3.printStackTrace();

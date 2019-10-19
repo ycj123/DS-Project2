@@ -14,7 +14,6 @@ class ManagerController extends Thread implements ClientControllerInterface {
     private static String sendData;
     private static String board_name = "";
     private static String manager_keychain;
-    private String managerkey = "";
     private String key;
     private String board_id;
     private int port;
@@ -27,15 +26,27 @@ class ManagerController extends Thread implements ClientControllerInterface {
         host_ip = server_ip;
         this.port = Integer.parseInt(port);
         board_name = input_board_name;
-        this.manager_keychain = initManagerKeychain();
+        try {
+            manager_keychain = initManagerKeychain();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         this.start();
     }
 
-    private static String initManagerKeychain(){
-        //对每一个manager生成一个manager_keychian
-        int random = (int)(Math.random() * 500000 + 1);
-        int salt = (int)(Math.random() * 5000 + 1);
-        return Integer.toString(random + salt);
+    private static String initManagerKeychain() throws UnknownHostException, SocketException {
+        InetAddress ip = InetAddress.getLocalHost();
+        NetworkInterface network = NetworkInterface.getByInetAddress(ip);
+
+        byte[] mac = network.getHardwareAddress();
+
+        System.out.print("Current MAC address : ");
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < mac.length; i++) {
+            sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "" : ""));
+        }
+        return sb.toString();
     }
 
     //请求创建管理员面板
@@ -99,8 +110,7 @@ class ManagerController extends Thread implements ClientControllerInterface {
 
     @Override
     public String getRMIKey() {
-        this.managerkey= this.board_id+this.manager_keychain;
-        return this.managerkey;
+        return this.board_id + manager_keychain;
     }
 
     public void run() {

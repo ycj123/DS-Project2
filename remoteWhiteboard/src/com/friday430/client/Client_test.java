@@ -1,3 +1,10 @@
+package com.friday430.client;
+
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+
 //package com.friday430.client;
 //
 //
@@ -6,46 +13,27 @@
 //import java.net.UnknownHostException;
 //import java.util.Scanner;
 //
-//public class Client_test{
-//
-//    // IP and port
-//
-//    public static void main(String[] args) {
-//        //
-//        try(Socket socket = new Socket("localhost", 5555);)
-//        {
-//
-//            // Input stream
-//            InputStreamReader in = new InputStreamReader(socket.getInputStream(),"UTF-8");
-//            BufferedReader input = new BufferedReader(in);
-//            // Output Stream
-//            OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream(),"UTF-8");
-//            BufferedWriter output = new BufferedWriter(out);
-////            String sendData ="manager_keychain###board_name###manager_port###manager_ip"; //manager 测试数据
-//            String sendData =""; //client测试数据(发送boardname)
-//
-//            output.write(sendData);
-//            output.newLine();
-//            System.out.println("Data sent to Server--> " + sendData);
-//            output.flush();
-//
-//            System.out.println("input"+input.readLine());
-//            String message = input.readLine();
-//
-//            System.out.println("Message from server to client："+message);
-//
-//
-//        }
-//        catch (UnknownHostException e)
-//        {
-//            e.printStackTrace();
-//        }
-//        catch (IOException e)
-//        {
-//            e.printStackTrace();
-//        }
-//
-//    }
+public class Client_test {
+
+    // IP and port
+
+    public static void main(String[] args) throws SocketException, UnknownHostException {
+        //
+        InetAddress ip = InetAddress.getLocalHost();
+        NetworkInterface network = NetworkInterface.getByInetAddress(ip);
+
+        byte[] mac = network.getHardwareAddress();
+
+        System.out.print("Current MAC address : ");
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < mac.length; i++) {
+            sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "" : ""));
+        }
+        System.out.println(sb.toString());
+
+    }
+}
 //
 //}
 

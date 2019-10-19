@@ -79,7 +79,7 @@ public class ServerController extends Thread {
             if(board_id.length() == 32) {
                 if (serverManagerService.isBoard_id(board_id)) {
                     serverRMIService.loadBoard(board_id);
-                    return ("Error! The board had been created.");
+                    return (board_id + "###" + "Error! The board had been created.");
                 }
                 else {
 //                    String[] manager = this.getManagerIPPort(clientManager).split("#+");
