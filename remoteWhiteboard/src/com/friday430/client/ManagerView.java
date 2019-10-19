@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.zip.DeflaterOutputStream;
 
-public class ClientView extends Application{
+public class ManagerView extends Application{
 
     private IRemoteBoard iRemoteBoard;
     private WhiteBoard wb = null;
@@ -48,10 +48,10 @@ public class ClientView extends Application{
         //mc = new ManagerController("default_board", "127.0.0.1", "37581");
 
         if (raw_para_list.size() == 0){
-//            client_controller = new ManagerController("default_board", "127.0.0.1", "4444");
-//            mc = new ManagerController("default_board", "127.0.0.1", "3758");
-            client_controller = new ClientController("default_board", "192.168.0.103", "5555");
-            is_manager = false;
+           client_controller = new ManagerController("default_board", "192.168.0.103", "4444");
+           mc = new ManagerController("default_board", "192.168.0.103", "3758");
+            // client_controller = new ClientController("default_board", "192.168.0.103", "5555");
+            // is_manager = false;
         }
         if (raw_para_list.size() == 2) {
             if (raw_para_list.get(0).equals("client")) {

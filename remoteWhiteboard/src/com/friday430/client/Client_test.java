@@ -1,9 +1,6 @@
 package com.friday430.client;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.net.UnknownHostException;
+import java.net.*;
 
 //package com.friday430.client;
 //
@@ -20,6 +17,7 @@ public class Client_test {
     public static void main(String[] args) throws SocketException, UnknownHostException {
         //
         InetAddress ip = InetAddress.getLocalHost();
+        System.out.println(new NetPermission("getNetworkInformation"));
         NetworkInterface network = NetworkInterface.getByInetAddress(ip);
 
         byte[] mac = network.getHardwareAddress();

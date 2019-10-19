@@ -58,7 +58,7 @@ class ManagerController extends Thread implements ClientControllerInterface {
             OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream(),"UTF-8");
             BufferedWriter output = new BufferedWriter(out);
             String str = toclientPORT+"";
-            InetAddress localip = socket.getInetAddress();
+            InetAddress localip = socket.getLocalAddress();
             String manager_ip = localip.getHostAddress();
             String sendData =manager_keychain+"###"+board_name+"###"+str+"###"+manager_ip;
             output.write(sendData);
