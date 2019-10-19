@@ -101,11 +101,11 @@ public class ServerRMIService {
         this.board_list = serverRMIDao.readAll();
     }
 
-    public static void main(String[] args) throws RemoteException {
-        ServerRMIService sms = new ServerRMIService();
-        sms.createNewBoard("123", "345");
-        RmiObject obj = sms.getBoard("123", "345");
-        System.out.println(obj.getRMI_key());
-
-    }
+//    public static void main(String[] args) throws RemoteException {
+//        ServerRMIService sms = new ServerRMIService();
+//        sms.createNewBoard("123", "345");
+//        RmiObject obj = sms.getBoard("123", "345");
+//        System.out.println(obj.getRMI_key());
+//
+//    }
 }

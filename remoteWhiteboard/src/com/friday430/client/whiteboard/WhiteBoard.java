@@ -25,6 +25,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -58,7 +59,7 @@ public class WhiteBoard extends BorderPane {
 //		return whiteBoard;
 //	}
 
-	private void draw_existing_canvas(int index){
+	private void draw_existing_canvas(int index) throws RemoteException {
 		ArrayList<HashMap<String, Double>> canvas_list = this.iRemoteBoard.getCanvas_object(index);
 		for (HashMap<String, Double> canvas_object_map : canvas_list){
 			int shape_type = (int) Math.floor(canvas_object_map.get("shape"));
@@ -137,7 +138,7 @@ public class WhiteBoard extends BorderPane {
 		}
 	}
 
-	public WhiteBoard(IRemoteBoard iRemoteBoard, boolean isManager) {
+	public WhiteBoard(IRemoteBoard iRemoteBoard, boolean isManager) throws RemoteException {
 		this.iRemoteBoard = iRemoteBoard;
 		//System.out.println("in white board");
 		//System.out.println(Arrays.toString(this.iRemoteBoard.getChat().get(0)));
@@ -175,10 +176,23 @@ public class WhiteBoard extends BorderPane {
                     //     timePrint();
                     // }
 					// checkTime();
-					int current_len = iRemoteBoard.get_object_length();
+					int current_len = 0;
+					try {
+						current_len = iRemoteBoard.get_object_length();
+					} catch (RemoteException e) {
+						e.printStackTrace();
+					}
 					if (current_len != index_shown) {
-						draw_existing_canvas(index_shown);
-						index_shown = iRemoteBoard.get_object_length();
+						try {
+							draw_existing_canvas(index_shown);
+						} catch (RemoteException e) {
+							e.printStackTrace();
+						}
+						try {
+							index_shown = iRemoteBoard.get_object_length();
+						} catch (RemoteException e) {
+							e.printStackTrace();
+						}
 					}
                 }
             });

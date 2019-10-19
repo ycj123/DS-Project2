@@ -2,11 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="27ed65b3-4a99-4718-bd4a-acc875a87f72" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/remoteWhiteboard.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/remoteWhiteboard.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manager.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/ManagerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/ManagerController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/META-INF/remoteWhiteboard.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/ClientView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/ClientView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/WhiteBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/whiteboard/WhiteBoard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/RmiObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/RmiObject.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/ServerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/ServerController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/ServerRMIService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/ServerRMIService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/ManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/ManagerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/WhiteBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/WhiteBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/friday430/server/ServerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/server/ServerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/friday430/server/ServerManagerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/server/ServerManagerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/friday430/server/ServerRMIService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/server/ServerRMIService.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,7 +39,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
@@ -171,6 +177,8 @@
       <workItem from="1568800931288" duration="19117000" />
       <workItem from="1570529903565" duration="384000" />
       <workItem from="1570530302312" duration="53778000" />
+      <workItem from="1571463217247" duration="508000" />
+      <workItem from="1571463762082" duration="1740000" />
     </task>
     <servers />
   </component>
