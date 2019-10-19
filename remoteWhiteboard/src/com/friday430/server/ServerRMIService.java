@@ -19,8 +19,8 @@ public class ServerRMIService {
 
     private static ServerRMIService instance = null;
 
-    public static ServerRMIService getInstance(){
-        if (instance == null){
+    public static ServerRMIService getInstance() {
+        if (instance == null) {
             instance = new ServerRMIService();
         }
         return instance;
@@ -31,7 +31,7 @@ public class ServerRMIService {
         this.serverRMIDao = ServerRMIDao.getInstance();
         try {
             this.read_on_start();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -73,32 +73,32 @@ public class ServerRMIService {
         }
     }
 
-    public synchronized IRemoteBoard getBoard(String board_id, String managerKeychain){
+    public synchronized IRemoteBoard getBoard(String board_id, String managerKeychain) {
         IRemoteBoard board = null;
-        try{
+        try {
             Registry registry_1 = LocateRegistry.getRegistry("localhost", 11112);
             board = (IRemoteBoard) registry_1.lookup(board_id + managerKeychain);
             //board = (RmiObject) Naming.lookup(board_id + managerKeychain);
-        } catch (RemoteException | NotBoundException e){// | MalformedURLException e) {
-           e.printStackTrace();
+        } catch (RemoteException | NotBoundException e) {// | MalformedURLException e) {
+            e.printStackTrace();
         }
         return board;
     }
 
-    public void saveBoard(IRemoteBoard board){
+    public void saveBoard(IRemoteBoard board) {
         serverRMIDao.writeBoard(board);
     }
 
-    public IRemoteBoard loadBoard(String board_id){
+    public IRemoteBoard loadBoard(String board_id) {
         return serverRMIDao.readBoard(board_id);
     }
 
 
-    public void saveAll(){
+    public void saveAll() {
         serverRMIDao.writeAll(board_list);
     }
 
-    public void loadAll(){
+    public void loadAll() {
         this.board_list = serverRMIDao.readAll();
     }
 

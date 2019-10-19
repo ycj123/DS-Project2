@@ -182,7 +182,7 @@ public class ServerController extends Thread {
             System.out.println(managerMassage);
             if(managerMassage != null){
                 String[] request = managerMassage.split("###");
-                System.out.println(Arrays.toString(request));
+//                System.out.println(Arrays.toString(request));
 
                 String manager_keychain = request[0];
                 String board_name = request[1];
@@ -199,7 +199,7 @@ public class ServerController extends Thread {
 //                System.out.println("manager_port:"+manager_port);
 
                 String response = this.handleManagerReauest(manager_keychain, board_name, manager_ip, manager_port);
-//                System.out.println("RE"+response);
+                System.out.println("Response"+response);
 
                 output.write(response);
 

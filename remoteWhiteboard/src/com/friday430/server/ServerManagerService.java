@@ -19,7 +19,7 @@ public class ServerManagerService {
     public void loadServerManangerDict(){
         try {
             serverManageDict = serverManagerDao.readServerManager();
-            System.out.println(serverManageDict.keySet());
+            System.out.println("loadServerManagerDict"+serverManageDict.keySet());
             System.out.println("Read hashmap successfully");
         }catch(Exception e){
             serverManageDict = new HashMap<String, ArrayList<String>>();
