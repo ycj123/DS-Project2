@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="27ed65b3-4a99-4718-bd4a-acc875a87f72" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manager.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/Client_test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/Client_test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/ManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/ManagerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/friday430/server/ServerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/server/ServerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/friday430/server/ServerRMIDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/server/ServerRMIDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/friday430/server/ServerRMIService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/server/ServerRMIService.java" afterDir="false" />
-    </list>
+    <list default="true" id="27ed65b3-4a99-4718-bd4a-acc875a87f72" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
