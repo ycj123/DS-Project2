@@ -4,6 +4,7 @@ import com.friday430.client.whiteboard.properties.Defaults;
 import com.friday430.client.whiteboard.properties.Properties;
 import com.friday430.client.whiteboard.tools.Pen;
 import com.friday430.remote.IRemoteBoard;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -27,6 +28,8 @@ import javafx.scene.shape.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
 * WhiteBoard
@@ -55,13 +58,8 @@ public class WhiteBoard extends BorderPane {
 //		return whiteBoard;
 //	}
 
-	private void draw_existing_canvas(){
-		ArrayList<HashMap<String, Double>> canvas_list = null;
-		try {
-			canvas_list = this.iRemoteBoard.getCanvas_object(0);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+	private void draw_existing_canvas(int index){
+		ArrayList<HashMap<String, Double>> canvas_list = this.iRemoteBoard.getCanvas_object(index);
 		for (HashMap<String, Double> canvas_object_map : canvas_list){
 			int shape_type = (int) Math.floor(canvas_object_map.get("shape"));
 			double sX = canvas_object_map.get("start_x");
@@ -153,7 +151,41 @@ public class WhiteBoard extends BorderPane {
         setupRight();
 		setupDown();
 		setupUp(isManager);
-		draw_existing_canvas();
+		draw_existing_canvas(0);// init
+		this.index_shown = this.iRemoteBoard.get_object_length();
+		TimerTask timerTask = new TimerTask(){
+		
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				// int current_len = iRemoteBoard.get_object_length();
+				// if (current_len != index_shown) {
+				// 	draw_existing_canvas(index_shown);
+				// 	index_shown = iRemoteBoard.get_object_length();
+				// }
+				Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // if (totalTime != 59) {
+                    //     totalTime++;
+                    //     timePrint();
+                    // } else {
+                    //     totalTime = 0;
+                    //     minutes++;
+                    //     timePrint();
+                    // }
+					// checkTime();
+					int current_len = iRemoteBoard.get_object_length();
+					if (current_len != index_shown) {
+						draw_existing_canvas(index_shown);
+						index_shown = iRemoteBoard.get_object_length();
+					}
+                }
+            });
+			}
+		};
+		Timer timer = new Timer();
+		timer.schedule(timerTask, 100, 100);
 	}
 
 	public ArrayList<String[]> getTa(){
@@ -161,9 +193,9 @@ public class WhiteBoard extends BorderPane {
 	}
 
 	public void updateCurrentShape(HashMap<String, Double> shape_map){
-		try {
-			this.iRemoteBoard.updateCanvas_object(shape_map);
-		}catch (Exception e){
+		try{
+		this.iRemoteBoard.updateCanvas_object(shape_map);
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -206,8 +238,10 @@ public class WhiteBoard extends BorderPane {
 	private void setupRight() {
 		VBox right = new VBox();
 		ta = new TextArea();
+		ta.setPrefSize(300,1300);
 		HBox send_box = new HBox();
 		TextField tf = new TextField();
+		tf.setPrefWidth(250);
 		Button send_button = new Button("Send");
 
 		send_box.getChildren().add(tf);
