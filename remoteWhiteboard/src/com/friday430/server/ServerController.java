@@ -79,7 +79,7 @@ public class ServerController extends Thread {
             if(board_id.length() == 32) {
                 if (serverManagerService.isBoard_id(board_id)) {
                     serverRMIService.loadBoard(board_id);
-                    return ("Error! The board had been created.");
+                    return (board_id + "###" + "Error! The board had been created.");
                 }
                 else {
 //                    String[] manager = this.getManagerIPPort(clientManager).split("#+");
@@ -180,7 +180,7 @@ public class ServerController extends Thread {
 //            System.out.println("1");
             String managerMassage = input.readLine();//从manager传输过来的消息；
             System.out.println(managerMassage);
-            if(managerMassage != null){
+            if(managerMassage != null && managerMassage.length() > 8){
                 String[] request = managerMassage.split("###");
 //                System.out.println(Arrays.toString(request));
 
