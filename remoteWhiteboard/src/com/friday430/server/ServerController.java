@@ -180,7 +180,7 @@ public class ServerController extends Thread {
 //            System.out.println("1");
             String managerMassage = input.readLine();//从manager传输过来的消息；
             System.out.println(managerMassage);
-            if(managerMassage != null){
+            if(managerMassage != null && managerMassage.length() > 8){
                 String[] request = managerMassage.split("###");
 //                System.out.println(Arrays.toString(request));
 
