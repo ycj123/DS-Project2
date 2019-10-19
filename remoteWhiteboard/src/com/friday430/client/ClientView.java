@@ -77,6 +77,7 @@ public class ClientView extends Application{
         }
         //String rmi_key = this.client_controller.getRMIKey();
         Registry registry = LocateRegistry.getRegistry(this.rmiServerIP, Integer.parseInt(this.rmiServerPort));
+        System.out.println(rmi_key);
         rmiObject = (IRemoteBoard) registry.lookup(rmi_key);
 
         //rmiObject = new RmiObject("1", "2");

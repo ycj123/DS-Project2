@@ -5,18 +5,20 @@ import javafx.scene.image.Image;
 
 import java.lang.reflect.Array;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class RmiObject implements IRemoteBoard {
+public class RmiObject extends UnicastRemoteObject implements IRemoteBoard {
     private ArrayList<String[]> chat_history;
     private ArrayList<HashMap<String, Double>> canvas_objects;
     private String board_id;
     private String RMI_key;
 
-    public RmiObject(String board_id, String RMI_key) {
+    public RmiObject(String board_id, String RMI_key) throws RemoteException{
+        super();
         this.chat_history = new ArrayList<>();
         this.canvas_objects = new ArrayList<>();
         this.board_id = board_id;

@@ -26,7 +26,7 @@ public class ServerController extends Thread {
 
 
     private ServerManagerService serverManagerService = new ServerManagerService();
-    private ServerRMIService serverRMIService = new ServerRMIService();
+    private ServerRMIService serverRMIService = ServerRMIService.getInstance();
 
     // class 得有构造方法！！！！！！！！！！！！！！
 //    public ServerController() throws IOException {
