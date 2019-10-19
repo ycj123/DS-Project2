@@ -28,7 +28,7 @@ public class ClientView extends Application{
     private IRemoteBoard rmiObject;
 
     private String rmiServerIP = "127.0.0.1";
-    private String rmiServerPort = "4444";
+    private String rmiServerPort = "11112";
     //private WhiteBoard temp_pane = new WhiteBoard();
 
     //public ClientView(IRemoteBoard iRemoteBoard){
@@ -41,8 +41,8 @@ public class ClientView extends Application{
         Parameters parameters = getParameters();
         //parameters.getNamed();
         List<String> raw_para_list = parameters.getRaw();
-        client_controller = new ManagerController("default_board", "127.0.0.1", "4444");
-        mc = new ManagerController("default_board", "127.0.0.1", "37581");
+        //client_controller = new ManagerController("default_board", "127.0.0.1", "4444");
+        //mc = new ManagerController("default_board", "127.0.0.1", "37581");
 
         if (raw_para_list.size() == 0){
             client_controller = new ManagerController("default_board", "127.0.0.1", "4444");
@@ -77,6 +77,8 @@ public class ClientView extends Application{
         }
         //String rmi_key = this.client_controller.getRMIKey();
         Registry registry = LocateRegistry.getRegistry(this.rmiServerIP, Integer.parseInt(this.rmiServerPort));
+        System.out.println(this.rmiServerIP + ", " + this.rmiServerPort);
+        System.out.println(registry);
         System.out.println(rmi_key);
         rmiObject = (IRemoteBoard) registry.lookup(rmi_key);
 

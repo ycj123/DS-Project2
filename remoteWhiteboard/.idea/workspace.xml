@@ -3,10 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="27ed65b3-4a99-4718-bd4a-acc875a87f72" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manager.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/ManagerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/ManagerController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/META-INF/remoteWhiteboard.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/ClientView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/client/ClientView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/RmiObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/RmiObject.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/ServerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/ServerController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/ServerRMIService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/remoteWhiteboard/com/friday430/server/ServerRMIService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/ManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/ManagerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/ClientView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/ClientView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/friday430/server/ServerRMIService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/server/ServerRMIService.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -58,20 +60,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ClientView">
-    <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.friday430.client.Client" />
-      <module name="remoteWhiteboard" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.friday430.client.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.Server">
     <configuration name="ClientView" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.friday430.client.ClientView" />
       <module name="remoteWhiteboard" />
@@ -125,6 +114,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ServerRMIService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.friday430.server.ServerRMIService" />
+      <module name="remoteWhiteboard" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.friday430.server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="cv_main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.friday430.client.cv_main" />
       <module name="remoteWhiteboard" />
@@ -140,19 +142,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.ClientView" />
-      <item itemvalue="Application.Client" />
       <item itemvalue="Application.Client_tmp" />
       <item itemvalue="Application.Client_view_main" />
       <item itemvalue="Application.cv_main" />
       <item itemvalue="Application.Server" />
+      <item itemvalue="Application.ServerRMIService" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Server" />
+        <item itemvalue="Application.ServerRMIService" />
         <item itemvalue="Application.cv_main" />
         <item itemvalue="Application.Client_view_main" />
         <item itemvalue="Application.Client_tmp" />
-        <item itemvalue="Application.Client" />
       </list>
     </recent_temporary>
   </component>

@@ -64,6 +64,7 @@ public class ServerRMIService {
             registry.bind(rmi_key, rmiObject);
             //Naming.rebind(rmi_key, rmiObject);
             //this.saveBoard(stub);
+            System.out.println(rmi_key);
             System.out.println("White Board server is ready!");
             return true;
         } catch (Exception var3) {
@@ -72,11 +73,11 @@ public class ServerRMIService {
         }
     }
 
-    public synchronized RmiObject getBoard(String board_id, String managerKeychain){
-        RmiObject board = null;
+    public synchronized IRemoteBoard getBoard(String board_id, String managerKeychain){
+        IRemoteBoard board = null;
         try{
-            //registry = LocateRegistry.getRegistry();
-            board = (RmiObject) registry.lookup(board_id + managerKeychain);
+            Registry registry_1 = LocateRegistry.getRegistry("localhost", 11112);
+            board = (IRemoteBoard) registry_1.lookup(board_id + managerKeychain);
             //board = (RmiObject) Naming.lookup(board_id + managerKeychain);
         } catch (RemoteException | NotBoundException e){// | MalformedURLException e) {
            e.printStackTrace();
@@ -104,7 +105,7 @@ public class ServerRMIService {
     public static void main(String[] args) throws RemoteException {
         ServerRMIService sms = new ServerRMIService();
         sms.createNewBoard("123", "345");
-        RmiObject obj = sms.getBoard("123", "345");
+        IRemoteBoard obj = sms.getBoard("123", "345");
         System.out.println(obj.getRMI_key());
 
     }
