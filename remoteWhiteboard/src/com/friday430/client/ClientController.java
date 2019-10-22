@@ -1,7 +1,9 @@
 package com.friday430.client;
 
 import com.friday430.remote.IRemoteBoard;
+import javafx.scene.control.TextInputDialog;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.*;
 import java.io.IOException;
@@ -9,6 +11,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,6 +27,7 @@ class ClientController implements ClientControllerInterface{
     private String managerkey;
     private String board_id ;
     private  String manager_keychain;
+    private  String userName;
 
     private ClientView clientView;
     private IRemoteBoard rmiObject = null;
@@ -93,6 +97,14 @@ class ClientController implements ClientControllerInterface{
         try
         {
             System.out.println(manager_ip+" " + toManagerPORT);
+//            TextInputDialog dialog = new TextInputDialog("Jack");
+//            dialog.setTitle("Client");
+//            dialog.setHeaderText("What should we call you?");
+//            dialog.setContentText("Please Enter Your Name:");
+//            Optional<String> result = dialog.showAndWait();
+//            result.ifPresent(name -> this.userName = name);
+            this.userName = JOptionPane.showInputDialog("Please input your name: ");
+
             Socket socket = new Socket(manager_ip, toManagerPORT);
 //            socket.setTcpNoDelay(true);
             // Output Stream
@@ -101,7 +113,7 @@ class ClientController implements ClientControllerInterface{
             // Input stream
             InputStreamReader in = new InputStreamReader(socket.getInputStream(),"UTF-8");
             BufferedReader input = new BufferedReader(in);
-            output.write(board_name + "\n");
+            output.write(this.userName + "###" +board_name + "\n");
             System.out.println("Request sent to Manager: join" + board_name);
 //            output.write("Test");
             output.flush();
@@ -141,6 +153,11 @@ class ClientController implements ClientControllerInterface{
     public String getRMIKey() {
         this.managerkey = this.board_id+this.manager_keychain;
         return this.managerkey;
+    }
+
+    @Override
+    public String getUserName() {
+        return this.userName;
     }
 }
 

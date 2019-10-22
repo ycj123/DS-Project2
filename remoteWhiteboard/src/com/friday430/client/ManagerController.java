@@ -113,8 +113,10 @@ class ManagerController extends Thread implements ClientControllerInterface {
 
     public static String handleClientRequest(String request){
         System.out.println(request);
+        String username = request.split("###")[0];
+        String board_name = request.split("###")[1];
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Client wish to join [" + request + "] (y/n)");
+        System.out.println("Client [" + username + "] wish to join [" + board_name + "] (y/n)");
         String user_response = scanner.next();
         if (user_response.equals("y")){
             return manager_keychain + "\n";
@@ -127,6 +129,11 @@ class ManagerController extends Thread implements ClientControllerInterface {
     @Override
     public String getRMIKey() {
         return board_id + manager_keychain;
+    }
+
+    @Override
+    public String getUserName() {
+        return "Manager";
     }
 
     public void run() {

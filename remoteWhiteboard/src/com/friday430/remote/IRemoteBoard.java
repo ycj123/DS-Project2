@@ -16,6 +16,8 @@ public interface IRemoteBoard extends Remote {
 
     ArrayList<String[]> getChat() throws RemoteException;
 
+    void updateChat(String username, String words) throws RemoteException;
+
     ArrayList<HashMap<String, Double>> getCanvas_objects() throws RemoteException;
 
     void updateCanvas_object(HashMap<String, Double> new_object) throws RemoteException;

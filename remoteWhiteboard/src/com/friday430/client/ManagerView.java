@@ -30,7 +30,7 @@ public class ManagerView extends Application{
     private boolean is_manager = true;
     private IRemoteBoard rmiObject;
 
-    private String rmiServerIP = "192.168.0.103";
+    private String rmiServerIP = "10.12.189.114";
     private String rmiServerPort = "11112";
     //private WhiteBoard temp_pane = new WhiteBoard();
 
@@ -48,8 +48,8 @@ public class ManagerView extends Application{
         //mc = new ManagerController("default_board", "127.0.0.1", "37581");
 
         if (raw_para_list.size() == 0){
-           client_controller = new ManagerController("default_board", "192.168.0.103", "4444");
-           mc = new ManagerController("default_board", "192.168.0.103", "37581");
+           client_controller = new ManagerController("default_board", rmiServerIP, "4444");
+           mc = new ManagerController("default_board", rmiServerIP, "37581");
             // client_controller = new ClientController("default_board", "192.168.0.103", "5555");
             // is_manager = false;
         }
@@ -100,7 +100,7 @@ public class ManagerView extends Application{
 //        tmp.put("width", 1.0);
 //        rmiObject.updateCanvas_object(tmp);}
 
-        this.wb = new WhiteBoard(rmiObject, is_manager);
+        this.wb = new WhiteBoard(rmiObject, is_manager, client_controller.getUserName());
         //parameters.getUnnamed();
 
 

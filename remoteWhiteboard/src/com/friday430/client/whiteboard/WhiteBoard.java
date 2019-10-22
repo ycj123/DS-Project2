@@ -5,6 +5,7 @@ import com.friday430.client.whiteboard.properties.Properties;
 import com.friday430.client.whiteboard.tools.Pen;
 import com.friday430.remote.IRemoteBoard;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -41,10 +42,13 @@ public class WhiteBoard extends BorderPane {
 	private  Pen pen;
 	private WhiteBoardMenu whiteBoardMenu;
 	private TextArea ta;
+	private TextField tf;
 	private IRemoteBoard iRemoteBoard;
 	private int index_shown = 0;
+	private  String userName;
 
-	private ArrayList<String[]> chat_history;
+
+	//private ArrayList<String[]> chat_history;
 
 
 	//private static WhiteBoard whiteBoard = null;
@@ -60,14 +64,15 @@ public class WhiteBoard extends BorderPane {
 //	}
 
 	private void draw_existing_canvas() throws RemoteException {
+		this.canvas.clearCanvas();
 		ArrayList<HashMap<String, Double>> canvas_list = null;
-		try {
-			canvas_list = this.iRemoteBoard.getCanvas_object(this.index_shown);
-		} catch (IllegalArgumentException e) {
-			this.index_shown  = 0;
-			this.canvas.clear();
-			canvas_list = this.iRemoteBoard.getCanvas_object(this.index_shown);
-		}
+		 try {
+		 	canvas_list = this.iRemoteBoard.getCanvas_object(this.index_shown);
+		 } catch (IllegalArgumentException e) {
+		 	this.index_shown  = 0;
+		 	this.canvas.clearCanvas();
+		 	canvas_list = this.iRemoteBoard.getCanvas_object(this.index_shown);
+		 }
 
 		for (HashMap<String, Double> canvas_object_map : canvas_list){
 			int shape_type = (int) Math.floor(canvas_object_map.get("shape"));
@@ -142,12 +147,36 @@ public class WhiteBoard extends BorderPane {
 					rectangle.setStrokeWidth(width);
 					canvas.addShape(rectangle);
 					break;
+				case 4: //square
+					Rectangle square = new Rectangle();
+					square.setX(sX);
+					square.setY(sY);
+					double dx_s = Math.abs(eX -sX);
+					double dy_s = Math.abs(eY -sY);
+					double radius_s = Math.max(dx_s,dy_s);
+					square.setWidth(radius_s);
+					square.setHeight(radius_s);
+					square.setFill(Color.TRANSPARENT);
+					square.setStroke(color);
+					square.setStrokeWidth(width);
+					canvas.addShape(square);
 			}
 		}
 	}
 
-	public WhiteBoard(IRemoteBoard iRemoteBoard, boolean isManager) throws RemoteException {
+	public void reload_existing_chat(){
+//		this.chat_history;
+//		this.iRemoteBoard.getChat();
+		try {
+			setTa(this.iRemoteBoard.getChat());
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public WhiteBoard(IRemoteBoard iRemoteBoard, boolean isManager, String userName) throws RemoteException {
 		this.iRemoteBoard = iRemoteBoard;
+		this.userName = userName;
 		//System.out.println("in white board");
 		//System.out.println(Arrays.toString(this.iRemoteBoard.getChat().get(0)));
        	canvas = new Canvas(this);
@@ -184,24 +213,25 @@ public class WhiteBoard extends BorderPane {
                     //     timePrint();
                     // }
 					// checkTime();
-					int current_len = 0;
-					try {
-						current_len = iRemoteBoard.get_object_length();
-					} catch (RemoteException e) {
-						e.printStackTrace();
-					}
-					if (current_len != index_shown) {
+//					int current_len = 0;
+//					try {
+//						current_len = iRemoteBoard.get_object_length();
+//					} catch (RemoteException e) {
+//						e.printStackTrace();
+//					}
+//					if (current_len != index_shown) {
 						try {
 							draw_existing_canvas();
+							reload_existing_chat();
 						} catch (RemoteException e) {
 							e.printStackTrace();
 						}
-						try {
-							index_shown = iRemoteBoard.get_object_length();
-						} catch (RemoteException e) {
-							e.printStackTrace();
-						}
-					}
+//						try {
+//							index_shown = iRemoteBoard.get_object_length();
+//						} catch (RemoteException e) {
+//							e.printStackTrace();
+//						}
+//					}
                 }
             });
 			}
@@ -210,9 +240,9 @@ public class WhiteBoard extends BorderPane {
 		timer.schedule(timerTask, 100, 100);
 	}
 
-	public ArrayList<String[]> getTa(){
-		return this.chat_history;
-	}
+	//public ArrayList<String[]> getTa(){
+	//	return this.chat_history;
+	//}
 
 	public void updateCurrentShape(HashMap<String, Double> shape_map){
 		try{
@@ -227,7 +257,6 @@ public class WhiteBoard extends BorderPane {
 //	}
 
 	public void setTa(ArrayList<String[]> chat_history){
-		this.chat_history = chat_history;
 
 		String chat_formatted = "";
 		for (String[] chat : chat_history) {
@@ -235,7 +264,9 @@ public class WhiteBoard extends BorderPane {
 			String user_words = chat[1];
 			chat_formatted = chat_formatted.concat(user_name + "\n");
 			chat_formatted = chat_formatted.concat(user_words + "\n");
+			chat_formatted = chat_formatted.concat("\n");
 		}
+		ta.setText(chat_formatted);
 	}
 
 	public void clear() {
@@ -272,9 +303,21 @@ public class WhiteBoard extends BorderPane {
 		ta = new TextArea();
 		ta.setPrefSize(300,1300);
 		HBox send_box = new HBox();
-		TextField tf = new TextField();
+		tf = new TextField();
 		tf.setPrefWidth(250);
 		Button send_button = new Button("Send");
+		send_button.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					String tfText = tf.getText();
+					iRemoteBoard.updateChat(userName, tfText);
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
 		send_box.getChildren().add(tf);
 		send_box.getChildren().add(send_button);

@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="27ed65b3-4a99-4718-bd4a-acc875a87f72" name="Default Changelist" comment="" />
+    <list default="true" id="27ed65b3-4a99-4718-bd4a-acc875a87f72" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/ClientControllerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/ClientControllerInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/ClientView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/ClientView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/ManagerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/ManagerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/ManagerView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/ManagerView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/Canvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/Canvas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/WhiteBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/WhiteBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/tools/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/client/whiteboard/tools/Square.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/friday430/remote/IRemoteBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/friday430/remote/IRemoteBoard.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +38,13 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Global Libraries" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
@@ -51,7 +69,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ClientView">
+  <component name="RunManager" selected="Application.ManagerView">
     <configuration name="ClientView" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.friday430.client.ClientView" />
       <module name="remoteWhiteboard" />
@@ -79,12 +97,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Client_view_main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.friday430.client.whiteboard.Client_view_main" />
+    <configuration name="ManagerView" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.friday430.client.ManagerView" />
       <module name="remoteWhiteboard" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.friday430.client.whiteboard.*" />
+          <option name="PATTERN" value="com.friday430.client.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -133,19 +151,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.ClientView" />
-      <item itemvalue="Application.Client_view_main" />
       <item itemvalue="Application.cv_main" />
       <item itemvalue="Application.Server" />
       <item itemvalue="Application.ServerRMIService" />
       <item itemvalue="Application.Client_test" />
+      <item itemvalue="Application.ManagerView" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Server" />
+        <item itemvalue="Application.ManagerView" />
         <item itemvalue="Application.Client_test" />
+        <item itemvalue="Application.Server" />
         <item itemvalue="Application.ServerRMIService" />
         <item itemvalue="Application.cv_main" />
-        <item itemvalue="Application.Client_view_main" />
       </list>
     </recent_temporary>
   </component>
@@ -166,6 +184,8 @@
       <workItem from="1570530302312" duration="53778000" />
       <workItem from="1571463217247" duration="508000" />
       <workItem from="1571463762082" duration="1740000" />
+      <workItem from="1571486311645" duration="6143000" />
+      <workItem from="1571719651435" duration="5619000" />
     </task>
     <servers />
   </component>
@@ -184,5 +204,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/friday430/client/ManagerController.java</url>
+          <line>147</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -36,6 +36,9 @@ public class Canvas extends Pane implements PropertiesListener {
        getChildren().clear();
        whiteBoard.clear();
    }
+   public void clearCanvas() {
+       getChildren().clear();
+   }
 
    private void setBackground(Color color) {
 	    setBackground(new Background(new BackgroundFill(
