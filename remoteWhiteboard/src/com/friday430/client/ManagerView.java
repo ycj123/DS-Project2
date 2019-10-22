@@ -19,6 +19,7 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 import java.util.zip.DeflaterOutputStream;
 
 public class ManagerView extends Application{
@@ -44,40 +45,33 @@ public class ManagerView extends Application{
         Parameters parameters = getParameters();
         //parameters.getNamed();
         List<String> raw_para_list = parameters.getRaw();
-        //client_controller = new ManagerController("default_board", "127.0.0.1", "4444");
-        //mc = new ManagerController("default_board", "127.0.0.1", "37581");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Would you like to create a board? (y/n, n for join)");
+        String c_or_j = scanner.next();
+        if (c_or_j.equals("y")) {
+            is_manager = true;
+        }
+        if (c_or_j.equals("n")){
+            is_manager = false;
+        }
+        System.out.println("Please input board name: ");
+        String board_name = scanner.next();
+        System.out.println("Please input RMI server IP: ");
+        rmiServerIP = scanner.next();
+        if (board_name == null || board_name.equals("")){
+            board_name = "default_board";
+        }
 
-        if (raw_para_list.size() == 0){
-           client_controller = new ManagerController("default_board", rmiServerIP, "4444");
-           mc = new ManagerController("default_board", rmiServerIP, "37581");
-            // client_controller = new ClientController("default_board", "192.168.0.103", "5555");
-            // is_manager = false;
+        if (is_manager) {
+            client_controller = new ManagerController(board_name, rmiServerIP, "4444");
+            mc = new ManagerController(board_name, rmiServerIP, "37581");
+        }else{
+            client_controller = new ClientController(board_name, rmiServerIP, "5555");
         }
-        if (raw_para_list.size() == 2) {
-            if (raw_para_list.get(0).equals("client")) {
-                client_controller = new ClientController(raw_para_list.get(1), "127.0.0.1", "5555");
-                is_manager = false;
-            } else if (raw_para_list.get(0).equals("manager")) {
-                client_controller = new ManagerController(raw_para_list.get(1), "127.0.0.1", "4444");
-                mc = new ManagerController("default_board", "127.0.0.1", "3758");
-            } else {
-                System.exit(1);
-            }
-        }
-        if (raw_para_list.size() == 4) {
-            if (raw_para_list.get(0).equals("client")) {
-                client_controller = new ClientController(raw_para_list.get(1),raw_para_list.get(2), raw_para_list.get(3));
-                is_manager = false;
-            } else if (raw_para_list.get(0).equals("manager")) {
-                client_controller = new ManagerController(raw_para_list.get(1),raw_para_list.get(2), raw_para_list.get(3));
-                mc = new ManagerController("default_board", "127.0.0.1", "3758");
-            } else {
-                System.exit(1);
-            }
-        }
+
         String rmi_key = "";
         while (rmi_key.equals("")){
-            Thread.sleep(1000);
+            Thread.sleep(100);
             rmi_key = this.client_controller.getRMIKey();
         }
         //String rmi_key = this.client_controller.getRMIKey();
@@ -99,8 +93,8 @@ public class ManagerView extends Application{
 //        tmp.put("blue", 0.0);
 //        tmp.put("width", 1.0);
 //        rmiObject.updateCanvas_object(tmp);}
-
-        this.wb = new WhiteBoard(rmiObject, is_manager, client_controller.getUserName());
+        String userName = client_controller.getUserName();
+        this.wb = new WhiteBoard(rmiObject, is_manager, userName);
         //parameters.getUnnamed();
 
 
