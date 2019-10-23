@@ -15,6 +15,10 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 
 /**
 * Panel shows all the optional tools.
@@ -55,25 +59,25 @@ class ToolsPanel extends VBox {
        arrowBtn = new Button();
 //        triAngleBtn = new Button();
 
-       String PEN_ICON = "./Icons/pen.png";
+       String PEN_ICON = "Icons/pen.png";
        createBtn(penBtn, PEN_ICON);
-       String ERASER_ICON = "./Icons/eraser.png";
+       String ERASER_ICON = "Icons/eraser.png";
        createBtn(eraserBtn, ERASER_ICON);
-       String COLOR_PICKER_ICON = "./Icons/color-picker.png";
+       String COLOR_PICKER_ICON = "Icons/color-picker.png";
        createBtn(colorPickerBtn, COLOR_PICKER_ICON);
-       String LINE_ICON = "./Icons/line.png";
+       String LINE_ICON = "Icons/line.png";
        createBtn(sLineBtn, LINE_ICON);
-       String CIRCLE_ICON = "./Icons/circle.png";
+       String CIRCLE_ICON = "Icons/circle.png";
        createBtn(circleBtn, CIRCLE_ICON);
-       String ELLIPSE_ICON = "./Icons/ellipse.png";
+       String ELLIPSE_ICON = "Icons/ellipse.png";
        createBtn(ellipseBtn, ELLIPSE_ICON);
-       String SQUARE_ICON = "./Icons/square.png";
+       String SQUARE_ICON = "Icons/square.png";
        createBtn(squareBtn, SQUARE_ICON);
-       String RECTANGLE_ICON = "./Icons/rectangle.png";
+       String RECTANGLE_ICON = "Icons/rectangle.png";
        createBtn(rectAngleBtn, RECTANGLE_ICON);
-       String CLEAR_ICON = "./Icons/clear.png";
+       String CLEAR_ICON = "Icons/clear.png";
        createBtn(clearBtn, CLEAR_ICON);
-       String ARROW_ICON = "./Icons/arrow.png";
+       String ARROW_ICON = "Icons/arrow.png";
        createBtn(arrowBtn, ARROW_ICON);
 //        createBtn(triAngleBtn, TRIANGLE_ICON);
        setupButtons();
@@ -86,8 +90,21 @@ class ToolsPanel extends VBox {
     */
    private void createBtn(Button btn, String imgLocation) {
        // public static String TRIANGLE_ICON = "./Icons/triangle.png";
+       String path = "";
+    //    try {
+    //        path = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+    //    } catch (Exception e) {
+    //        e.printStackTrace();
+    //    }
        int BTN_SIZE = 25;
-       Image img = new Image(getClass().getResourceAsStream(imgLocation), BTN_SIZE, BTN_SIZE, true, true);
+    //    String pngPath = path+imgLocation;
+       String url = null;
+       try {
+           url = new File(imgLocation).toURI().toURL().toString();
+       } catch (MalformedURLException e) {
+           e.printStackTrace();
+       }
+       Image img = new Image(url, BTN_SIZE, BTN_SIZE, true, true);
        ImageView imgView = new ImageView(img);
        btn.setGraphic(imgView);
        btn.setPrefSize(BTN_SIZE, BTN_SIZE);

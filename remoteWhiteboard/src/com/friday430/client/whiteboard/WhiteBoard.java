@@ -190,7 +190,7 @@ public class WhiteBoard extends BorderPane {
 		setupDown();
 		setupUp(isManager);
 		draw_existing_canvas();// init
-		this.index_shown = this.iRemoteBoard.get_object_length();
+		// this.index_shown = this.iRemoteBoard.get_object_length();
 		TimerTask timerTask = new TimerTask(){
 		
 			@Override

@@ -142,15 +142,13 @@ class ManagerController extends Thread implements ClientControllerInterface {
         if (port == toclientPORT) {
             try {
                 ServerSocket clientSocket = new ServerSocket(toclientPORT);
-                Socket client = clientSocket.accept();
-                System.out.println("waiting for clients' requests!");
-
-
-                InputStreamReader in = new InputStreamReader(client.getInputStream(), "UTF-8");
-                BufferedReader input = new BufferedReader(in);
-
                 while(true) {
                     Thread.sleep(100);
+                    System.out.println("waiting for users");
+                    Socket client = clientSocket.accept();
+                    System.out.println("waiting for clients' requests!");
+                    InputStreamReader in = new InputStreamReader(client.getInputStream(), "UTF-8");
+                    BufferedReader input = new BufferedReader(in);
                     String requests = input.readLine();
                     if (requests != null) {
                         key = ManagerController.handleClientRequest(requests);
@@ -158,7 +156,6 @@ class ManagerController extends Thread implements ClientControllerInterface {
                         BufferedWriter output = new BufferedWriter(out);
                         output.write(key);
                         output.flush();
-                        System.out.println("waiting for users");
                     }
                 }
 
