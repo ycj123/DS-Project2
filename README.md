@@ -16,7 +16,7 @@ Group: FRIDAY430
 - rectangle 3:
 - Square 4:
 
-##How to run jar:
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-java -jar Server.jar
+## How to run jar:
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8` 
+java -jar Server.jar  
 java -jar remoteWhiteBoard.jar
