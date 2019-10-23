@@ -1,6 +1,7 @@
 package com.friday430.client;
 
 import javax.net.ServerSocketFactory;
+import javax.swing.*;
 import java.io.*;
 import java.net.*;
 import java.io.IOException;
@@ -115,10 +116,11 @@ class ManagerController extends Thread implements ClientControllerInterface {
         System.out.println(request);
         String username = request.split("###")[0];
         String board_name = request.split("###")[1];
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Client [" + username + "] wish to join [" + board_name + "] (y/n)");
-        String user_response = scanner.next();
-        if (user_response.equals("y")){
+
+        JPanel panel = new JPanel();
+        panel.add(new JLabel(username + " wants to join board " + board_name));
+        int result = JOptionPane.showConfirmDialog(null, panel, "Client asking for permission", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION){
             return manager_keychain + "\n";
         }else{
             return null;

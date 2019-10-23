@@ -32,12 +32,13 @@ class ClientController implements ClientControllerInterface{
     private ClientView clientView;
     private IRemoteBoard rmiObject = null;
 
-    public ClientController(String board_name, String server_ip, String server_port){
+    public ClientController(String board_name, String server_ip, String server_port, String userName){
 //        private ClientView clientView = new ClientView();
         //视窗调用sendMessagetoServer()函数
         host_ip = server_ip;
         serverPORT = Integer.parseInt(server_port);
         this.board_name = board_name;
+        this.userName = userName;
         this.sendMessagetoServer(board_name, host_ip,serverPORT);
     }
 
@@ -103,7 +104,7 @@ class ClientController implements ClientControllerInterface{
 //            dialog.setContentText("Please Enter Your Name:");
 //            Optional<String> result = dialog.showAndWait();
 //            result.ifPresent(name -> this.userName = name);
-            this.userName = JOptionPane.showInputDialog("Please input your name: ");
+            //this.userName = JOptionPane.showInputDialog("Please input your name: ");
 
             Socket socket = new Socket(manager_ip, toManagerPORT);
 //            socket.setTcpNoDelay(true);
@@ -113,8 +114,8 @@ class ClientController implements ClientControllerInterface{
             // Input stream
             InputStreamReader in = new InputStreamReader(socket.getInputStream(),"UTF-8");
             BufferedReader input = new BufferedReader(in);
-            output.write(this.userName + "###" +board_name + "\n");
-            System.out.println("Request sent to Manager: join" + board_name);
+            output.write(userName + "###" +board_name + "\n");
+            System.out.println(userName + "###" +board_name + "\n");
 //            output.write("Test");
             output.flush();
 //            out.flush();

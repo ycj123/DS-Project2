@@ -9,11 +9,14 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import javax.swing.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
@@ -31,7 +34,7 @@ public class ClientView extends Application{
     private boolean is_manager = true;
     private IRemoteBoard rmiObject;
 
-    private String rmiServerIP = "10.12.189.114";
+    private String rmiServerIP = "";
     private String rmiServerPort = "11112";
     //private WhiteBoard temp_pane = new WhiteBoard();
 
@@ -45,33 +48,70 @@ public class ClientView extends Application{
         Parameters parameters = getParameters();
         //parameters.getNamed();
         List<String> raw_para_list = parameters.getRaw();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Would you like to create a board? (y/n, n for join)");
-        String c_or_j = scanner.next();
-        if (c_or_j.equals("y")) {
-            is_manager = true;
+        //Scanner scanner = new Scanner(System.in);
+        //System.out.println("Would you like to create a board? (y/n, n for join)");
+        //String c_or_j = scanner.next();
+        //if (c_or_j.equals("y")) {
+        //    is_manager = true;
+        //}
+        //if (c_or_j.equals("n")){
+        //    is_manager = false;
+        //}
+        //System.out.println("Please input board name: ");
+        //String board_name = scanner.next();
+        //System.out.println("Please input RMI server IP: ");
+        //rmiServerIP = scanner.next();
+        //if (board_name == null || board_name.equals("")){
+        //    board_name = "default_board";
+        //}
+        String username = "";
+        String board_name = "";
+        JRadioButton managerRadio = new JRadioButton("manager");
+        JRadioButton userRadio = new JRadioButton("user");
+        ButtonGroup group = new ButtonGroup();
+        group.add(managerRadio);
+        group.add(userRadio);
+        JTextField serveripTextField = new JTextField();
+        JTextField boardnameTextField = new JTextField();
+        JTextField usernameTextField = new JTextField();
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.add(new JLabel("Select your role"));
+        panel.add(managerRadio);
+        panel.add(userRadio);
+        panel.add(new JLabel("Your name"));
+        panel.add(usernameTextField);
+        panel.add(new JLabel("RMI server IP"));
+        panel.add(serveripTextField);
+        panel.add(new JLabel("Whiteboard name"));
+        panel.add(boardnameTextField);
+        int result = JOptionPane.showConfirmDialog(null, panel, "Settings", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            username = usernameTextField.getText();
+            rmiServerIP = serveripTextField.getText();
+            board_name = boardnameTextField.getText();
+            is_manager = managerRadio.isSelected();
+        }else{
+            System.exit(0);
         }
-        if (c_or_j.equals("n")){
-            is_manager = false;
-        }
-        System.out.println("Please input board name: ");
-        String board_name = scanner.next();
-        System.out.println("Please input RMI server IP: ");
-        rmiServerIP = scanner.next();
-        if (board_name == null || board_name.equals("")){
-            board_name = "default_board";
-        }
+        System.out.println("settings: ");
+        System.out.println("username: " + username);
+        System.out.println("server IP: " + rmiServerIP);
+        System.out.println("boardname: "+ board_name);
+        System.out.println("is manager: " + is_manager);
+
 
         if (is_manager) {
             client_controller = new ManagerController(board_name, rmiServerIP, "4444");
             mc = new ManagerController(board_name, rmiServerIP, "37581");
         }else{
-            client_controller = new ClientController(board_name, rmiServerIP, "5555");
+            client_controller = new ClientController(board_name, rmiServerIP, "5555", username);
         }
 
         String rmi_key = "";
         while (rmi_key.equals("")){
-            Thread.sleep(100);
+            Thread.sleep(500);
             rmi_key = this.client_controller.getRMIKey();
         }
         //String rmi_key = this.client_controller.getRMIKey();
@@ -93,8 +133,8 @@ public class ClientView extends Application{
 //        tmp.put("blue", 0.0);
 //        tmp.put("width", 1.0);
 //        rmiObject.updateCanvas_object(tmp);}
-        String userName = client_controller.getUserName();
-        this.wb = new WhiteBoard(rmiObject, is_manager, userName);
+        //String userName = client_controller.getUserName();
+        this.wb = new WhiteBoard(rmiObject, is_manager, username);
         //parameters.getUnnamed();
 
 
