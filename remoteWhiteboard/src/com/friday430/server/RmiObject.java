@@ -40,6 +40,7 @@ public class RmiObject extends UnicastRemoteObject implements IRemoteBoard {
         this.canvas_objects = new ArrayList<>();
         this.board_id = board_id;
         this.RMI_key = RMI_key;
+        this.client_list = new ArrayList<>();
     }
 
     public String getRMI_key() throws RemoteException {
