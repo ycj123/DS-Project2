@@ -16,6 +16,23 @@ public class RmiObject extends UnicastRemoteObject implements IRemoteBoard {
     private ArrayList<HashMap<String, Double>> canvas_objects;
     private String board_id;
     private String RMI_key;
+    private ArrayList<String> client_list;
+
+    public boolean isMyNameHere(String name){
+        return client_list.contains(name);
+    }
+
+    public void addNewName(String name){
+        client_list.add(name);
+    }
+
+    public void removeName(String name){
+        client_list.remove(name);
+    }
+
+    public void removeAll(){
+        client_list.clear();
+    }
 
     public RmiObject(String board_id, String RMI_key) throws RemoteException{
         super();
