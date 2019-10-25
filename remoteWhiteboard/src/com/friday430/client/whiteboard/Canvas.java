@@ -45,6 +45,19 @@ public class Canvas extends Pane implements PropertiesListener {
 		    color, new CornerRadii(0), new Insets(0))));
    }
 
+   public void updateTextRMI(String x, String y, String red, String green, String blue, String content){
+       HashMap<String, String> text_hash = new HashMap<>();
+       text_hash.put("x", x);
+       text_hash.put("y", y);
+       text_hash.put("red", red);
+       text_hash.put("green", green);
+       text_hash.put("blue", blue);
+       text_hash.put("content", content);
+       this.whiteBoard.updateCurrentText(text_hash);
+
+
+   }
+
    public void updateShapeRMI(double shape, double start_x, double start_y, double end_x, double end_y,
                               double red, double green, double blue, double width){
        HashMap<String, Double> shape_hash = new HashMap<>();

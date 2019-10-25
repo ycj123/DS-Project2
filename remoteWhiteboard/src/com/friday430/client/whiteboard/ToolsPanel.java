@@ -35,6 +35,7 @@ class ToolsPanel extends VBox {
    private Button ellipseBtn;
    private Button clearBtn;
    private Button arrowBtn;
+   private Button textBtn;
 //    private Button triAngleBtn;
 
    private Pen tools;
@@ -57,6 +58,7 @@ class ToolsPanel extends VBox {
        ellipseBtn = new Button();
        clearBtn = new Button();
        arrowBtn = new Button();
+       textBtn = new Button();
 //        triAngleBtn = new Button();
 
        String PEN_ICON = "Icons/pen.png";
@@ -79,6 +81,8 @@ class ToolsPanel extends VBox {
        createBtn(clearBtn, CLEAR_ICON);
        String ARROW_ICON = "Icons/arrow.png";
        createBtn(arrowBtn, ARROW_ICON);
+       String TEXT_ICON = "Icons/text.png";
+       createBtn(textBtn, TEXT_ICON);
 //        createBtn(triAngleBtn, TRIANGLE_ICON);
        setupButtons();
 
@@ -160,7 +164,11 @@ class ToolsPanel extends VBox {
            tools.setTool(new Arrow(canvas));
         // canvas = new Canvas();
         setActive(arrowBtn);
-    });
+       });
+       textBtn.setOnAction(arg0 -> {
+           tools.setTool(new Text(canvas));
+           setActive(textBtn);
+       });
        //Add text button
 //        textBtn.setOnAction(arg0 -> {
 //            TextInputDialog dialog = new TextInputDialog("");

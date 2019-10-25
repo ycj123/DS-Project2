@@ -14,6 +14,7 @@ import java.util.List;
 public class RmiObject extends UnicastRemoteObject implements IRemoteBoard {
     private ArrayList<String[]> chat_history;
     private ArrayList<HashMap<String, Double>> canvas_objects;
+    private ArrayList<HashMap<String, String>> text_objects;
     private String board_id;
     private String RMI_key;
     private ArrayList<String> client_list;
@@ -73,6 +74,22 @@ public class RmiObject extends UnicastRemoteObject implements IRemoteBoard {
         List l = canvas_objects.subList(start_index, canvas_objects.size());
         return new ArrayList<HashMap<String, Double>>(l);
         //return (ArrayList<HashMap<String, Double>>)
+    }
+
+    @Override
+    public ArrayList<HashMap<String, String>> getText_objects() throws RemoteException {
+        return this.text_objects;
+    }
+
+    @Override
+    public void updateText_object(HashMap<String, String> new_object) throws RemoteException {
+        this.text_objects.add(new_object);
+    }
+
+    @Override
+    public ArrayList<HashMap<String, String>> getText_object(int start_index) throws RemoteException {
+        List l = text_objects.subList(start_index, canvas_objects.size());
+        return new ArrayList<HashMap<String, String>>(l);
     }
 
     public synchronized void updateChat(String username, String words) throws RemoteException{

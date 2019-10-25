@@ -5,15 +5,14 @@ import com.friday430.client.whiteboard.properties.Properties;
 import com.friday430.client.whiteboard.tools.Pen;
 import com.friday430.remote.IRemoteBoard;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Button;
-import javafx.scene.control.Separator;
+import javafx.scene.control.*;
 import javafx.geometry.Pos;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -25,6 +24,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import javafx.scene.text.Text;
 
 import javax.swing.*;
 import java.rmi.RemoteException;
@@ -47,6 +47,8 @@ public class WhiteBoard extends BorderPane {
 	private IRemoteBoard iRemoteBoard;
 	private int index_shown = 0;
 	private  String userName;
+	private boolean isManager;
+	private ListView<String> client_pane;
 
 
 	//private ArrayList<String[]> chat_history;
@@ -63,6 +65,31 @@ public class WhiteBoard extends BorderPane {
 //		}
 //		return whiteBoard;
 //	}
+
+	private void draw_existing_text() throws RemoteException {
+		ArrayList<HashMap<String, String>> text_list = null;
+		try {
+			text_list = this.iRemoteBoard.getText_object(this.index_shown);
+		} catch (IllegalArgumentException e) {
+			this.index_shown  = 0;
+			text_list = this.iRemoteBoard.getText_object(this.index_shown);
+		}
+		for (HashMap<String, String> text_hash : text_list){
+			double x = Double.parseDouble(text_hash.get("x"));
+			double y = Double.parseDouble(text_hash.get("y"));
+			double red = Double.parseDouble(text_hash.get("red"));
+			double green = Double.parseDouble(text_hash.get("green"));
+			double blue = Double.parseDouble(text_hash.get("blue"));
+			Color color = Color.color(red,green,blue);
+			String content = text_hash.get("content");
+			Text text = new Text();
+			text.setX(x);
+			text.setY(y);
+			text.setFill(color);
+			text.setText(content);
+			this.canvas.getChildren().add(text);
+		}
+	}
 
 	private void draw_existing_canvas() throws RemoteException {
 		this.canvas.clearCanvas();
@@ -178,8 +205,13 @@ public class WhiteBoard extends BorderPane {
 	public void check_if_alive(){
 		try {
 			ArrayList<String> client_list = iRemoteBoard.get_namelist();
+			if (this.isManager){
+				ObservableList<String> items = FXCollections.observableArrayList(iRemoteBoard.get_namelist());
+				this.client_pane.setItems(items);
+			}
 			if (!client_list.contains(this.userName)){
-				JOptionPane.showMessageDialog(null, "Your have been removed from whiteboard.");
+				// JOptionPane.showMessageDialog(null, "Your have been removed from whiteboard.");
+				System.out.println("Your have been removed from whiteboard!");
 				System.exit(0);
 			}
 		}catch (Exception e){
@@ -191,6 +223,7 @@ public class WhiteBoard extends BorderPane {
 	public WhiteBoard(IRemoteBoard iRemoteBoard, boolean isManager, String userName) throws RemoteException {
 		this.iRemoteBoard = iRemoteBoard;
 		this.userName = userName;
+		this.isManager = isManager;
 		//System.out.println("in white board");
 		//System.out.println(Arrays.toString(this.iRemoteBoard.getChat().get(0)));
        	canvas = new Canvas(this);
@@ -237,6 +270,7 @@ public class WhiteBoard extends BorderPane {
 						try {
 							check_if_alive();
 							draw_existing_canvas();
+							draw_existing_text();
 							reload_existing_chat();
 						} catch (RemoteException e) {
 							e.printStackTrace();
@@ -252,12 +286,20 @@ public class WhiteBoard extends BorderPane {
 			}
 		};
 		Timer timer = new Timer();
-		timer.schedule(timerTask, 100, 2000);
+		timer.schedule(timerTask, 100, 100);
 	}
 
 	//public ArrayList<String[]> getTa(){
 	//	return this.chat_history;
 	//}
+
+	public void updateCurrentText(HashMap<String, String> text_hash){
+		try {
+			this.iRemoteBoard.updateText_object(text_hash);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+	}
 
 	public void updateCurrentShape(HashMap<String, Double> shape_map){
 		try{
@@ -314,9 +356,11 @@ public class WhiteBoard extends BorderPane {
 	}
 
 	private void setupRight() {
+
+
 		VBox right = new VBox();
 		ta = new TextArea();
-		ta.setPrefSize(300,1300);
+		ta.setPrefSize(300,500);
 		HBox send_box = new HBox();
 		tf = new TextField();
 		tf.setPrefWidth(250);
@@ -337,6 +381,32 @@ public class WhiteBoard extends BorderPane {
 		send_box.getChildren().add(tf);
 		send_box.getChildren().add(send_button);
 
+		if (this.isManager){
+			client_pane = new ListView<String>();
+			try {
+				ObservableList<String> items = FXCollections.observableArrayList(iRemoteBoard.get_namelist());
+				client_pane.setItems(items);
+				client_pane.setPrefHeight(200);
+				Button client_btm = new Button("Kick");
+				client_btm.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						String selected_user = client_pane.getFocusModel().getFocusedItem();
+						try {
+							iRemoteBoard.removeName(selected_user);
+						}catch (Exception e){
+							e.printStackTrace();
+						}
+					}
+				});
+				VBox client_box = new VBox();
+				client_box.getChildren().add(client_pane);
+				client_box.getChildren().add(client_btm);
+				right.getChildren().add(client_box);
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+		}
 		right.getChildren().add(ta);
 		right.getChildren().add(send_box);
 		setRight(right);

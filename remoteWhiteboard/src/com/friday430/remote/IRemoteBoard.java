@@ -24,6 +24,12 @@ public interface IRemoteBoard extends Remote {
 
     ArrayList<HashMap<String, Double>> getCanvas_object(int start_index) throws RemoteException;
 
+    ArrayList<HashMap<String, String>> getText_objects() throws RemoteException;
+
+    void updateText_object(HashMap<String, String> new_object) throws RemoteException;
+
+    ArrayList<HashMap<String, String>> getText_object(int start_index) throws RemoteException;
+
     String getBoard_id() throws RemoteException;
 
     String getRMI_key() throws RemoteException;
