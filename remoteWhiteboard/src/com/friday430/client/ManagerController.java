@@ -9,6 +9,7 @@ import java.net.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 class ManagerController extends Thread implements ClientControllerInterface {
@@ -22,11 +23,14 @@ class ManagerController extends Thread implements ClientControllerInterface {
     private String board_id;
     private int port;
 
+    private static ArrayList<String> users = new ArrayList<>();
+
     //    private ClientView clientView;
 
 
-    public ManagerController(String input_board_name, String server_ip, String port)  {
+    public ManagerController(String input_board_name, String server_ip, String port, String username)  {
 //
+        users.add(username);
         host_ip = server_ip;
         this.port = Integer.parseInt(port);
         board_name = input_board_name;
@@ -119,10 +123,16 @@ class ManagerController extends Thread implements ClientControllerInterface {
         String username = request.split("###")[0];
         String board_name = request.split("###")[1];
 
+
+        if (users.contains(username)){
+            return null;
+        }
+
         JPanel panel = new JPanel();
         panel.add(new JLabel(username + " wants to join board " + board_name));
         int result = JOptionPane.showConfirmDialog(null, panel, "Client asking for permission", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION){
+            users.add(username);
             return manager_keychain + "\n";
         }else{
             return null;

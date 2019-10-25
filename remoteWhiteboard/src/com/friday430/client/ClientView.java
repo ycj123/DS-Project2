@@ -103,8 +103,8 @@ public class ClientView extends Application{
 
 
         if (is_manager) {
-            client_controller = new ManagerController(board_name, rmiServerIP, "4444");
-            mc = new ManagerController(board_name, rmiServerIP, "37581");
+            client_controller = new ManagerController(board_name, rmiServerIP, "4444", username);
+            mc = new ManagerController(board_name, rmiServerIP, "37581", username);
         }else{
             client_controller = new ClientController(board_name, rmiServerIP, "5555", username);
         }

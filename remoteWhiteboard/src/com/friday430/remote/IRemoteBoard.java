@@ -30,6 +30,8 @@ public interface IRemoteBoard extends Remote {
 
     ArrayList<HashMap<String, String>> getText_object(int start_index) throws RemoteException;
 
+    void clear_text() throws RemoteException;
+
     String getBoard_id() throws RemoteException;
 
     String getRMI_key() throws RemoteException;

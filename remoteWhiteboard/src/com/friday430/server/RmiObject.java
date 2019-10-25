@@ -47,6 +47,7 @@ public class RmiObject extends UnicastRemoteObject implements IRemoteBoard {
         this.board_id = board_id;
         this.RMI_key = RMI_key;
         this.client_list = new ArrayList<>();
+        this.text_objects = new ArrayList<>();
     }
 
     public String getRMI_key() throws RemoteException {
@@ -88,8 +89,13 @@ public class RmiObject extends UnicastRemoteObject implements IRemoteBoard {
 
     @Override
     public ArrayList<HashMap<String, String>> getText_object(int start_index) throws RemoteException {
-        List l = text_objects.subList(start_index, canvas_objects.size());
+        List l = text_objects.subList(start_index, text_objects.size());
         return new ArrayList<HashMap<String, String>>(l);
+    }
+
+    @Override
+    public void clear_text() throws RemoteException {
+        this.text_objects.clear();
     }
 
     public synchronized void updateChat(String username, String words) throws RemoteException{

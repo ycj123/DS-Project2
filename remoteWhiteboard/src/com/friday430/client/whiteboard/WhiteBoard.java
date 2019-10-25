@@ -329,6 +329,7 @@ public class WhiteBoard extends BorderPane {
 	public void clear() {
 		try {
 			this.iRemoteBoard.clear_object();
+			this.iRemoteBoard.clear_text();
 			this.index_shown = 0;
 		} catch (Exception e) {
 			e.printStackTrace();
