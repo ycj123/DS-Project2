@@ -81,11 +81,16 @@ class WhiteBoardMenu extends MenuBar {
     //    WritableImage img = canvas.snapshot(new SnapshotParameters(), null);
 		// BufferedImage buffImg = SwingFXUtils.fromFXImage(img, null);
 		ArrayList<HashMap<String, Double>> map = null;
+		ArrayList<HashMap<String, String>> textmap = null;
 		try {
 			map = iRemoteBoard.getCanvas_objects();
+			textmap = iRemoteBoard.getText_objects();
 		}catch (Exception e){
 			e.printStackTrace();
 		}
+		ArrayList<Object> final_obj = new ArrayList<Object>();
+		final_obj.add(map);
+		final_obj.add(textmap);
 		// FileOutputStream os = new FileOutputStream("D:\\student.data");
 		// ObjectOutputStream oos = new ObjectOutputStream(os);
 		// oos.writeObject(o);
@@ -98,7 +103,7 @@ class WhiteBoardMenu extends MenuBar {
 			try {
 				FileOutputStream os = new FileOutputStream(file);
 				ObjectOutputStream oos = new ObjectOutputStream(os);
-				oos.writeObject(map);
+				oos.writeObject(final_obj);
 				oos.flush();
 				oos.close();
 				// ImageIO.write(rmi, extension, file);
@@ -115,7 +120,11 @@ class WhiteBoardMenu extends MenuBar {
 				FileOutputStream os = new FileOutputStream(file);
 				ObjectOutputStream oos = new ObjectOutputStream(os);
 				ArrayList<HashMap<String, Double>> map = iRemoteBoard.getCanvas_objects();
-				oos.writeObject(map);
+				ArrayList<HashMap<String, String>> textmap = iRemoteBoard.getText_objects();
+				ArrayList<Object> final_obj = null;
+				final_obj.add(map);
+				final_obj.add(textmap);
+				oos.writeObject(final_obj);
 				oos.flush();
 				oos.close();
 				// ImageIO.write(rmi, extension, file);
@@ -136,11 +145,17 @@ class WhiteBoardMenu extends MenuBar {
 		if (file != null) {
 			try {
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-				ArrayList<HashMap<String, Double>> map = (ArrayList<HashMap<String, Double>>)ois.readObject();
+				//ArrayList<HashMap<String, Double>> map = (ArrayList<HashMap<String, Double>>)ois.readObject();
+				ArrayList<Object> two_lists = (ArrayList<Object>) ois.readObject();
 				ois.close();
+				ArrayList<HashMap<String, Double>> map = (ArrayList<HashMap<String, Double>>) two_lists.get(0);
+				ArrayList<HashMap<String, String>> textmap = (ArrayList<HashMap<String, String>>) two_lists.get(1);
 				iRemoteBoard.clear_object();
 				for (HashMap<String, Double> i : map) {
 					iRemoteBoard.updateCanvas_object(i);
+				}
+				for (HashMap<String, String> j : textmap){
+					iRemoteBoard.updateText_object(j);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

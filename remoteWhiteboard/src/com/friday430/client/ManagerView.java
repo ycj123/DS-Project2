@@ -119,7 +119,12 @@ public class ManagerView extends Application{
         System.out.println(this.rmiServerIP + ", " + this.rmiServerPort);
         System.out.println(registry);
         System.out.println(rmi_key);
-        rmiObject = (IRemoteBoard) registry.lookup(rmi_key);
+        try {
+            rmiObject = (IRemoteBoard) registry.lookup(rmi_key);
+        }catch (Exception e){
+            System.out.println("You are not the rightful manager for this whiteboard.");
+            System.exit(0);
+        }
 
         //rmiObject = new RmiObject("1", "2");
 //        HashMap<String, Double> tmp = new HashMap<>(){};
