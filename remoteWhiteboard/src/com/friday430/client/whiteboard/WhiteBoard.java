@@ -26,6 +26,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
+import javax.swing.*;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -174,6 +175,19 @@ public class WhiteBoard extends BorderPane {
 		}
 	}
 
+	public void check_if_alive(){
+		try {
+			if (!this.iRemoteBoard.isMyNameHere(this.userName)){
+				JOptionPane.showMessageDialog(null, "Your have been removed from whiteboard.");
+				Thread.sleep(2000);
+				System.exit(0);
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+
+
 	public WhiteBoard(IRemoteBoard iRemoteBoard, boolean isManager, String userName) throws RemoteException {
 		this.iRemoteBoard = iRemoteBoard;
 		this.userName = userName;
@@ -221,6 +235,7 @@ public class WhiteBoard extends BorderPane {
 //					}
 //					if (current_len != index_shown) {
 						try {
+							check_if_alive();
 							draw_existing_canvas();
 							reload_existing_chat();
 						} catch (RemoteException e) {

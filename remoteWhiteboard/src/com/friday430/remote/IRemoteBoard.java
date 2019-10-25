@@ -31,4 +31,12 @@ public interface IRemoteBoard extends Remote {
     void clear_object() throws RemoteException;
 
     int get_object_length() throws RemoteException;
+
+    boolean isMyNameHere(String name) throws RemoteException;
+
+    void addNewName(String name) throws RemoteException;
+
+    void removeName(String name) throws RemoteException;
+
+    void removeAll() throws RemoteException;
 }

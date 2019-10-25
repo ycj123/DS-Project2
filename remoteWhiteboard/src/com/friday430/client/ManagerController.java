@@ -1,5 +1,7 @@
 package com.friday430.client;
 
+import com.friday430.remote.IRemoteBoard;
+
 import javax.net.ServerSocketFactory;
 import javax.swing.*;
 import java.io.*;
@@ -20,7 +22,7 @@ class ManagerController extends Thread implements ClientControllerInterface {
     private String board_id;
     private int port;
 
-//    private ClientView clientView;
+    //    private ClientView clientView;
 
 
     public ManagerController(String input_board_name, String server_ip, String port)  {

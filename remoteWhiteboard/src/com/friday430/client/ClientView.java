@@ -134,6 +134,7 @@ public class ClientView extends Application{
 //        tmp.put("width", 1.0);
 //        rmiObject.updateCanvas_object(tmp);}
         //String userName = client_controller.getUserName();
+        rmiObject.addNewName(username);
         this.wb = new WhiteBoard(rmiObject, is_manager, username);
         //parameters.getUnnamed();
 
@@ -156,6 +157,13 @@ public class ClientView extends Application{
             @Override
             public void handle(WindowEvent windowEvent) {
                 Platform.exit();
+                try {
+                    if (is_manager) {
+                        rmiObject.removeAll();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 System.exit(0);
             }
         });
