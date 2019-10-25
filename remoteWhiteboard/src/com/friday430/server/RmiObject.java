@@ -34,6 +34,11 @@ public class RmiObject extends UnicastRemoteObject implements IRemoteBoard {
         client_list.clear();
     }
 
+    @Override
+    public ArrayList<String> get_namelist() throws RemoteException {
+        return client_list;
+    }
+
     public RmiObject(String board_id, String RMI_key) throws RemoteException{
         super();
         this.chat_history = new ArrayList<>();

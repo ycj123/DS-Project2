@@ -39,4 +39,6 @@ public interface IRemoteBoard extends Remote {
     void removeName(String name) throws RemoteException;
 
     void removeAll() throws RemoteException;
+
+    ArrayList<String> get_namelist() throws RemoteException;
 }

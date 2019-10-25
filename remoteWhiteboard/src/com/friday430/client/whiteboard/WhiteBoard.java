@@ -177,9 +177,9 @@ public class WhiteBoard extends BorderPane {
 
 	public void check_if_alive(){
 		try {
-			if (!this.iRemoteBoard.isMyNameHere(this.userName)){
+			ArrayList<String> client_list = iRemoteBoard.get_namelist();
+			if (!client_list.contains(this.userName)){
 				JOptionPane.showMessageDialog(null, "Your have been removed from whiteboard.");
-				Thread.sleep(2000);
 				System.exit(0);
 			}
 		}catch (Exception e){
@@ -252,7 +252,7 @@ public class WhiteBoard extends BorderPane {
 			}
 		};
 		Timer timer = new Timer();
-		timer.schedule(timerTask, 100, 100);
+		timer.schedule(timerTask, 100, 2000);
 	}
 
 	//public ArrayList<String[]> getTa(){
