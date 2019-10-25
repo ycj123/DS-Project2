@@ -79,8 +79,6 @@ class ToolsPanel extends VBox {
        createBtn(rectAngleBtn, RECTANGLE_ICON);
        String CLEAR_ICON = "Icons/clear.png";
        createBtn(clearBtn, CLEAR_ICON);
-       String ARROW_ICON = "Icons/arrow.png";
-       createBtn(arrowBtn, ARROW_ICON);
        String TEXT_ICON = "Icons/text.png";
        createBtn(textBtn, TEXT_ICON);
 //        createBtn(triAngleBtn, TRIANGLE_ICON);
@@ -159,11 +157,6 @@ class ToolsPanel extends VBox {
            new Clear(canvas);
            // canvas = new Canvas();
            setActive(clearBtn);
-       });
-       arrowBtn.setOnAction(arg0 -> {
-           tools.setTool(new Arrow(canvas));
-        // canvas = new Canvas();
-        setActive(arrowBtn);
        });
        textBtn.setOnAction(arg0 -> {
            tools.setTool(new Text(canvas));
