@@ -122,8 +122,6 @@ class ManagerController extends Thread implements ClientControllerInterface {
         System.out.println(request);
         String username = request.split("###")[0];
         String board_name = request.split("###")[1];
-
-
         if (users.contains(username)){
             return null;
         }
@@ -166,8 +164,13 @@ class ManagerController extends Thread implements ClientControllerInterface {
                         key = ManagerController.handleClientRequest(requests);
                         OutputStreamWriter out = new OutputStreamWriter(client.getOutputStream(), "UTF-8");
                         BufferedWriter output = new BufferedWriter(out);
-                        output.write(key);
-                        output.flush();
+                        if (key == null){
+                            output.write("FAIL");
+                            output.flush();
+                        }else {
+                            output.write(key);
+                            output.flush();
+                        }
                     }
                 }
 

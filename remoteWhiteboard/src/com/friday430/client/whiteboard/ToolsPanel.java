@@ -100,7 +100,7 @@ class ToolsPanel extends VBox {
     //    } catch (Exception e) {
     //        e.printStackTrace();
     //    }
-       int BTN_SIZE = 25;
+       int BTN_SIZE = 20;
     //    String pngPath = path+imgLocation;
        String url = null;
        try {

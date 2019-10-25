@@ -24,7 +24,9 @@ public class RmiObject extends UnicastRemoteObject implements IRemoteBoard {
     }
 
     public void addNewName(String name){
-        client_list.add(name);
+        if (!client_list.contains(name)) {
+            client_list.add(name);
+        }
     }
 
     public void removeName(String name){

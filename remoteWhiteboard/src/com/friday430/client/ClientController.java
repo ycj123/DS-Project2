@@ -124,7 +124,7 @@ class ClientController implements ClientControllerInterface{
 
 
             this.manager_keychain = input.readLine();
-            if (manager_keychain == null){
+            if (manager_keychain.equals("FAIL")){
                 System.out.println("Manager refused to accept you.");
                 System.exit(0);
             }
